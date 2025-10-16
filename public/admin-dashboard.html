@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Adsteric</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            font-size: 24px;
+            font-weight: 700;
+            padding: 0 30px;
+            margin-bottom: 10px;
+            color: #3dd5c3;
+        }
+
+        .admin-badge {
+            font-size: 11px;
+            background: #3dd5c3;
+            color: #1a202c;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin: 0 30px 40px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 14px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(61, 213, 195, 0.1);
+            border-left-color: #3dd5c3;
+        }
+
+        .nav-item.active {
+            background: rgba(61, 213, 195, 0.15);
+            border-left-color: #3dd5c3;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            margin: 30px;
+            padding: 12px 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .search-box {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 250px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #3dd5c3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f7fafc;
+        }
+
+        th {
+            padding: 16px 24px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 24px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ed8936;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-active { background: #c6f6d5; color: #22543d; }
+        .status-paused { background: #fed7d7; color: #742a2a; }
+        .status-pending { background: #feebc8; color: #7c2d12; }
+        .status-completed { background: #bee3f8; color: #2c5282; }
+        .status-rejected { background: #fed7d7; color: #742a2a; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #3dd5c3;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            max-width: 400px;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .notification.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">ADSTERIC</div>
+            <span class="admin-badge">ADMIN PANEL</span>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showPage('overview')">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Overview</span>
+                </li>
+                <li class="nav-item" onclick="showPage('users')">
+                    <i class="bi bi-people"></i>
+                    <span>Users</span>
+                </li>
+                <li class="nav-item" onclick="showPage('campaigns')">
+                    <i class="bi bi-megaphone"></i>
+                    <span>Campaigns</span>
+                </li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <!-- Overview Page -->
+            <div id="overview" class="page active">
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard Overview</h1>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-label">Total Users</div>
+                                <div class="stat-value" id="totalUsers">0</div>
+                            </div>
+                            <div class="stat-icon" style="background: #e6fffa; color: #3dd5c3;">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-label">Total Campaigns</div>
+                                <div class="stat-value" id="totalCampaigns">0</div>
+                            </div>
+                            <div class="stat-icon" style="background: #fef5e7; color: #f39c12;">
+                                <i class="bi bi-megaphone-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-label">Active Campaigns</div>
+                                <div class="stat-value" id="activeCampaigns">0</div>
+                            </div>
+                            <div class="stat-icon" style="background: #e8f5e9; color: #4caf50;">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-label">Pending Review</div>
+                                <div class="stat-value" id="pendingCampaigns">0</div>
+                            </div>
+                            <div class="stat-icon" style="background: #fff3e0; color: #ff9800;">
+                                <i class="bi bi-clock-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Page -->
+            <div id="users" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">User Management</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">All Users</h3>
+                        <input type="text" class="search-box" placeholder="Search users..." id="userSearch">
+                    </div>
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Balance</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td colspan="5" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Campaigns Page -->
+            <div id="campaigns" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Campaign Management</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">All Campaigns</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <select class="search-box" id="statusFilter" style="width: 150px;">
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="active">Active</option>
+                                <option value="paused">Paused</option>
+                                <option value="completed">Completed</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <input type="text" class="search-box" placeholder="Search campaigns..." id="campaignSearch">
+                        </div>
+                    </div>
+                    <table id="campaignsTable">
+                        <thead>
+                            <tr>
+                                <th>Campaign</th>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Budget</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="campaignsTableBody">
+                            <tr><td colspan="6" style="text-align: center; padding: 40px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Funds Modal -->
+    <div id="addFundsModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Funds to User</h2>
+                <button class="modal-close" onclick="closeModal('addFunds')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="addFunds(event)">
+                    <input type="hidden" id="selectedUserId">
+                    <div class="form-group">
+                        <label class="form-label">User</label>
+                        <input type="text" class="form-input" id="selectedUserName" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Action</label>
+                        <select class="form-select" id="fundsAction">
+                            <option value="add">Add to Balance</option>
+                            <option value="set">Set Balance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount ($)</label>
+                        <input type="number" class="form-input" id="fundsAmount" step="0.01" min="0" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Update Balance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Campaign Status Modal -->
+    <div id="updateStatusModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Campaign Status</h2>
+                <button class="modal-close" onclick="closeModal('updateStatus')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="updateCampaignStatus(event)">
+                    <input type="hidden" id="selectedCampaignId">
+                    <div class="form-group">
+                        <label class="form-label">Campaign</label>
+                        <input type="text" class="form-input" id="selectedCampaignName" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">New Status</label>
+                        <select class="form-select" id="campaignStatus" required>
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="paused">Paused</option>
+                            <option value="completed">Completed</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Update Status</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        // Check admin authentication
+        function checkAuth() {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '/admin-login.html';
+            }
+        }
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+            };
+        }
+
+        // Initialize
+        checkAuth();
+        loadStats();
+        loadUsers();
+        loadCampaigns();
+
+        // Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+        }
+
+        // Load Statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_URL}/admin/stats`, {
+                    headers: getAuthHeaders()
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem('adminToken');
+                    window.location.href = '/admin-login.html';
+                    return;
+                }
+
+                const data = await response.json();
+                document.getElementById('totalUsers').textContent = data.stats.totalUsers;
+                document.getElementById('totalCampaigns').textContent = data.stats.totalCampaigns;
+                document.getElementById('activeCampaigns').textContent = data.stats.activeCampaigns;
+                document.getElementById('pendingCampaigns').textContent = data.stats.pendingCampaigns;
+
+            } catch (error) {
+                console.error('Load stats error:', error);
+            }
+        }
+
+        // Load Users
+        async function loadUsers(search = '') {
+            try {
+                const response = await fetch(`${API_URL}/admin/users?search=${search}`, {
+                    headers: getAuthHeaders()
+                });
+
+                const data = await response.json();
+                const tbody = document.getElementById('usersTableBody');
+
+                if (data.users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">No users found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.users.map(user => `
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600;">${user.fullName}</div>
+                        </td>
+                        <td>${user.email}</td>
+                        <td style="font-weight: 600; color: #3dd5c3;">$${user.balance.toFixed(2)}</td>
+                        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td>
+                            <button class="btn btn-primary" onclick="openAddFundsModal('${user._id}', '${user.fullName}', ${user.balance})">
+                                <i class="bi bi-cash-coin"></i> Add Funds
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error('Load users error:', error);
+            }
+        }
+
+        // Load Campaigns
+        async function loadCampaigns(status = '', search = '') {
+            try {
+                const response = await fetch(`${API_URL}/admin/campaigns?status=${status}&search=${search}`, {
+                    headers: getAuthHeaders()
+                });
+
+                const data = await response.json();
+                const tbody = document.getElementById('campaignsTableBody');
+
+                if (data.campaigns.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">No campaigns found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.campaigns.map(campaign => `
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600; margin-bottom: 4px;">${campaign.campaignName}</div>
+                            <div style="font-size: 12px; color: #718096;">${campaign.targetUrl}</div>
+                        </td>
+                        <td>
+                            <div>${campaign.userId?.fullName || 'N/A'}</div>
+                            <div style="font-size: 12px; color: #718096;">${campaign.userId?.email || ''}</div>
+                        </td>
+                        <td style="text-transform: uppercase; font-weight: 600; color: #3dd5c3;">${campaign.campaignType}</td>
+                        <td>
+                            <div style="font-weight: 600;">$${campaign.totalBudget.toFixed(2)}</div>
+                            <div style="font-size: 12px; color: #718096;">$${campaign.dailyBudget.toFixed(2)}/day</div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-${campaign.status}">${campaign.status}</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" onclick="openUpdateStatusModal('${campaign._id}', '${campaign.campaignName}', '${campaign.status}')">
+                                <i class="bi bi-pencil"></i> Update
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error('Load campaigns error:', error);
+            }
+        }
+
+        // Search handlers
+        document.getElementById('userSearch')?.addEventListener('input', (e) => {
+            loadUsers(e.target.value);
+        });
+
+        document.getElementById('statusFilter')?.addEventListener('change', (e) => {
+            loadCampaigns(e.target.value, document.getElementById('campaignSearch').value);
+        });
+
+        document.getElementById('campaignSearch')?.addEventListener('input', (e) => {
+            loadCampaigns(document.getElementById('statusFilter').value, e.target.value);
+        });
+
+        // Modal functions
+        function openAddFundsModal(userId, userName, currentBalance) {
+            document.getElementById('selectedUserId').value = userId;
+            document.getElementById('selectedUserName').value = `${userName} (Current: $${currentBalance.toFixed(2)})`;
+            document.getElementById('addFundsModal').classList.add('active');
+        }
+
+        function openUpdateStatusModal(campaignId, campaignName, currentStatus) {
+            document.getElementById('selectedCampaignId').value = campaignId;
+            document.getElementById('selectedCampaignName').value = campaignName;
+            document.getElementById('campaignStatus').value = currentStatus;
+            document.getElementById('updateStatusModal').classList.add('active');
+        }
+
+        function closeModal(type) {
+            document.getElementById(type === 'addFunds' ? 'addFundsModal' : 'updateStatusModal').classList.remove('active');
+        }
+
+        // Add Funds
+        async function addFunds(event) {
+            event.preventDefault();
+            
+            const userId = document.getElementById('selectedUserId').value;
+            const action = document.getElementById('fundsAction').value;
+            const amount = parseFloat(document.getElementById('fundsAmount').value);
+
+            try {
+                const response = await fetch(`${API_URL}/admin/users/${userId}/balance`, {
+                    method: 'PATCH',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ amount, action })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message);
+                }
+
+                showNotification('Balance updated successfully!', 'success');
+                closeModal('addFunds');
+                loadUsers();
+                event.target.reset();
+
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        // Update Campaign Status
+        async function updateCampaignStatus(event) {
+            event.preventDefault();
+            
+            const campaignId = document.getElementById('selectedCampaignId').value;
+            const status = document.getElementById('campaignStatus').value;
+
+            try {
+                const response = await fetch(`${API_URL}/admin/campaigns/${campaignId}/status`, {
+                    method: 'PATCH',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ status })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message);
+                }
+
+                showNotification('Campaign status updated successfully!', 'success');
+                closeModal('updateStatus');
+                loadCampaigns();
+                loadStats();
+
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        // Notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.remove(), 4000);
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminToken');
+                window.location.href = '/admin-login.html';
+            }
+        }
+
+        // Close modals on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

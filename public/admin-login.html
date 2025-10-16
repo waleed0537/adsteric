@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Adsteric</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+            padding: 50px 40px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .admin-badge {
+            text-align: center;
+            font-size: 12px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            font-size: 15px;
+            color: #718096;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3dd5c3;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(61, 213, 195, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #a0aec0;
+        }
+
+        .forgot-link {
+            display: block;
+            text-align: right;
+            font-size: 14px;
+            color: #3dd5c3;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: #4db8e8;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(61, 213, 195, 0.3);
+            margin-top: 24px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61, 213, 195, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .back-link a {
+            color: #718096;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #3dd5c3;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 40px 30px;
+            }
+
+            .login-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">ADSTERIC</div>
+        <div class="admin-badge">Admin Portal</div>
+        
+        <div class="login-header">
+            <h1 class="login-title">Admin Login</h1>
+            <p class="login-subtitle">Enter your credentials to access admin panel</p>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="email" placeholder="admin@adsteric.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
+                <a href="javascript:void(0)" class="forgot-link" id="forgotLink">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="submit-btn" id="loginBtn">Sign In</button>
+        </form>
+
+        <div class="back-link">
+            <a href="/login.html">← Back to User Login</a>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000;">
+        <div style="background: white; border-radius: 16px; max-width: 450px; width: 90%; padding: 40px;">
+            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px;">Reset Password</h2>
+            <p style="color: #718096; margin-bottom: 24px;">Enter your admin email to receive a password reset link.</p>
+            
+            <div id="forgot-alert"></div>
+            
+            <form id="forgotForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="forgot-email" required>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button type="button" class="submit-btn" onclick="closeForgotModal()" style="background: #e2e8f0; color: #2d3748; box-shadow: none;">Cancel</button>
+                    <button type="submit" class="submit-btn" id="forgotBtn">Send Reset Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        function showAlert(containerId, message, type) {
+            const alertDiv = document.getElementById(containerId);
+            alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                alertDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Login Form
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = document.getElementById('loginBtn');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing In...';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/signin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('admin', JSON.stringify(data.admin));
+                    
+                    showAlert('alert-container', 'Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = '/admin-dashboard.html';
+                    }, 1500);
+                } else {
+                    showAlert('alert-container', data.message || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showAlert('alert-container', 'Network error. Please try again.', 'error');
+                console.error('Login error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign In';
+            }
+        });
+
+        // Forgot Password
+        document.getElementById('forgotLink').addEventListener('click', () => {
+            document.getElementById('forgotModal').style.display = 'flex';
+        });
+
+        function closeForgotModal() {
+            document.getElementById('forgotModal').style.display = 'none';
+            document.getElementById('forgotForm').reset();
+            document.getElementById('forgot-alert').innerHTML = '';
+        }
+
+        document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('forgot-email').value;
+            const submitBtn = document.getElementById('forgotBtn');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/forgot-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('forgot-alert', 'Reset link sent! Check your email.', 'success');
+                    setTimeout(() => {
+                        closeForgotModal();
+                    }, 2000);
+                } else {
+                    showAlert('forgot-alert', data.message || 'Failed to send reset link', 'error');
+                }
+            } catch (error) {
+                showAlert('forgot-alert', 'Network error. Please try again.', 'error');
+                console.error('Forgot password error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Reset Link';
+            }
+        });
+    </script>
+</body>
+</html>

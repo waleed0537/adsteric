@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adsteric - Sign In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+        }
+
+        .shape-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            top: -300px;
+            right: -200px;
+            animation: morphing 20s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #4db8e8, #3dd5c3);
+            bottom: -150px;
+            left: -100px;
+            animation: morphing 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes morphing {
+            0%, 100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+        }
+
+        .main-container {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .left-section {
+            flex: 1;
+            background: linear-gradient(135deg, #3dd5c3 0%, #4db8e8 100%);
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-large {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .tagline {
+            font-size: 28px;
+            font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            animation: slideInLeft 0.8s ease 0.2s both;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 500px;
+            animation: slideInLeft 0.8s ease 0.4s both;
+        }
+
+        .features {
+            margin-top: 50px;
+            animation: slideInLeft 0.8s ease 0.6s both;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+
+        .right-section {
+            flex: 1;
+            background: white;
+            padding: 80px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 440px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-logo {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .form-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            font-size: 15px;
+            color: #718096;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 0;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #3dd5c3;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .form-content {
+            position: relative;
+        }
+
+        .form-panel {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3dd5c3;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(61, 213, 195, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #a0aec0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #4a5568;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #3dd5c3;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            color: #3dd5c3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .forgot-link:hover {
+            color: #4db8e8;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(61, 213, 195, 0.3);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61, 213, 195, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .left-section {
+                display: none;
+            }
+
+            .right-section {
+                flex: 1;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .right-section {
+                padding: 60px 40px;
+            }
+
+            .form-title {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .right-section {
+                padding: 40px 24px;
+            }
+
+            .form-logo {
+                font-size: 28px;
+            }
+
+            .form-title {
+                font-size: 24px;
+            }
+
+            .tabs {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-decoration">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+    </div>
+
+    <div class="main-container">
+        <div class="left-section">
+            <div class="brand-content">
+                <div class="logo-large">ADSTERIC</div>
+                <div class="tagline">Scale Your Profits<br>with the Pros</div>
+                <p class="description">
+                    Innovative traffic monetization and performance marketing solutions 
+                    for advertisers, publishers, ad networks, affiliates & brands.
+                </p>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Advanced Analytics Dashboard</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Real-time Performance Tracking</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Premium Ad Network Access</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>24/7 Expert Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <div class="form-logo">ADSTERIC</div>
+                    <h1 class="form-title">Welcome</h1>
+                    <p class="form-subtitle">Enter your credentials to access your account</p>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active" data-tab="signin">Sign In</button>
+                    <button class="tab" data-tab="signup">Sign Up</button>
+                </div>
+
+                <div class="form-content">
+                    <div class="form-panel active" id="signin-panel">
+                        <div id="signin-alert"></div>
+                        <form id="signinForm">
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-wrapper">
+                                    <input type="email" class="form-input" id="signin-email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <div class="input-wrapper">
+                                    <input type="password" class="form-input" id="signin-password" placeholder="Enter your password" required>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="remember-me">
+                                    <span>Remember me</span>
+                                </label>
+                                <a class="forgot-link" id="forgot-password-link">Forgot Password?</a>
+                            </div>
+
+                            <button type="submit" class="submit-btn" id="signin-btn">Sign In</button>
+                        </form>
+                    </div>
+
+                    <div class="form-panel" id="signup-panel">
+                        <div id="signup-alert"></div>
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <div class="input-wrapper">
+                                    <input type="text" class="form-input" id="signup-name" placeholder="John Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-wrapper">
+                                    <input type="email" class="form-input" id="signup-email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <div class="input-wrapper">
+                                    <input type="password" class="form-input" id="signup-password" placeholder="Create a password (min 6 characters)" required minlength="6">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="terms-checkbox" required>
+                                    <span>I agree to the Terms of Service and Privacy Policy</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
+                        </form>
+                    </div>
+
+                    <div class="form-panel" id="forgot-panel">
+                        <div id="forgot-alert"></div>
+                        <form id="forgotForm">
+                            <p style="color: #4a5568; margin-bottom: 24px; font-size: 15px;">
+                                Enter your email address and we'll send you a link to reset your password.
+                            </p>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-wrapper">
+                                    <input type="email" class="form-input" id="forgot-email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="submit-btn" id="forgot-btn">Send Reset Link</button>
+                            <div style="text-align: center; margin-top: 20px;">
+                                <a class="forgot-link" id="back-to-signin">Back to Sign In</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Replace the script section in login.html with this:
+
+const API_URL = 'http://localhost:5000/api';
+
+// Tab switching
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.form-panel');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        panels.forEach(panel => {
+            panel.classList.remove('active');
+            if (panel.id === `${targetTab}-panel`) {
+                panel.classList.add('active');
+            }
+        });
+    });
+});
+
+// Show forgot password panel
+document.getElementById('forgot-password-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    panels.forEach(panel => panel.classList.remove('active'));
+    document.getElementById('forgot-panel').classList.add('active');
+    tabs.forEach(t => t.classList.remove('active'));
+});
+
+// Back to sign in
+document.getElementById('back-to-signin').addEventListener('click', (e) => {
+    e.preventDefault();
+    panels.forEach(panel => panel.classList.remove('active'));
+    document.getElementById('signin-panel').classList.add('active');
+    tabs[0].classList.add('active');
+});
+
+// Helper function to show alerts
+function showAlert(elementId, message, type) {
+    const alertDiv = document.getElementById(elementId);
+    alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+    setTimeout(() => {
+        alertDiv.innerHTML = '';
+    }, 5000);
+}
+
+// Sign In Form - FIXED: Changed 'token' to 'authToken'
+document.getElementById('signinForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('signin-email').value;
+    const password = document.getElementById('signin-password').value;
+    const submitBtn = document.getElementById('signin-btn');
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Signing In...';
+
+    try {
+        const response = await fetch(`${API_URL}/auth/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // FIXED: Store token with key 'authToken' to match dashboard.html
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            
+            showAlert('signin-alert', 'Login successful! Redirecting...', 'success');
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = '/dashboard.html';
+            }, 1500);
+        } else {
+            showAlert('signin-alert', data.message || 'Login failed', 'error');
+        }
+    } catch (error) {
+        showAlert('signin-alert', 'Network error. Please try again.', 'error');
+        console.error('Signin error:', error);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+    }
+});
+
+// Sign Up Form - FIXED: Changed 'token' to 'authToken'
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const fullName = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const submitBtn = document.getElementById('signup-btn');
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating Account...';
+
+    try {
+        const response = await fetch(`${API_URL}/auth/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ fullName, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // FIXED: Store token with key 'authToken' to match dashboard.html
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            
+            showAlert('signup-alert', 'Account created successfully! Redirecting...', 'success');
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = '/dashboard.html';
+            }, 1500);
+        } else {
+            showAlert('signup-alert', data.message || 'Registration failed', 'error');
+        }
+    } catch (error) {
+        showAlert('signup-alert', 'Network error. Please try again.', 'error');
+        console.error('Signup error:', error);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+    }
+});
+
+// Forgot Password Form
+document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('forgot-email').value;
+    const submitBtn = document.getElementById('forgot-btn');
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    try {
+        const response = await fetch(`${API_URL}/auth/forgot-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            showAlert('forgot-alert', 'If that email exists, a reset link has been sent. Please check your inbox.', 'success');
+            document.getElementById('forgotForm').reset();
+        } else {
+            showAlert('forgot-alert', data.message || 'Failed to send reset link', 'error');
+        }
+    } catch (error) {
+        showAlert('forgot-alert', 'Network error. Please try again.', 'error');
+        console.error('Forgot password error:', error);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Reset Link';
+    }
+});
+    </script>
+</body>
+</html>
+                        
