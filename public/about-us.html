@@ -2,670 +2,1537 @@
 <html lang="en">
 
 <head>
-    <script>
-        (function(w, i, g) {
-            w[g] = w[g] || [];
-            if (typeof w[g].push == 'function') w[g].push(i)
-        })
-        (window, 'GTM-KT9L4MZ', 'google_tags_first_party');
-    </script>
-    <script>
-        (function(w, d, s, l) {
-            w[l] = w[l] || [];
-            (function() {
-                w[l].push(arguments);
-            })('set', 'developer_id.dYzg1YT', true);
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s);
-            j.async = true;
-            j.src = '/analytics/';
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer');
-    </script>
-    <base href="https://evadav.com">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
-    <title>About Adsteric Traffic Group | Empowering Growth with Innovative Solutions</title>
+    <title>About Us | Adsteric Traffic Group - Our Story & Mission</title>
     <meta name="theme-color" content="#fff">
-    <meta name="application-name" content="Adsteric">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Adsteric">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="msapplication-config" content="/forWin.xml">
-    <link rel="canonical" href="https://Adsteric.com/about-us" />
-    <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" color="#01b69b" href="/img/icons/ic.svg">
-    <link rel="apple-touch-icon" sizes="57x57" href="/img/icons/ic57.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/icons/ic76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/img/icons/ic120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/img/icons/ic144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/img/icons/ic152.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="/img/icons/ic167.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/ic180.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/ic32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/ic96.png">
-    <link rel="icon" type="image/png" sizes="128x128" href="/img/icons/ic128.png">
-    <link rel="icon" type="image/png" sizes="195x195" href="/img/icons/ic195.png">
-    <link rel="icon" type="image/png" sizes="228x228" href="/img/icons/ic228.png">
+    <meta name="description" content="Learn about Adsteric Traffic Group - a leading ad network connecting advertisers and publishers worldwide. Discover our mission, values, and commitment to excellence.">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            min-width: 320px
+            min-width: 320px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        body.no-scroll {
-            overflow: hidden
-        }
-
-        .my-loading {
-            align-items: center;
-            background-color: #fff;
-            display: flex;
-            height: 100vh;
-            left: 0;
-            justify-content: center;
+        /* Header Styles */
+        .main-h {
             position: fixed;
             top: 0;
-            width: 100vw;
-            z-index: 50;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s;
         }
 
-        .my-loading__ic {
-            fill: #26c0a9;
-            height: auto;
-            width: 14.6875rem
+        .centring {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .my-loading__ic-i {
-            transform-origin: center;
-            transform: scale(.75)
+        .main-h__logo img {
+            height: 50px;
+            width: auto;
         }
 
-        .main-w {
-            display: none
+        .main-h__nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        .main-h__nav-lst {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .main-h__nav-lst-a {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .main-h__nav-lst-a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #01b69b;
+            transition: width 0.3s;
+        }
+
+        .main-h__nav-lst-a:hover {
+            color: #01b69b;
+        }
+
+        .main-h__nav-lst-a:hover::after {
+            width: 100%;
+        }
+
+        .main-h__w-btn {
+            display: flex;
+            gap: 15px;
+        }
+
+        .my-btn {
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-block;
+            border: 2px solid #01b69b;
+            letter-spacing: 0.3px;
+        }
+
+        .my-btn.sm {
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(1, 182, 155, 0.3);
+        }
+
+        .my-btn.sm:hover {
+            background: linear-gradient(135deg, #019680, #00b890);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(1, 182, 155, 0.4);
+        }
+
+        .my-btn.no-bg {
+            background: transparent;
+            color: #01b69b;
+        }
+
+        .my-btn.no-bg:hover {
+            background: #01b69b;
+            color: #fff;
+        }
+
+        .main-h__btn-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-cnt {
+            margin-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, #f7fafc 0%, #fff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-shape-1 {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(1, 182, 155, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-shape-2 {
+            position: absolute;
+            bottom: -15%;
+            left: -8%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 164, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 28px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
+            border: 2px solid rgba(1, 182, 155, 0.2);
+            border-radius: 50px;
+            color: #01b69b;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero-section h1 {
+            font-size: 62px;
+            color: #1a202c;
+            margin-bottom: 25px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero-section h1 span {
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 22px;
+            color: #4a5568;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 100px 20px;
+            background: #fff;
+        }
+
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .story-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .story-shape {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 30px;
+            transform: rotate(-6deg);
+            opacity: 0.1;
+        }
+
+        .story-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-image i {
+            font-size: 150px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.4;
+        }
+
+        .story-content h2 {
+            font-size: 42px;
+            color: #1a202c;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .story-content p {
+            font-size: 17px;
+            color: #4a5568;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        /* Mission Vision Section */
+        .mission-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="1.5" fill="rgba(1,182,155,0.15)"/></svg>') repeat;
+            opacity: 0.4;
+        }
+
+        .mission-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .mission-card {
+            padding: 50px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            border: 2px solid rgba(1, 182, 155, 0.2);
+            transition: all 0.3s;
+        }
+
+        .mission-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(1, 182, 155, 0.4);
+            transform: translateY(-10px);
+        }
+
+        .mission-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.3);
+        }
+
+        .mission-icon i {
+            font-size: 40px;
+            color: #fff;
+        }
+
+        .mission-card h3 {
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .mission-card p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #f7fafc 0%, #fff 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: #718096;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+
+        .value-card {
+            padding: 45px 35px;
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #01b69b, #00d4a4);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(1, 182, 155, 0.3);
+            box-shadow: 0 20px 60px rgba(1, 182, 155, 0.15);
+        }
+
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .value-icon i {
+            font-size: 36px;
+            color: #01b69b;
+        }
+
+        .value-card h4 {
+            font-size: 24px;
+            color: #1a202c;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .value-card p {
+            font-size: 16px;
+            color: #718096;
+            line-height: 1.8;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 100px 20px;
+            background: #fff;
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-intro {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+
+        .team-intro h2 {
+            font-size: 48px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .team-intro p {
+            font-size: 18px;
+            color: #718096;
+            line-height: 1.8;
+        }
+
+        .team-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-stat-card {
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #f7fafc, #fff);
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .team-stat-card:hover {
+            border-color: rgba(1, 182, 155, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(1, 182, 155, 0.1);
+        }
+
+        .team-stat-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(1, 182, 155, 0.3);
+        }
+
+        .team-stat-icon i {
+            font-size: 32px;
+            color: #fff;
+        }
+
+        .team-stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #01b69b;
+            margin-bottom: 8px;
+        }
+
+        .team-stat-label {
+            font-size: 15px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* Technology Section */
+        .tech-section {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #f7fafc 0%, #fff 100%);
+        }
+
+        .tech-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tech-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .tech-features {
+            display: grid;
+            gap: 25px;
+        }
+
+        .tech-feature {
+            display: flex;
+            gap: 25px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .tech-feature:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.15);
+        }
+
+        .tech-feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tech-feature-icon i {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        .tech-feature-text h4 {
+            font-size: 20px;
+            color: #1a202c;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .tech-feature-text p {
+            font-size: 15px;
+            color: #718096;
+            line-height: 1.7;
+        }
+
+        .tech-visual {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.05), rgba(0, 212, 164, 0.05));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .tech-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid rgba(1, 182, 155, 0.2);
+        }
+
+        .tech-circle-1 {
+            width: 300px;
+            height: 300px;
+            animation: rotate 20s linear infinite;
+        }
+
+        .tech-circle-2 {
+            width: 200px;
+            height: 200px;
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        .tech-circle-3 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .tech-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-icon i {
+            font-size: 24px;
+            color: #01b69b;
+        }
+
+        .tech-icon-1 { top: 15%; left: 20%; }
+        .tech-icon-2 { top: 25%; right: 15%; }
+        .tech-icon-3 { bottom: 30%; left: 15%; }
+        .tech-icon-4 { bottom: 20%; right: 20%; }
+
+        /* Global Presence */
+        .global-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .global-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1" fill="rgba(1,182,155,0.2)"/></svg>') repeat;
+        }
+
+        .global-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .global-section .section-title {
+            color: #fff;
+        }
+
+        .global-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .global-map {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 2px solid rgba(1, 182, 155, 0.2);
+        }
+
+        .global-map i {
+            font-size: 200px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.3;
+        }
+
+        .global-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .global-stat {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(1, 182, 155, 0.2);
+        }
+
+        .global-stat h3 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #00d4a4;
+            margin-bottom: 10px;
+        }
+
+        .global-stat p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 20px;
+            background: #fff;
+        }
+
+        .cta-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 60px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .cta-container::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            padding: 18px 45px;
+            background: #fff;
+            color: #01b69b;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-outline {
+            padding: 16px 43px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline:hover {
+            background: #fff;
+            color: #01b69b;
+        }
+
+        /* Footer */
+        .main-f {
+            background: #0f172a;
+            color: #fff;
+            padding: 70px 20px 30px;
+        }
+
+        .main-f .centring {
+            flex-direction: column;
+            max-width: 1200px;
+        }
+
+        .main-f__nav {
+            display: flex;
+            gap: 100px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-f__nav-i {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .main-f__nav-i-a {
+            color: #cbd5e0;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .main-f__nav-i-a:first-child {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #01b69b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-f__nav-i-a:hover {
+            color: #01b69b;
+            transform: translateX(5px);
+        }
+
+        .main-f__lks {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-f__soc {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-f__soc-a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(1, 182, 155, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .main-f__soc-a:hover {
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            transform: translateY(-5px);
+            border-color: rgba(1, 182, 155, 0.3);
+            box-shadow: 0 10px 25px rgba(1, 182, 155, 0.3);
+        }
+
+        .main-f__soc-a-tx {
+            display: none;
+        }
+
+        .main-f__soc-a-ic {
+            width: 24px;
+            height: 24px;
+        }
+
+        .main-f__help {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .main-f__help-a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e0;
+            text-decoration: none;
+            padding: 14px 28px;
+            background: rgba(1, 182, 155, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s;
+            font-size: 15px;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+
+        .main-f__help-a:hover {
+            background: rgba(1, 182, 155, 0.2);
+            border-color: rgba(1, 182, 155, 0.3);
+            transform: translateY(-3px);
+            color: #01b69b;
+        }
+
+        .main-f__help-a-ic {
+            width: 28px;
+            height: 28px;
+        }
+
+        .main-f__copy {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-h__nav {
+                display: none;
+            }
+
+            .main-h__w-btn {
+                display: none;
+            }
+
+            .main-h__btn-menu {
+                display: block;
+            }
+
+            .main-h__btn-menu-cnt {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .main-h__btn-menu-line {
+                width: 28px;
+                height: 3px;
+                background: #01b69b;
+                border-radius: 2px;
+                transition: all 0.3s;
+            }
+
+            .hero-section h1 {
+                font-size: 42px;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .story-container {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tech-content {
+                grid-template-columns: 1fr;
+            }
+
+            .global-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-container {
+                padding: 60px 40px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-section {
+                padding: 80px 20px;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .story-content h2 {
+                font-size: 32px;
+            }
+
+            .mission-card {
+                padding: 35px 25px;
+            }
+
+            .team-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section h2 {
+                font-size: 32px;
+            }
+
+            .cta-container {
+                padding: 50px 30px;
+            }
         }
     </style>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "url": "https://evadav.com/",
-            "logo": "https://evadav.com/img/logo.svg"
-        }
-    </script>
-    <meta name="description" content="Learn more about Adsteric Traffic Group, a leading advertising platform, traffic monetization, mobile app development, search arbitrage, and media buying education. Explore our mission, values, and global offices in Warsaw and Prague.">
-    <meta name="keywords" content="Adsteric, Push, push-notification, OpenRTB, SSP, DSP">
-    <!-- Google Tag Manager -->
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push(Object.assign({
-            "event": "geo",
-            "country": "PK"
-        }, window.ga4Params));
-    </script>
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-KT9L4MZ');
-    </script>
-    <!-- End Google Tag Manager -->
 </head>
 
-<body class="no-scroll" data-page="about-us">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT9L4MZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <div id="my-loading" class="my-loading">
-        <svg class="my-loading__ic" viewBox="0 0 116.3 21.5" xmlns="http://www.w3.org/2000/svg" height="21.5" width="116.3"><polygon class="my-loading__ic-i i-1" points="0,0.4 10.1,0.4 12,4.3 4.3,4.3 4.3,8.2 12.1,8.2 12.1,12.1 4.3,12.1 4.3,17.2 12.9,17.2 12.9,21.2 0,21.2"/><polygon class="my-loading__ic-i i-2" points="18.6,0.4 24.9,12.6 30.9,0.4 35.3,0.4 24.8,21.5 13.7,0.4"/><path class="my-loading__ic-i i-3" d="M43.9,0l11,21.2h-4.7l-1.4-2.8H38.8l-1.3,2.8H33L43.9,0z M46.9,14.5L43.8,8l-3.1,6.5H46.9z"/><path class="my-loading__ic-i i-4" d="M57.6,0.4h8.4c1.5,0,2.9,0.3,4.2,0.8c1.3,0.5,2.5,1.3,3.5,2.2c1,0.9,1.8,2,2.3,3.3c0.6,1.3,0.9,2.7,0.9,4.1 c0,1.5-0.3,2.8-0.9,4.1c-0.6,1.3-1.3,2.4-2.3,3.3c-1,0.9-2.1,1.6-3.5,2.2c-1.3,0.5-2.7,0.8-4.2,0.8h-8.5L57.6,0.4z M66.1,17.3 c1.8,0,3.3-0.6,4.6-1.9c1.2-1.2,1.9-2.8,1.9-4.6c0-1.9-0.6-3.4-1.9-4.6c-1.2-1.2-2.8-1.8-4.6-1.8H62v13L66.1,17.3z"/><path class="my-loading__ic-i i-5" d="M87.9,0l11,21.2h-4.7l-1.4-2.8H82.8l-1.3,2.8H77L87.9,0z M90.9,14.5L87.7,8l-3.1,6.5H90.9z"/><polygon class="my-loading__ic-i i-6" points="99.6,0.4 105.9,12.6 111.9,0.4 116.3,0.4 105.8,21.5 94.7,0.4 "/></svg>
-    </div>
-    <div class="main-w">
-        <header class="main-h">
-                        <div class="centring">
-                            <a class="main-h__logo" href="/" title="Adsteric - traffic group">
-                                <img src="./img/adsteric_logo.png" height="240" width="230" alt="Adsteric Logo" style="padding-left: -40px;">
-                            </a>
-                <div class="main-h__cnt">
-                    <nav class="main-h__nav">
-                        <ul class="main-h__nav-lst">
-                            <li class="main-h__nav-lst-i">
-                                <a class="main-h__nav-lst-a i-1" href="./about-us.html" title="About us">About us</a>
-                            </li>
-                            <li class="main-h__nav-lst-i">
-                                <a class="main-h__nav-lst-a i-1" href="./advertiser.html"
-                                    title="Advertiser">Advertiser</a>
-                            </li>
-                            <li class="main-h__nav-lst-i">
-                                <a class="main-h__nav-lst-a i-1" href="./publisher.html" title="Publisher">Publisher</a>
-                            </li>
-                            <li class="main-h__nav-lst-i">
-                                <a class="main-h__nav-lst-a i-1" href="./contact-us.html" title="Publisher">Contact
-                                    us</a>
-                            </li>
-
-
-                        </ul>
-                    </nav>
-                    <div class="main-h__w-btn">
-                        <a class="main-h__btn my-btn sm reset is-btn-signup arg" href="/registration" title="Go to registration">Sign up</a>
-                        <button class="main-h__btn my-btn no-bg reset is-btn-login" type="button">Login</button>
-                    </div>
-                    <button class="main-h__btn-close reset" type="button">
-                <svg class="main-h__btn-close-ic reset" width="36" height="17" viewBox="0 0 36 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M35 11 18 2 1 11" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M35 16 18 7 1 16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-            </button>
-                </div>
-                <div class="main-h__r">
-                    <a class="main-h__btn my-btn sm reset is-btn-signup" href="/registration" title="Go to registration">Sign up</a>
-                    <button class="main-h__btn my-btn no-bg reset is-btn-login" type="button">Login</button>
-
-                    <button class="main-h__btn-menu reset" title="Open/Close menu">
-            <span class="main-h__btn-menu-cnt">
-                <span class="main-h__btn-menu-line i-1"></span>
-                <span class="main-h__btn-menu-line i-2"></span>
-                <span class="main-h__btn-menu-line i-3"></span>
-            </span>
-            </button>
-                </div>
+<body>
+    <!-- Header -->
+    <header class="main-h">
+        <div class="centring">
+            <a class="main-h__logo" href="./index.html" title="Adsteric - traffic group">
+                <img src="./img/adsteric_logo.png" height="50" width="auto" alt="Adsteric Logo">
+            </a>
+            <nav class="main-h__nav">
+                <ul class="main-h__nav-lst">
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./about-us.html" title="About us">About us</a>
+                    </li>
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./advertiser.html" title="Advertiser">Advertiser</a>
+                    </li>
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./publisher.html" title="Publisher">Publisher</a>
+                    </li>
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./contact-us.html" title="Contact us">Contact us</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="main-h__w-btn">
+                <a class="my-btn sm" href="/login.html" title="Go to registration">Sign up</a>
+                <a class="my-btn no-bg" href="/login.html" title="Go to login">Login</a>
             </div>
-        </header>
-        <main class="main-cnt">
-            <svg class="icons-hid"><symbol id="arrow-right" viewBox="0 0 32 32"><path d="M1.3 14.7h26.1L23 10.3c-.2-.3-.4-.6-.4-.9 0-.3.1-.7.4-.9.3-.3.7-.5 1-.5.3 0 .7.1.9.4l6.7 6.7.2.2s0 .1.1.1l.1.1V16.4s0 .1-.1.1c0 0 0 .1-.1.1l-.2.2-6.7 6.7c-.2.4-.5.5-.9.5s-.7-.1-.9-.4c-.3-.3-.4-.6-.4-.9 0-.4.1-.7.4-.9l4.4-4.4H1.3c-.4 0-.7-.1-.9-.4-.3-.3-.4-.7-.4-1 0-.4.1-.7.4-.9.2-.3.6-.4.9-.4z"/></symbol></svg>
-            <section class="about-us">
-                <div class="about-us__block-top follow-block anim-end">
-                    <div class="about-us__cnts i-1 centring">
-                        <div class="about-us__w-img i-1">
-                            <img class="about-us__img lazy-load has-webp" src="data:," data-src="/img/guest/page-about-us/block-1.png" alt="" height="613" width="699">
-                        </div>
-                        <div class="about-us__cnt i-1">
-                            <h1 class="about-us__t">Scale Up With Us!</h1>
-                            <p class="about-us__tx i-1">Since 2007, we've been passionate about delivering innovative, in-house-developed solutions to help brands, affiliates, and ad networks achieve their goals.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-us__block-center follow-block anim-end">
-                    <div class="stat follow-block anim-end">
-                        <div class="centring">
-                            <div class="about-us__w-img i-2 follow-block">
-                                <img class="about-us__img lazy-load" src="data:," data-src="/img/guest/page-about-us/block-2.png" alt="" height="323" width="282">
-                            </div>
-                            <div class="stat__lst">
-                                <div class="stat__lst-i i-1 follow-block">
-                                    <p class="stat__lst-i-info font-montserrat"><span class="stat__lst-i-info-num odometer">300000000</span><span class="stat__lst-i-info-tx"></span></p>
-                                    <p class="stat__lst-i-tx">Unique audience</p>
-                                </div>
-                                <div class="stat__lst-i i-2 follow-block">
-                                    <p class="stat__lst-i-info font-montserrat"><span class="stat__lst-i-info-num odometer">4</span><span class="stat__lst-i-info-tx"></span></p>
-                                    <p class="stat__lst-i-tx">Projects</p>
-                                </div>
-                                <div class="stat__lst-i i-3 follow-block">
-                                    <p class="stat__lst-i-info font-montserrat"><span class="stat__lst-i-info-num odometer">2</span><span class="stat__lst-i-info-tx"></span></p>
-                                    <p class="stat__lst-i-tx">Offices in Warsaw, Prague</p>
-                                </div>
-                                <div class="stat__lst-i i-4 follow-block">
-                                    <p class="stat__lst-i-info font-montserrat"><span class="stat__lst-i-info-num odometer">150</span><span class="stat__lst-i-info-tx"></span></p>
-                                    <p class="stat__lst-i-tx">Employees</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about-us__cnt-2 centring">
-                        <div class="about-us__cnt-2-lst">
-                            <div class="about-us__cnt-2-lst-i follow-block">
-                                <h2 class="about-us__cnt-2-lst-i-t">
-                                    <svg class="about-us__cnt-2-lst-i-t-ic i-1" viewBox="0 0 40 41" width="40" height="41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M27.46 17.572c-.005.863.24 1.413.536 2.19-.426.229-1.194.456-1.666.64h-.251c-.015-.106-.052-.22-.078-.325-.145-.497-.363-.96-.584-1.425.2-.224 1.673-.659 2.043-.743a2.764 2.764 0 0 1 0-.337zM11.925 19.761c.089-.263.238-.506.326-.772.101-.307.137-.632.228-.941l.008-.029.117.02c.544.096 1.258.396 1.732.677.074.033.149.073.226.097-.001.03-.007.071 0 .1-.311.46-.495 1.026-.64 1.564-.44-.205-1.608-.287-1.997-.716zM24.686 26.103a.524.524 0 0 0 .108-.03c.337.407 1.214 1.532 1.437 1.969-.427.21-.818.437-1.192.738-.12.096-.23.251-.353.33-.19-.075-1.303-1.682-1.29-1.899.028-.04 1.243-1.08 1.29-1.108zM15.337 26.021c.404.468.85.838 1.352 1.19-.054.243-1.135 1.783-1.352 1.969-.66-.505-.617-.642-1.528-1.077.211-.37 1.19-1.776 1.528-2.082zM19.066 12.825c.644.157 1.275.103 1.922 0a38.98 38.98 0 0 0 0 2.61c-.446.038-1.07-.008-1.553 0-.148.03-.297.057-.446.08-.012-.63-.04-1.424 0-2.046.012-.202.003-.455.077-.644z" fill="#B6E5F8"/><path d="M19.066 12.825c-.425-.05-.92-.28-1.285-.506-2.105-1.3-2.798-4.116-1.513-6.274 1.237-2.076 4.012-2.796 6.037-1.497 3.346 2.145 2.476 7.422-1.317 8.277-.647.103-1.278.157-1.922 0z" fill="url(#a-t-ic-1)"/><path d="M15.337 29.18c.11.18.225.355.337.534 1.334 2.143.773 5.103-1.36 6.461-2.114 1.348-4.884.618-6.168-1.526-1.304-2.174-.573-4.973 1.552-6.262 1.45-.879 2.63-.678 4.111-.284.91.435.868.572 1.528 1.077z" fill="url(#b-t-ic-1)"/><path d="M26.231 28.042c2.373-.938 5.076.187 5.99 2.652.856 2.306-.288 4.99-2.548 5.873-3.813 1.491-7.386-2.517-5.712-6.266.185-.415.452-.829.725-1.19.124-.08.234-.235.353-.33a6.235 6.235 0 0 1 1.192-.74z" fill="url(#c-t-ic-1)"/><path d="M11.925 19.761c-.682 1.387-2.428 2.326-3.907 2.33-2.514.007-4.574-2.139-4.567-4.706.012-4 4.937-6.136 7.731-3.211 1.156 1.21 1.323 2.273 1.305 3.845l-.008.029c-.091.31-.127.634-.228.941-.088.266-.237.509-.326.772z" fill="url(#d-t-ic-1)"/><path d="M27.46 17.572c-.079-2.57 1.929-4.715 4.427-4.781 2.55-.068 4.594 2.072 4.627 4.657.053 4.17-4.842 6.193-7.756 3.245-.3-.305-.491-.633-.762-.932-.297-.776-.54-1.326-.536-2.19z" fill="url(#e-t-ic-1)"/><path d="M19.435 15.436c.482-.009 1.107.037 1.553 0l.037.014c2.197.84 2.896.892 4.392 3.202.221.464.439.928.584 1.425.026.105.063.219.078.326.385 1.577.064 3.293-.747 4.675-.2.343-.477.669-.646 1.025a42.17 42.17 0 0 0-1.29 1.108l-.03.012c-.397.152-.748.41-1.15.562-2.184.83-3.603.325-5.527-.574-.501-.352-.948-.722-1.352-1.19-1.239-1.558-1.873-3.537-1.415-5.544.145-.538.329-1.103.64-1.565-.007-.028-.001-.07 0-.1.977-1.837 2.446-2.945 4.427-3.296.15-.024.298-.05.446-.08z" fill="#7394F7"/><defs><linearGradient id="a-t-ic-1" x1="22.795" y1="11.827" x2="17.035" y2="5.129" gradientUnits="userSpaceOnUse"><stop stop-color="#9BB5F4"/><stop offset="1" stop-color="#C1DAF3"/></linearGradient><linearGradient id="b-t-ic-1" x1="15.204" y1="35.326" x2="8.612" y2="29.345" gradientUnits="userSpaceOnUse"><stop stop-color="#95BAF4"/><stop offset="1" stop-color="#C9DEF4"/></linearGradient><linearGradient id="c-t-ic-1" x1="31.483" y1="35.116" x2="24.353" y2="29.584" gradientUnits="userSpaceOnUse"><stop stop-color="#92A6F1"/><stop offset="1" stop-color="#BDCAF4"/></linearGradient><linearGradient id="d-t-ic-1" x1="11.145" y1="20.688" x2="4.656" y2="14.346" gradientUnits="userSpaceOnUse"><stop stop-color="#9CB2F4"/><stop offset="1" stop-color="#C6DEF3"/></linearGradient><linearGradient id="e-t-ic-1" x1="35.476" y1="20.351" x2="28.361" y2="14.695" gradientUnits="userSpaceOnUse"><stop stop-color="#91A7F3"/><stop offset="1" stop-color="#C8CFF4"/></linearGradient></defs></svg>                                    Adsteric AD NETWORK
-                                </h2>
-                                <p class="about-us__cnt-2-lst-i-tx">a branch of Adsteric TRAFFIC GROUP focused on traffic monetization and marketing performance across various formats, including popunders, push notifications, in-page messages, banners, and native ads, using CPM and CPC models.
-                                    Adsteric AD NETWORK was listed in the top 20 ad platforms worldwide.</p>
-                                <div class="about-us__cnt-2-lst-i">
-                                    <h2 class="about-us__cnt-2-lst-i-t">
-                                        Adsteric PERFORMANCE
-                                    </h2>
-                                    <p class="about-us__cnt-2-lst-i-tx">a high-level media buying service for significant advertisers across various verticals on CPA and rev-share models. We have solid expertise in process management, starting from strategic planning and utilizing in-house
-                                        R&D approaches to increase our partners' revenue.</p>
-                                </div>
-                            </div>
-                            <div class="about-us__cnt-2-lst-i follow-block">
-                                <h2 class="about-us__cnt-2-lst-i-t">
-                                    <svg class="about-us__cnt-2-lst-i-t-ic i-2" viewBox="0 0 47 47" width="47" height="47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.034 19.614a4.966 4.966 0 0 1-.005-.164l.004-8.08c0-.955-.021-1.868.206-2.804.64-2.625 2.855-4.63 5.562-4.912.781-.081 1.576-.052 2.36-.052h3.459c-.288.24-1.679-.15-1.651.218l-.046.034.04-.034-.022.025c-.179.201-.156.258-.203.5-.084.442-.826 1.591-.397 1.801a3.14 3.14 0 0 0-.243.261l-.056-.074c-.085.044-.072.153-.17.183-.474-.165-1.523 1.15-1.655 1.536-.385.141-.428.723-.747.926-.099.246-.303.454-.339.723-.124-.194-.051.047-.19.157l-.026-.006c-.002.08.07.133.123.186l-.002.044c-.154.115-.446.346-.43.554.04.515-.638.815-.85 1.058-.084.096-.129.28-.23.348-.21-.101-.086-.222-.294.02l-.036-.001c-.167.424-.218.25-.38.508l-.031-.037c-.106.189.199.104.207.283-.104.19-.334.316-.403.522-.065.196-.685.715-.884.59l-.065.01a.256.256 0 0 0-.024.095l-.023-.005a.64.64 0 0 1-.004-.1l-.054-.017-.03.021-.013.124-.03.023c-.173-.064-.16-.112-.165.204l.032.056a.138.138 0 0 0 .084-.037l.016.032c-.088.266-.362.36-.013.253l.034.014c.02.053.046.094.08.138-.266.45-.546.188-.225.606.264.344-1.162 1.913-1.324 2.344-.058.153-.197.738-.326.807l-.04-.028-.007-.1c-.026.125-.122.675-.13.7-.075.211-.24.09-.195.454l-.014.027c-.11-.048-.17.068-.173.071l-.001-.02c-.002-.05-.006-.098-.01-.147l-.02-.012c-.014.052-.013.097-.013.15l-.018.024z" fill="#B6E5F8"/><path d="M22.62 3.602h4.583c1.123 0 2.772-.095 3.834.18 2.39.617 4.35 2.63 4.802 5.071.203 1.1.123 2.393.123 3.52v24.582c-.006 2.834-2.025 5.41-4.785 6.076-.956.23-1.91.186-2.885.185H17.395c-3.035-.01-5.62-2.16-6.23-5.116-.193-.929-.132-1.918-.132-2.861v-11.54c0-1.358-.046-2.728 0-4.085l.02-.024c-.001-.053-.002-.098.011-.15l.021.012c.004.049.008.098.01.147v.02c.005-.003.064-.119.174-.071l.014-.027c-.046-.364.12-.243.195-.454.008-.025.104-.575.13-.7l.007.1.04.028c.129-.069.268-.654.326-.807.162-.43 1.588-2 1.324-2.344-.321-.418-.041-.156.225-.606a.495.495 0 0 1-.08-.138l-.034-.014c-.35.107-.075.013.013-.253l-.016-.032a.138.138 0 0 1-.084.037l-.032-.056c.006-.316-.008-.268.166-.204l.029-.023.013-.124.03-.02.054.016a.64.64 0 0 0 .004.1l.024.005a.256.256 0 0 1 .023-.095l.065-.01c.2.125.82-.394.885-.59.068-.206.298-.333.402-.522-.008-.179-.313-.094-.207-.283l.032.037c.161-.259.212-.084.379-.508h.036c.208-.241.084-.12.294-.019.101-.069.146-.252.23-.348.212-.243.89-.543.85-1.058-.016-.208.276-.439.43-.554l.002-.044c-.052-.053-.125-.106-.123-.186l.025.006c.14-.11.067-.35.191-.157.036-.269.24-.477.34-.723.318-.203.36-.785.746-.926.133-.386 1.18-1.701 1.655-1.536.098-.03.085-.14.17-.183l.056.074c.077-.092.155-.178.243-.26-.43-.21.313-1.36.397-1.801.047-.243.024-.3.203-.5l.023-.026-.04.034.045-.034c-.028-.368 1.363.022 1.65-.218z" fill="url(#a-t-ic-2)"/><path d="M25.002 5.801c.632.002 1.199-.029 1.674.456.841.857.35 2.407-.874 2.556a3.198 3.198 0 0 1-.336-.029l.008-.01.153-.005c.576-.022.557.018.607-.472.07-.698.076-1.73-.199-2.396-.337-.095-.693-.013-1.033-.1z" fill="#7394F7"/><path d="M20.34 6.146c.533-.412 1.129-.344 1.77-.345h1.395c.471 0 1.037-.042 1.498 0 .34.087.695.005 1.032.1.275.666.27 1.698.199 2.396-.05.49-.03.45-.607.472l-.153.005-.008.01c.113.017.222.025.336.03-.175.03-.384.005-.563.003l-2.913-.002c-.983.002-2.1.077-2.44-1.123-.13-.46-.02-.882.212-1.285.077-.092.155-.178.243-.26z" fill="#8DB0F7"/><path d="M25.612 27.61c.083-2.22 2.486-3.616 4.492-2.842 2.932 1.387 2.835 5.338.02 6.318-2.305.803-4.753-1.063-4.512-3.475z" fill="url(#b-t-ic-2)"/><path d="M24.222 13.882c5.628-.336 9.205 6.223 5.882 10.886-2.006-.774-4.41.623-4.492 2.843-.275.007-.553.068-.83.081-3.239.162-6.351-2.35-6.973-5.516-.19-.965-.19-2.604.192-3.515.6-2.595 3.617-4.755 6.221-4.779z" fill="url(#c-t-ic-2)"/><path d="M18.001 18.66c.6-2.594 3.617-4.754 6.221-4.778.04.024.078.046.113.078l.001.053c-.232.016-.958.587-1.173.757-.026-.051-.013-.127-.059-.148-.437.19-.535.332-.89.558-.11.07-.263.036-.367.103-.176.112-1.346 1.08-1.511 1.24-.147.14-.233.337-.377.48-.21.21-.478.37-.701.569-.523.466-.622.676-1.238 1.111l-.019-.022z" fill="#fff"/><defs><linearGradient id="a-t-ic-2" x1="38.519" y1="36.036" x2="12.29" y2="14.055" gradientUnits="userSpaceOnUse"><stop stop-color="#789FFF"/><stop offset="1" stop-color="#CEECF9"/></linearGradient><linearGradient id="b-t-ic-2" x1="31.401" y1="30.119" x2="26.436" y2="25.681" gradientUnits="userSpaceOnUse"><stop stop-color="#DACFE8"/><stop offset="1" stop-color="#F7FCFE"/></linearGradient><linearGradient id="c-t-ic-2" x1="28.078" y1="26.05" x2="21.124" y2="15.757" gradientUnits="userSpaceOnUse"><stop stop-color="#90DBFC"/><stop offset="1" stop-color="#E8F9F9"/></linearGradient></defs></svg>                                    Adsteric MOBILE APPS
-                                </h2>
-                                <p class="about-us__cnt-2-lst-i-tx">An agency focused on creating and promoting mobile applications. Holding expertise in in-house development for iOS and Android platforms in the Utilities and AI segments, we distribute our and partner applications to millions
-                                    of users worldwide.</p>
-                            </div>
-                            <div class="about-us__cnt-2-lst-i follow-block">
-                                <h2 class="about-us__cnt-2-lst-i-t">
-                                    <svg class="about-us__cnt-2-lst-i-t-ic i-3" viewBox="0 0 49 49" width="49" height="49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.695 11.874c.036-.067 0-3.008 0-3.253-.001-1.778-.023-3.651 2.03-4.335.97-.323 2.938-.344 3.924.153 1.67.84 1.598 2.376 1.598 3.987v2.467c.002.22-.066.81.032.98.596.148 1.165.411 1.707.694 3.148 1.639 5.669 4.64 6.616 8.082l.022.004c.452.08.936.046 1.394.044h2.251c1.857 0 3.92-.123 4.508 2.22.161.644.175 2.34.06 2.995-.403 2.295-2.604 2.415-4.444 2.415l-2.503-.003c-.455-.001-.914-.015-1.369.001-1.4 4.202-3.986 6.686-8.141 8.33v3.463c.002 1.398.186 2.751-.93 3.824-.992.954-2.354.893-3.635.869-1.475-.028-2.72-.936-3.051-2.394-.2-.88-.096-4.767-.069-5.838-.791-.382-1.612-.737-2.383-1.159-2.645-1.447-4.925-4.12-5.79-7.045-.201-.154-.812-.052-1.07-.051l-2.987.002c-1.354 0-2.427.132-3.482-.89-1.302-1.263-1.286-4.563-.028-5.83 1.098-1.106 2.57-.91 4-.91l3.471.001c1.224-4.058 4.113-7.546 8.27-8.823zm3.456 7.865c-1.36.195-2.608.782-3.45 1.903-2.515 3.352.044 7.703 4.178 7.617a4.771 4.771 0 0 0 2.559-8.546c-.994-.798-2.048-.999-3.287-.974z" fill="url(#a-t-ic-3)"/><path d="M12.522 28.375c.073-.026 3.086-.015 3.347.01.675.067.904.811 1.207 1.317.615 1.027 1.49 1.874 2.504 2.505.293.182.903.432 1.056.764.153.332.084 3.057.06 3.608-.792-.382-1.613-.737-2.384-1.159-2.645-1.447-4.925-4.12-5.79-7.045zM32.93 28.375c.837-.173 2.655-.022 3.591-.05-1.4 4.202-3.986 6.686-8.141 8.33l-.002-2.32c-.006-1.913-.14-1.314 1.395-2.338.863-.576 1.762-1.46 2.328-2.33.244-.376.457-1.042.83-1.292z" fill="#7C9EF7"/><path d="M28.28 11.874c.595.146 1.164.41 1.706.693 3.148 1.639 5.669 4.64 6.616 8.082-.512-.005-3.456.061-3.728-.043-.268-.102-.424-.578-.546-.808-.615-1.167-1.723-2.364-2.852-3.014-1.171-.674-1.2-.134-1.197-1.564 0-.921.095-2.45-.025-3.315l.025-.031zM20.695 11.874c.051.18.001.792 0 1.014v3.267c-1.388.732-2.551 1.673-3.435 2.97-.486.714-.524 1.516-1.52 1.58-.507.033-1.165-.008-1.693-.007H12.96c-.174.001-.361.016-.534-.001 1.224-4.058 4.113-7.546 8.27-8.823z" fill="#9DC0F7"/><defs><linearGradient id="a-t-ic-3" x1="17.068" y1="42.216" x2="31.94" y2="6.692" gradientUnits="userSpaceOnUse"><stop stop-color="#95AFEA"/><stop offset="1" stop-color="#D0F1F2"/></linearGradient></defs></svg>                                    Adsteric SEARCH ARBITRAGE
-                                </h2>
-                                <p class="about-us__cnt-2-lst-i-tx">This division provides a leading media buying service with expertise in monetizing search traffic for AFD/AFS (RSoC) Google feeds.</p>
-                            </div>
-                            <div class="about-us__cnt-2-lst-i follow-block">
-                                <h2 class="about-us__cnt-2-lst-i-t">
-                                    <svg class="about-us__cnt-2-lst-i-t-ic i-4" viewBox="0 0 55 55" width="55" height="55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M39.924 36.58c.902 1.396 1.624 2.929 2.453 4.374.756 1.32 1.61 2.986-.18 4.115-.815.515-1.729.405-2.637.528-1.648.225-2.484 1.161-3.46 2.41-.187.24-.383.518-.623.703.014-.291 1.376-1.744 1.77-2.137.11-.11.384-.182.396-.346.027-.38-.14-.966-.189-1.371-.105-.888-.221-2.208-.213-3.058.015-1.484 3.212-3.524 3.21-4.161 0-.228-.57-.777-.527-1.058z" fill="#B0D3F8"/><path d="M24.137 5.512c.604-.175 1.273-.202 1.897-.258 8.178-.728 15.753 4.66 18.02 12.49.123.424.268.916.297 1.356l-.023.005c-.019.23.091.497.12.73.08.638.3 2.385.154 2.893l-.01-.089-.048.006-.055-.052-.033.017c.012-.165-.011-.119-.137-.137-.15-.023-.037-.126-.129-.259-.406 1.047-.334-.279-1.003-.41-.662-.131-.746-.441-1.158-.85-.5-.495-1.274-.4-1.487-.627-.35-.373-1.2-1.226-1.714-.98-.158.076-.543.331-.568.121l-.035.048c-.173-.34-.302-.687-.45-1.039l-.034-.025c-1.445-3.432-4.297-6.117-8.039-6.821-.365-.069-.746-.116-1.101-.225l-.037-.011c-.056-.052-.872-.044-1-.047.585-.031.047-.179-.006-.417.096-.138.08-.165.012-.317l-.082.007.039-.04c-.254-.152-.253-.231-.349-.294l-.058.025.024.034c-.05.067-.019.15-.053.23l-.03-.016.016-.134-.026-.04.035-.045c-.052-.048-.047-.095-.05-.159L24.44 7.848c-.193-.174-.43-.33-.605-.518-.111-.119-.175-.398-.312-.478-.08-.047-.129-.03-.197-.105-.108-.868-.055-.98.79-1.192l.02-.043z" fill="#B6E5F8"/><path d="M15.979 35.26c.491.517 1.12.962 1.707 1.362 3.297 2.242 6.635 3.279 10.578 3.108 3.729-.162 7.228-1.377 10.1-3.766.278-.232.54-.481.827-.703.278.42.504.87.733 1.318-.043.282.527.83.528 1.058.001.637-3.196 2.677-3.21 4.161-.01.85.107 2.17.212 3.058.048.405.216.991.19 1.371-.013.164-.287.237-.397.346-.395.393-1.756 1.846-1.77 2.137-1.016.882-2.45.791-3.36-.235-.307-.347-.538-.774-.776-1.17l-2.964-4.973c-.294-.503-.56-1.024-.84-1.534-.202.26-.364.553-.536.833-.89 1.455-1.746 2.932-2.628 4.393-.695 1.15-1.474 2.99-2.94 3.26-2.205.408-3.024-2.786-4.955-3.55-1.237-.49-2.638.142-3.783-.663-1.622-1.14-1.01-2.651-.25-3.97l2.599-4.414c.168-.286.324-.594.516-.863l.047.01c.148-.153.255-.392.372-.573z" fill="#96B9F7"/><path d="m15.979 35.166-.03-.021c-.558-.402-1.095-1.057-1.533-1.59-7.828-9.53-3.808-23.548 7.629-27.478.676-.232 1.385-.454 2.092-.565l-.02.043c-.845.212-.898.324-.79 1.192.068.075.117.058.197.105.136.08.2.36.312.478.176.188.412.344.605.518l2.594 2.334c.004.064 0 .11.051.158l-.035.046.026.04-.015.134.029.017c.034-.08.002-.164.053-.231l-.023-.034.058-.025c.095.063.094.142.348.294l-.039.04.082-.007c.069.152.084.18-.012.317.053.238.591.386.006.417.128.003.944-.005 1 .046l.037.012c.355.11.736.156 1.101.225 3.742.704 6.594 3.389 8.04 6.82l.034.026c.147.352.276.698.45 1.04l.034-.05c.025.211.41-.044.568-.12.514-.246 1.364.607 1.714.98.213.226.987.132 1.487.628.412.408.496.718 1.158.848.67.132.597 1.458 1.003.41.092.134-.02.237.13.26.125.018.148-.028.136.137l.033-.017.055.052.048-.006.01.09c.147-.51-.073-2.256-.153-2.895-.03-.233-.14-.5-.121-.729l.023-.005c.215.637.306 2.105.309 2.829.018 4.652-1.438 8.746-4.48 12.222-.317.362-.737.704-.99 1.11-.286.222-.548.471-.826.703-2.872 2.389-6.371 3.604-10.1 3.766-3.943.17-7.281-.866-10.578-3.108-.587-.4-1.216-.846-1.707-1.361-.117.181-.224.42-.372.573l-.047-.01c.112-.234.272-.446.419-.658z" fill="url(#a-t-ic-4)"/><path d="M37.741 18.452c.075.321.211.635.306.952.818 2.738.458 5.904-.948 8.378-5.344 9.402-19.197 6.101-20.527-4.144-.788-6.072 3.736-11.528 9.757-12.2.716-.08 1.63.056 2.235-.044l.037.012c.355.11.736.156 1.101.225 3.742.704 6.594 3.389 8.04 6.82z" fill="url(#b-t-ic-4)"/><path d="M27.976 17.062c.825-.089 1.675.52 2.001 1.247.233.52.134 1.299.135 1.852v4.192c0 .418.014.844-.015 1.261-.152 2.164-3.016 2.761-3.922.58-.564-1.788-1.598-1.232-2.648-2.037-1.224-.938-1.205-3.112.242-3.842.71-.358 1.002-.21 1.703-.844.971-.88.465-2.176 2.504-2.409z" fill="#B6E5F8"/><defs><linearGradient id="a-t-ic-4" x1="16.463" y1="35.57" x2="34.55" y2="14.099" gradientUnits="userSpaceOnUse"><stop stop-color="#76C5FB"/><stop offset="1" stop-color="#B6E9F3"/></linearGradient><linearGradient id="b-t-ic-4" x1="20.681" y1="30.869" x2="34.303" y2="13.859" gradientUnits="userSpaceOnUse"><stop stop-color="#66A4FB"/><stop offset="1" stop-color="#99EBF3"/></linearGradient></defs></svg>                                    Adsteric ACADEMY
-                                </h2>
-                                <p class="about-us__cnt-2-lst-i-tx">An integral part of the company, dedicated to developing and preparing future industry leaders through specialized training, mentorship, and hands-on learning opportunities.</p>
-                            </div>
-                        </div>
-                        <div class="about-us__cnt-2-w-img i-3 follow-block">
-                            <img class="about-us__cnt-2-img lazy-load" src="data:," data-src="/img/guest/page-about-us/block-3.png" alt="" height="416" width="319">
-                        </div>
-                    </div>
-                    <div class="about-us__cnt-2-b">
-                        <h3 class="about-us__cnt-2-b-t follow-block">
-                            Aligned by values, <br>empowered <span>for success.</span>
-                        </h3>
-                        <button class="about-us__cnt-2-b-btn my-btn sm reset arg follow-block" type="button">Join the leader</button>
-                    </div>
-                </div>
-                <div class="office">
-                    <div class="office__i follow-block">
-                        <div class="office__country">Poland</div>
-                        <img class="office__img lazy-load" src="data:," data-src="/img/guest/page-about-us/poland.png" alt="Warsaw, Poland, showcasing the Adsteric office location" width="486" height="225">
-                        <h3 class="office__t">
-                            <a class="office__t-a" href="https://www.google.com/maps/place/Aleje+Jerozolimskie+123A,+02-017+Warszawa,+%D0%9F%D0%BE%D0%BB%D1%8C%D1%89%D0%B0/@52.2249832,20.9911079,17z/data=!3m1!4b1!4m6!3m5!1s0x471ecc912dcfbc11:0x914920fa7b955f73!8m2!3d52.2249832!4d20.9911079!16s%2Fg%2F11bw3wtd2n"
-                                title="Adsteric POLAND" target="_blank" rel="nofollow noopener">Adsteric POLAND</a>
-                        </h3>
-                        <p class="office__tx">al. Jerozolimskie 123A, 02-017 Warszawa, Poland</p>
-                    </div>
-                    <div class="office__i follow-block">
-                        <div class="office__country">Czech Republic</div>
-                        <img class="office__img lazy-load" src="data:," data-src="/img/guest/page-about-us/czech.png" alt="Prague, Czech Republic, highlighting the Adsteric office location" width="486" height="225">
-                        <h3 class="office__t">
-                            <span class="office__t-a" title="Adsteric CZECH REPUBLIC">Adsteric CZECH REPUBLIC</span>
-                        </h3>
-                        <p class="office__tx">Na Příkopě 859/22, Praha - Nové Město, 11000 Czech Republic</p>
-                    </div>
-                </div>
-                <article class="partners">
-                    <div class="centring">
-                        <h3 class="partners__t follow-block">Our partners</h3>
-                        <div class="partners__slider glide follow-block">
-                            <div class="glide__track" data-glide-el="track">
-                                <div class="glide__slides">
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/adcombo.png" alt="adCombo" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/adsbridge.png" alt="adsBridge" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/alfaleads.png" alt="alfaleads" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/cpaclub.png" alt="cpaClub" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/mobidea.png" alt="mobIdea" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/revcontent.png" alt="revContent" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/taboola.png" alt="taboola" height="90" width="277">
-                                        </div>
-                                    </div>
-                                    <div class="partners__i glide__slide">
-                                        <div class="partners__w-i-img">
-                                            <img class="partners__i-img lazy-load" src="data:," data-src="/img/partners/voluum.png" alt="voluum" height="90" width="277">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="glide__bullets"></div>
-                            <button class="glide__arrow glide__arrow--left reset" data-go-to="<" title="Move left">
-                    <svg class="glide__arrow-ic" height="32" width="32"><use href="#arrow-right"/></svg>
-                </button>
-                            <button class="glide__arrow glide__arrow--right reset" data-go-to=">" title="Move right">
-                    <svg class="glide__arrow-ic" height="32" width="32"><use href="#arrow-right"/></svg>
-                </button>
-                        </div>
-                    </div>
-                </article>
-            </section>
-            <template id="join-popup-form">
-    <form class="join__form my-form" action="/send-about-us" method="post">
-        <input type="hidden" name="_csrf" value="oNqeHGElV-KxPsyMIx2fmAtQQZF9QP0OZ9cxheO6pRzFi85GFFIgoPN74c5KcPffPDo2ojVxtWYm4gi3r9X6SQ==">
-        <input type="hidden" name="reCaptcha">
-        <div class="join__form-error-msg" hidden></div>
-        <div class="my-form__group">
-            <select class="my-form__control sel reset" name="subject" title="Subject" required>
-                <option value="" disabled selected>Subject</option>
-                                    <option value="product">I want to promote my product or buy traffic</option>
-                                    <option value="monetize">I have traffic and want to monetize it with your products</option>
-                                    <option value="business">Business cooperation inquiry</option>
-                                    <option value="employee">I want to become an employee</option>
-                                    <option value="legal">Legal request</option>
-                                    <option value="investing">Investing request</option>
-                            </select>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="name" placeholder="Full Name" title="Full Name" required>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="email" type="email" placeholder="E-mail" title="E-mail" required>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="company" placeholder="Company Name" title="Company Name" required>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <select class="my-form__control sel reset" name="company_type" title="Company Type" required>
-                <option value="" disabled selected>Company Type</option>
-                                    <option value="agency">Agency</option>
-                                    <option value="brand">Brand</option>
-                                    <option value="publisher">Publisher</option>
-                                    <option value="dsp">DSP</option>
-                                    <option value="media_buying">Media buying</option>
-                                    <option value="affiliate">Affiliate</option>
-                            </select>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="link" type="url" placeholder="Site Link (Offer Link)" title="Site Link (Offer Link)" required>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <textarea class="my-form__control itx reset" name="message" placeholder="Message" title="Message" required></textarea>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group">
-            <label class="my-form__custom-cb">
-                <input class="my-form__control reset" name="termsAndPrivacy" type="checkbox" required>
-                <span class="my-form__custom-cb-w-tx">
-                    <span class="my-form__custom-cb-tx">I accept <a class="my-btn no-bg reset" href="/terms-of-use#content" title="Terms of use" target="_blank">terms of use</a> and <a class="my-btn no-bg reset" href="/privacy-policy#content" title="Privacy policy" target="_blank">privacy policy</a> and agree to receive newsletters</span>
+            <button class="main-h__btn-menu" type="button">
+                <span class="main-h__btn-menu-cnt">
+                    <span class="main-h__btn-menu-line"></span>
+                    <span class="main-h__btn-menu-line"></span>
+                    <span class="main-h__btn-menu-line"></span>
                 </span>
-            </label>
-        </div>
-        <div class="my-form__group it-recaptcha">
-            <div class="my-form__w-recaptcha">
-                <div id="about-us-join-recaptcha"></div>
-                <div class="my-form__control-msg">Please verify that you are not a robot.</div>
-            </div>
-        </div>
-        <button class="my-form__is my-btn reset">Send</button>
-    </form>
-</template>
-        </main>
-
-        <footer class="main-f">
-            <div class="centring">
-                <nav class="main-f__nav">
-                    <div class="main-f__nav-i">
-                        <span class="main-f__nav-i-a">Projects</span>
-                        <a class="main-f__nav-i-a" href="/about-us.html" title="About Us">About Us</a>
-                        <a class="main-f__nav-i-a" href="./advertiser.html" title="Advertisers">Advertisers</a>
-                        <a class="main-f__nav-i-a" href="./publisher.html" title="Publishers">Publishers</a>
-                        <a class="main-f__nav-i-a" href="/contact-us.html" title="Contact Us">Contact Us</a>
-                    </div>
-                    <div class="main-f__nav-i">
-                        <a class="main-f__nav-i-a" href="/ad-formats" title="Ad Formats">Ad Formats</a>
-                        <a class="main-f__nav-i-a" href="/advertiser" title="Advertisers">Advertisers</a>
-                        <a class="main-f__nav-i-a" href="/publisher" title="Publishers">Publishers</a>
-                        <a class="main-f__nav-i-a" href="/ad-formats#push" title="Push">Push</a>
-                        <a class="main-f__nav-i-a" href="/ad-formats#popunder" title="Popunder">Popunder</a>
-                        <a class="main-f__nav-i-a" href="/ad-formats#in-page" title="In-Page">In-Page</a>
-                        <a class="main-f__nav-i-a" href="/ad-formats#native" title="Native">Native</a>
-                        <a class="main-f__nav-i-a" href="/programmatic-integration" title="Programmatic Integration">Programmatic Integration</a>
-                    </div>
-                    <div class="main-f__nav-i">
-                        <span class="main-f__nav-i-a">Resources</span>
-                        <a class="main-f__nav-i-a" href="/privacy-policy" title="Documentation">Documentation</a>
-                        <a class="main-f__nav-i-a" href="/faq-advertiser#content" title="FAQ">FAQ</a>
-                        <a class="main-f__nav-i-a" href="https://support.Adsteric.com/en/" title="Help Center" target="_blank">Help Center</a>
-                        <a class="main-f__nav-i-a" href="/contact-us" title="Contact Us">Contact Us</a>
-                        <a class="main-f__nav-i-a" href="/faq-publisher" title="Support">Support</a>
-                        <a class="main-f__nav-i-a" href="https://Adstericapi.com/docs/api" title="API 2.2" target="_blank">API 2.2</a>
-                    </div>
-                    <div class="main-f__nav-i">
-                        <span class="main-f__nav-i-a">Policies</span>
-                        <a class="main-f__nav-i-a" href="/privacy-policy#content" title="Privacy Policy">Privacy Policy</a>
-                        <a class="main-f__nav-i-a" href="/terms-of-use#content" title="Terms">Terms</a>
-                        <a class="main-f__nav-i-a" href="/cookie#content" title="Cookies Policy">Cookies Policy</a>
-                        <a class="main-f__nav-i-a" href="/prohibited-materials-rules#content" title="Prohibited Materials Rules">Prohibited Materials Rules</a>
-                    </div>
-                </nav>
-                <div class="main-f__lks">
-                    <div class="main-f__soc">
-                        <a class="main-f__soc-a" href="https://www.linkedin.com/company/Adsteric/" title="Adsteric on Linkedin" target="_blank" rel="nofollow noopener">
-                    <span class="main-f__soc-a-tx">Adsteric on Linkedin</span>
-                    <svg class="main-f__soc-a-ic" width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.752 3.115C6.712 1.347 5.448 0 3.395 0S0 1.347 0 3.115C0 4.846 1.303 6.23 3.317 6.23h.039c2.092 0 3.396-1.385 3.396-3.116zm-.396 5.578H.355v18.032h6.001V8.693zm14.734-.424c3.95 0 6.91 2.578 6.91 8.117v10.339h-6.002v-9.647c0-2.423-.868-4.077-3.04-4.077-1.659 0-2.646 1.115-3.08 2.191-.159.386-.197.924-.197 1.463v10.07H9.678s.08-16.34 0-18.032h6.002v2.554c.797-1.227 2.224-2.978 5.41-2.978z" fill="#09D9BA"/></svg>
-                </a>
-                        <a class="main-f__soc-a" href="https://www.instagram.com/Adsteric_general/" title="Adsteric on Instagram" target="_blank" rel="nofollow noopener">
-                    <span class="main-f__soc-a-tx">Adsteric on Instagram</span>
-                    <svg class="main-f__soc-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27.923 8.232c-.065-1.488-.306-2.51-.65-3.397a6.833 6.833 0 0 0-1.62-2.483A6.892 6.892 0 0 0 23.177.738c-.892-.344-1.91-.585-3.397-.65C18.28.016 17.804 0 14.003 0 10.2 0 9.725.016 8.233.082c-1.489.066-2.511.306-3.398.65a6.832 6.832 0 0 0-2.483 1.62A6.894 6.894 0 0 0 .738 4.83c-.344.892-.585 1.909-.65 3.397C.016 9.725 0 10.2 0 14.003c0 3.801.016 4.277.082 5.77.066 1.488.306 2.511.651 3.397.356.941.908 1.783 1.619 2.483a6.89 6.89 0 0 0 2.478 1.614c.892.345 1.909.585 3.397.65 1.493.067 1.969.083 5.77.083 3.802 0 4.278-.016 5.771-.082 1.488-.066 2.51-.306 3.397-.651a7.162 7.162 0 0 0 4.097-4.097c.344-.891.585-1.909.65-3.397.066-1.493.083-1.969.083-5.77 0-3.802-.006-4.278-.072-5.77zm-2.521 11.432c-.06 1.367-.29 2.106-.481 2.598a4.645 4.645 0 0 1-2.659 2.659c-.492.191-1.236.42-2.598.48-1.477.067-1.92.083-5.656.083-3.736 0-4.184-.016-5.656-.082-1.367-.06-2.106-.29-2.598-.481a4.31 4.31 0 0 1-1.608-1.045 4.354 4.354 0 0 1-1.045-1.608c-.191-.493-.42-1.236-.48-2.598-.067-1.477-.083-1.92-.083-5.656 0-3.736.016-4.185.082-5.656.06-1.368.29-2.106.481-2.598.225-.607.58-1.16 1.05-1.608.455-.465 1.002-.821 1.609-1.045.492-.192 1.236-.421 2.598-.481 1.477-.066 1.92-.083 5.656-.083 3.741 0 4.184.017 5.656.083 1.367.06 2.105.29 2.598.48.607.225 1.16.58 1.608 1.046.465.454.82 1 1.045 1.608.191.492.42 1.236.481 2.598.066 1.477.082 1.92.082 5.656 0 3.736-.016 4.173-.082 5.65z" fill="#09D9BA"/><path d="M14.002 6.81a7.195 7.195 0 0 0-7.192 7.193 7.195 7.195 0 0 0 7.192 7.193 7.194 7.194 0 0 0 7.193-7.193 7.194 7.194 0 0 0-7.193-7.192zm0 11.86a4.667 4.667 0 1 1 .002-9.334 4.667 4.667 0 0 1-.002 9.333zM23.16 6.525a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0z" fill="#09D9BA"/></svg>
-                </a>
-                        <a class="main-f__soc-a" href="https://t.me/Adstericchat" title="Adsteric on Telegram" target="_blank" rel="nofollow noopener">
-                    <span class="main-f__soc-a-tx">Adsteric on Telegram</span>
-                    <svg class="main-f__soc-a-ic" width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.482 22.062c.644 0 .928-.294 1.287-.643l3.434-3.339-4.283-2.582" fill="#09D9BA"/><path fill-rule="evenodd" clip-rule="evenodd" d="m11.92 15.498 10.377 7.667c1.184.653 2.038.315 2.333-1.1l4.224-19.904c.433-1.734-.66-2.52-1.794-2.006L2.258 9.72c-1.693.68-1.683 1.624-.309 2.045l6.365 1.986L23.05 4.454c.696-.422 1.335-.195.81.27" fill="#09D9BA"/></svg>
-                </a>
-                        <a class="main-f__soc-a" href="https://www.youtube.com/channel/UCrAXi8GCx-K2QrJ1csuAlog?reload=9" title="Adsteric on YouTube" target="_blank" rel="nofollow noopener">
-                    <span class="main-f__soc-a-tx">Adsteric on YouTube</span>
-                    <svg class="main-f__soc-a-ic" width="29" height="21" viewBox="0 0 29 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M25.89.6c1.205.331 2.154 1.306 2.476 2.543.585 2.242.585 6.92.585 6.92s0 4.677-.585 6.92c-.322 1.236-1.271 2.21-2.476 2.541-2.183.601-10.94.601-10.94.601s-8.755 0-10.939-.6c-1.205-.331-2.153-1.305-2.475-2.543C.95 14.74.95 10.062.95 10.062s0-4.677.585-6.92C1.858 1.907 2.806.933 4.01.602 6.195 0 14.951 0 14.951 0s8.756 0 10.939.6zM12.326 6.126v8.75l7-4.375-7-4.375z" fill="#09D9BA"/></svg>
-                </a>
-                        <a class="main-f__soc-a" href="https://x.com/Adsteric2" title="Adsteric on X" target="_blank" rel="nofollow noopener">
-                    <span class="main-f__soc-a-tx">Adsteric on X</span>
-                    <svg class="main-f__soc-a-ic" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#09D9BA"/></svg>
-                </a>
-                    </div>
-                    <div class="main-f__help">
-                        <div class="main-f__help-a is-skype-lk" data-href="skype:live:Adsterichelp?chat" title="Our Skype">
-                            <svg class="main-f__help-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27.009 16.353c.144-.787.22-1.592.22-2.397 0-1.785-.35-3.516-1.04-5.146a13.168 13.168 0 0 0-2.833-4.203A13.172 13.172 0 0 0 14.008.735c-.841 0-1.684.079-2.504.236l-.006.001a7.836 7.836 0 0 0-3.67-.917c-2.091 0-4.057.814-5.535 2.293A7.777 7.777 0 0 0 0 7.882c0 1.331.342 2.64.985 3.795-.13.75-.2 1.515-.2 2.279 0 1.785.35 3.516 1.04 5.147a13.16 13.16 0 0 0 2.833 4.202 13.153 13.153 0 0 0 4.203 2.833c1.63.69 3.362 1.04 5.147 1.04.777 0 1.555-.07 2.315-.205a7.82 7.82 0 0 0 3.851 1.014 7.77 7.77 0 0 0 5.534-2.292A7.772 7.772 0 0 0 28 20.161a7.828 7.828 0 0 0-.991-3.808z" fill="#3498D8"/><path d="M14.06 22.053c-4.697 0-6.798-2.309-6.798-4.04 0-.887.655-1.51 1.559-1.51 2.01 0 1.49 2.887 5.24 2.887 1.92 0 2.98-1.043 2.98-2.11 0-.641-.317-1.352-1.581-1.664l-4.178-1.043c-3.365-.844-3.975-2.663-3.975-4.373 0-3.55 3.342-4.883 6.481-4.883 2.892 0 6.3 1.598 6.3 3.728 0 .913-.79 1.444-1.693 1.444-1.715 0-1.4-2.375-4.855-2.375-1.715 0-2.665.777-2.665 1.888 0 1.109 1.355 1.463 2.53 1.73l3.093.687c3.387.755 4.246 2.733 4.246 4.596 0 2.884-2.214 5.038-6.684 5.038z" fill="#fff"/></svg>
-                            <span class="main-f__help-a-tx">live:Adsterichelp</span>
-                        </div>
-                        <a class="main-f__help-a" href="https://t.me/Adsterichelp" title="Our Telegram" target="_blank" rel="nofollow noopener">
-                    <svg class="main-f__help-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14 0c7.73 0 14 6.27 14 14s-6.27 14-14 14S0 21.73 0 14 6.27 0 14 0z" fill="#0087CB"/><path fill-rule="evenodd" clip-rule="evenodd" d="m21.005 9.088-2.198 10.355-1.481.269-3.053-2.24-1.584 1.571-2.329-3.996 2.535-3.74 6.566-2.309 1.544.09z" fill="#fff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12.787 16.35c.028.082.655.495.703.516l-.014-.062 3.996-2.487c.083-.055.131-.076.207-.13.523-.345 1.164-.71 1.68-1.055l.628-.393c.041-.027.055-.041.11-.069.097-.055.035-.041.145-.062l.076-.351c.034-.186.144-.558.13-.723-.027-.063.007-.056-.206.082-.083.055-.159.097-.241.152l-1.461.91c-.91.599-1.977 1.219-2.9 1.811l-1.461.91-.482.303-.724.448c-.29.172-.227.11-.207.193l.021.006z" fill="#F2F8FB"/><path fill-rule="evenodd" clip-rule="evenodd" d="M13.49 16.866c.027.069.255.207.33.269.131.09.249.172.359.261.02-.082.007-.048.055-.096l1.557-.971c.062-.042.117-.07.18-.11.068-.042.11-.063.178-.11l3.872-2.405.07-.27.096-.454.069-.365c-.117.02-.055.007-.145.062-.055.034-.069.041-.11.069l-.627.393c-.517.344-1.158.71-1.681 1.054-.083.055-.124.075-.207.13l-3.996 2.488.014.062-.014-.007z" fill="#F5FAFD"/><path fill-rule="evenodd" clip-rule="evenodd" d="M16.17 18.85c.02.049.096.09.151.131.11.076.51.358.58.448.082.014.557.386.62.434.33.241.42.2.833.214.124-.117.13-.035.29-.269.089-.138.089-.227.158-.365l.248-1.178.179-.834c.027-.172.09-.33.083-.496l-.014-.083-1.605.992c-.131.09-.262.159-.4.248l-.978.614c-.062.034-.131.048-.145.144z" fill="#FEFEFF"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12.36 16.032c.034.07.338.276.427.317-.02-.076-.083-.02.207-.193l.723-.447c.165-.104.31-.193.482-.304l1.461-.909c.923-.593 1.991-1.22 2.9-1.812l1.461-.91c.083-.055.159-.096.241-.151.214-.138.18-.138.207-.083.076-.082.076-.296.11-.42.014-.096.042-.145.021-.234-.055-.076.028-.062-.076-.062-.041.062-.427.29-.51.337l-2.563 1.606c-.868.565-1.84 1.13-2.707 1.694l-2.177 1.365c-.049.027-.166.075-.186.124-.035.062-.097-.062-.007.082h-.014z" fill="#F0F7FC"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.33 18.223c0 .007.006.007.006.014.007.041.462.338.53.414.028-.138.042-.09.31-.262.042-.028.083-.049.118-.07l.11-.068.227-.138c.62-.372 1.289-.827 1.909-1.192l.675-.42c.207-.131.152-.152.2-.055.062-.076.062-.228.096-.331l.097-.44v-.118c-.069-.083 0-.048-.083-.028l-1.536.965c-.062.041-.097.055-.145.09-.723.447-1.543.985-2.26 1.412-.09.055-.165.11-.268.158.027.042 0 .014.006.076l.007-.007z" fill="#FBFDFE"/><path fill-rule="evenodd" clip-rule="evenodd" d="m13.676 18.079 1.199.51c.227.096 1.867.847 2.032.84-.069-.09-.468-.372-.579-.447-.055-.042-.137-.083-.151-.131-.131-.063-.186-.124-.303-.2-.076-.076-.524-.372-.53-.414 0-.006-.008-.006-.008-.013-.117-.049-.193-.124-.29-.193l-.254-.186c-.117-.09-.4-.317-.517-.365-.096.096-.172.165-.29.296-.096.11-.226.179-.302.31l-.007-.007z" fill="#2199CC"/><path fill-rule="evenodd" clip-rule="evenodd" d="m14.179 17.397.082.075c.118.055.4.283.517.365.083.063.18.138.255.186.097.076.172.145.29.194-.007-.063.013-.035-.007-.076.103-.049.179-.104.268-.159.717-.427 1.537-.964 2.26-1.412.055-.035.083-.048.145-.09l1.536-.964c.083-.021.007-.055.083.027l.083-.275c.02-.083.034-.186.062-.255l.124-.6.144-.716L16.15 16.1c-.069.049-.11.062-.179.11-.062.042-.117.07-.179.11l-1.557.972c-.048.049-.034.014-.055.097v.007z" fill="#F7FBFD"/><path fill-rule="evenodd" clip-rule="evenodd" d="m19.973 8.04-1.082.42-.875.338-1.488.586-.668.248-1.874.723-.496.186-1.357.524-.862.33-1.026.4-.951.372-.6.235-.654.248-.634.248c-.048.034-.4.179-.461.2-.035.04-.827.488-.097.854.186.09 3.231 1.054 3.5 1.102.152-.062.365-.207.51-.303l2.522-1.592c1.288-.813 2.783-1.722 4.023-2.542.297-.2.84-.606 1.089-.427.014.165-.18.276-.317.393l-1.185 1.081c-.07.062-.138.104-.2.166l-.393.365c-.09.076-.117.103-.206.186l-3.962 3.582.041.063.076.013c-.09-.144-.027-.02.007-.082.028-.049.138-.097.186-.124l2.177-1.365c.868-.565 1.84-1.13 2.708-1.694l2.563-1.606c.09-.055.475-.275.51-.337.096 0 .014-.014.076.062.02-.028.006-.007.034-.062l.145-.676.179-.84c.048-.269.138-.524.082-.806-.048-.248-.158-.427-.358-.517-.282-.117-.454-.007-.703.055l.021-.007z" fill="#EDF5FB"/><path fill-rule="evenodd" clip-rule="evenodd" d="m10.355 15.047.269.882.282.937.255.834.248.806c.034.055.124.386.152.468.062.207.082.359.296.352l.151-.014.283-3.3c-.014-.021-.02-.049-.042-.062l3.962-3.583c.09-.09.117-.11.207-.186l.393-.365c.062-.062.13-.104.2-.166l1.184-1.081c.138-.117.331-.235.317-.393-.255-.18-.792.227-1.088.427-1.24.82-2.736 1.73-4.024 2.543l-2.521 1.591c-.145.097-.359.241-.51.303l-.014.007z" fill="#C8DAEA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M11.857 19.333v.02c.193.014.344.007.503-.075.22-.11.207-.2.33-.235.021-.034.42-.461.483-.475.055-.11.275-.283.372-.379l.138-.11c.069-.131.2-.2.303-.31.117-.131.193-.2.29-.296l-.083-.076c-.118-.097-.235-.172-.359-.262-.082-.055-.303-.2-.33-.269-.049-.02-.676-.44-.703-.517-.083-.04-.393-.247-.427-.316l-.076-.014-.283 3.3-.151.014h-.007z" fill="#A9C9DD"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.867 18.644c.117.082.172.144.303.2.014-.097.082-.11.144-.145l.979-.613c.138-.09.269-.166.4-.248l1.605-.993.014.083c.048-.055.034-.096.062-.172l.04-.324c-.047-.096.008-.083-.199.055l-.675.42c-.62.366-1.288.82-1.909 1.192l-.227.138c-.034.02-.076.048-.11.07-.035.02-.076.04-.117.068-.269.172-.29.124-.31.262v.007z" fill="#FCFDFE"/></svg>
-                    <span class="main-f__help-a-tx">@Adsterichelp</span>
-                </a>
-                    </div>
-                </div>
-                <p class="main-f__copy">
-                    &copy; 2025 Cassandera Capital LTD<br> Agias Faneromenis, 143-145 PATSIAS COURT, Flat/Office 201 6031, Larnaca, Cyprus
-                </p>
-            </div>
-        </footer>
-    </div>
-    <template id="template-popup">
-    <div class="my-popup">
-        <div class="my-popup__bg" title="Close popup"></div>
-        <div class="my-popup__cnt">
-            <button class="my-popup__btn-close reset" type="button" title="Close popup">
-                <svg class="my-popup__btn-close-ic" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" height="32" width="32"><path d="M1.8 31.6c-.5 0-.9-.2-1.3-.5-.7-.7-.7-1.8 0-2.5l13-13L1.3 3.4C.6 2.7.6 1.6 1.3.9S3.1.2 3.8.9L16 13.1 28.2.9c.7-.7 1.8-.7 2.5 0s.7 1.8 0 2.5L18.5 15.6l12.9 12.9c.7.7.7 1.8 0 2.5s-1.8.7-2.5 0L16 18.1l-13 13c-.3.4-.8.5-1.2.5z"/></svg>
             </button>
         </div>
-    </div>
-</template>
+    </header>
 
-    <script>
-        (function() {
-            /**
-             * Use cookie
-             */
-            const COOKIE = {
-                /**
-                 * @param {String} name
-                 * @returns {null|String}
-                 */
-                get(name) {
-                    let cookie = decodeURIComponent(document.cookie).split(";");
-                    let returnedValue = null;
-
-                    if (0 === cookie.length) {
-                        return returnedValue;
-                    }
-
-                    cookie.some(value => {
-                        value = value.trim().split("=");
-
-                        if (name === value[0]) {
-                            returnedValue = value[1];
-
-                            return true;
-                        }
-                    });
-
-                    cookie = null;
-
-                    return returnedValue;
-                },
-                /**
-                 * @param {String} name
-                 * @param {String} [value=]
-                 * @param {Number} [expired=0] - in seconds
-                 * @param {String} [domain=undefined]
-                 */
-                set(name, value = "", expired = 0, domain = undefined) {
-                    let DateNow = new Date();
-                    DateNow.setTime(DateNow.getTime() + expired * 1000);
-
-                    document.cookie =
-                        name + "=" + value +
-                        (undefined !== domain ? "; domain=" + domain : "") +
-                        "; expires=" + DateNow.toUTCString() +
-                        "; path=/";
-
-                    DateNow = null;
-                }
-            };
-
-            COOKIE.set("ga4_screen_resolution", (screen.width + "x" + screen.height).toString(), 86400);
-
-            let data = JSON.parse('{"cid":"(not found)","uid":null,"cid_reg":"(not found)","sid_reg":"","device_type":"desktop","landing_page":"\/index.html","page":"\/about-us","host":"evadav.com","browser":"Chrome","os":"Windows","screen_resolution":"1920x1080","session_id":"","country":"PK"}');
-
-            data.screen_resolution = COOKIE.get("ga4_screen_resolution");
-
-            window.ga4Params = data;
-
-            data = null;
-        })();
-    </script>
-
-    <template id="template-form-login">
-    <form class="my-form form-login" action="/login" method="post">
-        <input type="hidden" name="_csrf" value="oNqeHGElV-KxPsyMIx2fmAtQQZF9QP0OZ9cxheO6pRzFi85GFFIgoPN74c5KcPffPDo2ojVxtWYm4gi3r9X6SQ==">
-        <input type="hidden" name="reCaptcha">
-        <div class="form-login__t">Login</div>
-        <div class="form-login__error-msg" hidden></div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="email" type="email" placeholder="E-mail" title="E-mail" required>
-        </div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="password" type="password" placeholder="Password" title="Password should contain at least 6 characters" autocomplete="on" pattern=".{6,}" required>
-            <div class="my-form__control-msg"></div>
-        </div>
-        <div class="my-form__group hide">
-            <input class="my-form__control reset" name="ga_code" placeholder="Insert code from Google Authenticator" title="Code should contain 6 numbers" pattern="[0-9]{6}" minlength="6" maxlength="6" required disabled>
-        </div>
-        <div class="my-form__group it-recaptcha">
-            <div class="my-form__w-recaptcha">
-                <div id="login-recaptcha"></div>
-                <div class="my-form__control-msg">Please verify that you are not a robot.</div>
+    <!-- Main Content -->
+    <main class="main-cnt">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-shape-1"></div>
+            <div class="hero-shape-2"></div>
+            <div class="hero-container">
+                <div class="hero-badge">
+                    <i class="bi bi-building"></i> About Adsteric
+                </div>
+                <h1>Connecting <span>Advertisers & Publishers</span> Globally</h1>
+                <p>We are a leading traffic monetization platform, empowering thousands of publishers and advertisers worldwide with innovative ad technology, premium inventory, and exceptional support.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">$50M+</div>
+                        <div class="stat-label">Revenue Generated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15K+</div>
+                        <div class="stat-label">Active Publishers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Countries Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10B+</div>
+                        <div class="stat-label">Daily Impressions</div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="my-form__w-btn-is">
-            <button class="form-login__btn-back my-btn no-bg reset hide" type="button">Change login or password</button>
-            <div class="w-100"></div>
-            <button class="my-form__is my-btn reset">Login</button>
-            <button class="my-btn no-bg reset is-btn-forgot-password" type="button">Forgot password?</button>
-        </div>
-        <div class="my-form__info">Don't have an account? <a class="my-btn no-bg reset is-btn-signup" href="/registration">Get started today!</a></div>
-    </form>
-</template>
-    <template id="template-reset-password">
-    <form class="my-form form-password-reset" action="/reset-password" method="post">
-        <input type="hidden" name="_csrf" value="oNqeHGElV-KxPsyMIx2fmAtQQZF9QP0OZ9cxheO6pRzFi85GFFIgoPN74c5KcPffPDo2ojVxtWYm4gi3r9X6SQ==">
-        <input type="hidden" name="reCaptcha">
-        <div class="form-password-reset__t">Send password</div>
-        <div class="form-password-reset__error-msg" hidden></div>
-        <div class="my-form__group">
-            <input class="my-form__control reset" name="email" type="email" placeholder="E-mail" title="E-mail" required>
-        </div>
-        <div class="my-form__group hide">
-            <input class="my-form__control reset" name="password" type="password" placeholder="Enter new password" title="password length should be between 8 and 32 symbols; at least 1 upper case character; at least 1 lower case character; at least 1 number; at least 1 special character, for example: !@#$" autocomplete="off" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*\(\)_\-]).{8,32}$" required disabled>
-        </div>
-        <div class="my-form__group it-recaptcha">
-            <div class="my-form__w-recaptcha">
-                <div id="reset-password-recaptcha"></div>
-                <div class="my-form__control-msg">Please verify that you are not a robot.</div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story-section">
+            <div class="story-container">
+                <div class="story-visual">
+                    <div class="story-shape"></div>
+                    <div class="story-image">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <h2>Our Story</h2>
+                    <p>Founded with a vision to revolutionize digital advertising, Adsteric has grown from a small startup to a global ad network serving thousands of partners worldwide.</p>
+                    <p>We recognized the challenges faced by both advertisers seeking quality traffic and publishers looking to maximize their revenue. Our mission was simple: create a transparent, efficient, and profitable ecosystem for all.</p>
+                    <p>Today, we process billions of impressions daily, connect advertisers with premium inventory across 200+ countries, and help publishers earn top-tier CPM rates through our advanced technology platform.</p>
+                    <p>Our success is built on trust, innovation, and an unwavering commitment to our partners' growth. We continue to invest in cutting-edge ad technology, expand our global reach, and provide the best service in the industry.</p>
+                </div>
             </div>
-        </div>
-        <div class="my-form__w-btn-is">
-            <button class="my-form__is my-btn reset">Send</button>
-        </div>
-        <div class="my-form__info">Already have an account? <button class="my-btn no-bg reset is-btn-login" type="button">Login</button></div>
-        <div class="my-form__info recaptcha-info" hidden>This site is protected by reCAPTCHA and the Google <a class="my-btn no-bg reset" href="https://policies.google.com/privacy" title="Privacy Policy" rel="nofollow noopener" target="_blank">Privacy Policy</a> and <a class="my-btn no-bg reset" href="https://policies.google.com/terms" title="Terms of Service" rel="nofollow noopener" target="_blank">Terms of Service</a> apply.</div>
-    </form>
-</template>
-    <template id="template-reset-password-popup">
-    <div class="password-reset-popup">
-        <div class="password-reset-popup__t is-recovery">
-            <svg class="password-reset-popup__t-ic" width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M23.615 51.652h2.957V37.447c0-11.392 9.319-20.71 20.71-20.71 11.385 0 20.704 9.318 20.704 20.71v14.205h2.957c6.318 0 11.491 5.173 11.491 11.485v35.93c0 6.319-5.173 11.485-11.491 11.485H23.615c-6.318 0-11.485-5.166-11.485-11.485v-35.93c0-6.312 5.167-11.485 11.485-11.485zm15.058 0h17.212V37.447c0-4.712-3.897-8.61-8.603-8.61-4.712 0-8.609 3.898-8.609 8.61v14.205z" fill="#7D86FB"/><path fill-rule="evenodd" clip-rule="evenodd" d="M82.434 66.997v29.17H55.25l-12.475 12.082V66.996h39.66z" fill="#526ADD"/><path fill-rule="evenodd" clip-rule="evenodd" d="M93.653 39.93c-1.777-9.579-6.481-18.37-13.617-25.256C71.2 6.144 59.566 1.448 47.282 1.448 21.271 1.448.11 22.607.11 48.615a2.419 2.419 0 0 0 2.416 2.416 2.419 2.419 0 0 0 2.416-2.416C4.941 25.27 23.935 6.28 47.282 6.28c20.449 0 37.469 14.3 41.453 33.65h-6.53l9.523 11.119 9.518-11.118h-7.593z" fill="#0AD9BA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M45.627 16.805a20.82 20.82 0 0 1 1.655-.068c11.386 0 20.704 9.319 20.704 20.71v14.2a12.346 12.346 0 0 0-.684-.02h-2.957v-14.21c0-10.72-8.254-19.603-18.718-20.612zm22.49 34.847h2.826c6.318 0 11.491 5.173 11.491 11.485v35.93c0 6.319-5.173 11.485-11.49 11.485h-.468c4.818-1.456 8.317-6.256 8.317-11.516V63.112c0-6.044-4.731-11.036-10.676-11.46zm-22.59-22.627c-3.884.821-6.854 4.313-6.854 8.422v14.18h-3.641V37.416c0-4.706 3.897-8.603 8.609-8.603.647 0 1.276.075 1.886.212z" fill="#526ADD"/><path fill-rule="evenodd" clip-rule="evenodd" d="M105.392 62.44H34.814c-3.573 0-6.5 2.926-6.5 6.499v16.166c0 3.58 2.927 6.499 6.5 6.499h7.961v12.088L55.25 91.604h50.142c3.573 0 6.499-2.92 6.499-6.5V68.94c0-3.573-2.926-6.5-6.499-6.5z" fill="#0AD9BA"/><path d="M56.85 72.795a1.538 1.538 0 0 0-2.1-.563l-3.683 2.126v-4.25a1.538 1.538 0 1 0-3.075 0v4.25l-3.682-2.126a1.538 1.538 0 0 0-1.538 2.663l3.683 2.127-3.683 2.126a1.538 1.538 0 0 0 1.538 2.664l3.682-2.126v4.249a1.538 1.538 0 1 0 3.075 0v-4.25l3.682 2.127a1.537 1.537 0 1 0 1.538-2.663l-3.683-2.127 3.683-2.127a1.538 1.538 0 0 0 .563-2.1zM77.423 72.795a1.538 1.538 0 0 0-2.1-.563L71.64 74.36v-4.25a1.538 1.538 0 1 0-3.076 0v4.25l-3.681-2.126a1.538 1.538 0 0 0-1.538 2.663l3.682 2.126-3.682 2.126a1.537 1.537 0 1 0 1.538 2.664l3.681-2.126v4.25a1.538 1.538 0 1 0 3.076 0v-4.25l3.681 2.126a1.537 1.537 0 1 0 1.538-2.663l-3.682-2.127 3.682-2.126a1.538 1.538 0 0 0 .563-2.101zM97.427 79.148l-3.68-2.126 3.68-2.127a1.538 1.538 0 0 0-1.538-2.663l-3.675 2.124v-4.247a1.538 1.538 0 0 0-3.075 0v4.25l-3.682-2.127a1.537 1.537 0 1 0-1.538 2.663l3.68 2.127-3.68 2.126a1.538 1.538 0 0 0 1.538 2.663l3.682-2.127v4.251a1.538 1.538 0 0 0 3.075 0v-4.247l3.675 2.123a1.536 1.536 0 0 0 2.1-.562 1.538 1.538 0 0 0-.561-2.1z" fill="#EAF6FF"/></svg>
-            <p class="password-reset-popup__t-tx">password recovery</p>
-        </div>
-        <div class="password-reset-popup__t is-saved">
-            <svg class="password-reset-popup__t-ic" width="112" height="112" fill="none" viewBox="0 0 112 112" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.615 51.652h2.957V37.447c0-11.392 9.319-20.71 20.71-20.71 11.386 0 20.704 9.318 20.704 20.71v14.205h2.957c6.319 0 11.491 5.173 11.491 11.485v35.93c0 6.319-5.173 11.485-11.49 11.485H23.614c-6.318 0-11.485-5.166-11.485-11.485v-35.93c0-6.312 5.167-11.485 11.485-11.485zm15.058 0h17.212V37.447c0-4.712-3.897-8.61-8.603-8.61-4.712 0-8.609 3.898-8.609 8.61v14.205z" fill="#7D86FB"/><circle cx="47" cy="84" r="8" fill="#fff"/><rect x="45" y="70" width="4" height="11" rx="2" fill="#fff"/><path fill-rule="evenodd" clip-rule="evenodd" d="M93.653 39.93c-1.777-9.579-6.481-18.37-13.617-25.256C71.2 6.144 59.566 1.448 47.282 1.448 21.271 1.448.11 22.607.11 48.615a2.419 2.419 0 0 0 2.416 2.416 2.419 2.419 0 0 0 2.416-2.416C4.941 25.27 23.935 6.28 47.282 6.28c20.449 0 37.469 14.301 41.453 33.65h-6.53l9.523 11.119 9.518-11.118h-7.593z" fill="#0AD9BA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M45.627 16.805a20.82 20.82 0 0 1 1.655-.068c11.386 0 20.704 9.319 20.704 20.71v14.2a12.346 12.346 0 0 0-.684-.02h-2.957v-14.21c0-10.72-8.254-19.603-18.718-20.612zm22.49 34.847h2.826c6.318 0 11.491 5.173 11.491 11.485v35.93c0 6.319-5.173 11.485-11.49 11.485h-.468c4.818-1.456 8.317-6.256 8.317-11.516V63.112c0-6.044-4.731-11.036-10.676-11.46zm-22.59-22.627c-3.884.821-6.854 4.314-6.854 8.422v14.18h-3.641V37.416c0-4.706 3.897-8.603 8.609-8.603.647 0 1.276.075 1.886.212z" fill="#526ADD"/><path d="m52.006 101.6-.056-3.16 4-.84-3.944 4z" fill="#526ADD"/><g filter="url(#a-pop-reset)"><path d="M70.506 51.123a23.895 23.895 0 0 0-17.248 37.389 5.774 5.774 0 0 1 .555 5.526l-1.886 4.557 7.72-2.01a5.835 5.835 0 0 1 3.79.3 23.92 23.92 0 1 0 7.052-45.762h.017z" fill="#0AD9BA"/></g><path d="m63.992 76.04 6.882 8.242 11.118-17" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><defs><filter id="a-pop-reset" x="49" y="51" width="47.834" height="50.842" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/><feOffset dy="3"/><feComposite in2="hardAlpha" operator="out"/><feColorMatrix values="0 0 0 0 0.321569 0 0 0 0 0.415686 0 0 0 0 0.866667 0 0 0 1 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow_6285_4568"/><feBlend in="SourceGraphic" in2="effect1_dropShadow_6285_4568" result="shape"/></filter></defs></svg>
-            <p class="password-reset-popup__t-tx">Password saved</p>
-        </div>
-        <p class="password-reset-popup__tx"></p>
-        <button class="password-reset-popup__btn-login my-btn sm reset" type="button">LOGIN now</button>
-    </div>
-</template>
-    <template id="template-msg-email-activate">
-    <div class="msg-email-activate" data-id="1">
-        <svg class="msg-email-activate__ic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 163 140" height="140" width="163">
-            <path d="M119.276 112.9c21.43-21.43 21.43-56.175 0-77.606-21.43-21.43-56.175-21.43-77.605 0-21.43 21.43-21.43 56.176 0 77.606 21.43 21.43 56.175 21.43 77.605 0z" fill="#BAF4EE"/><path opacity=".73" d="M125.281 87.284v18.448a55.089 55.089 0 0 1-6.805 7.932V87.222c0-.14-3.349-2.882-5.887-4.97v-1.146l3.076-.802a5.8 5.8 0 0 1 3.781.3c.538.228 1.093.449 1.648.625v2.406a51.178 51.178 0 0 1 4.187 3.587v.062z" fill="#7FD6CB"/><path d="m2.38 3.693 16.094 37.785 11.775-8.056 6.814 9.916 1.233-16.72 14.244-8.682L2.38 3.693z" fill="#7D86FB"/><path d="m32.858 31.642-14.384 9.836 11.775-8.056 6.813 9.916 1.234-16.72-22.695-13.512 17.257 18.536z" fill="#526ADD"/><path d="M37.997 30.716 15.6 13.106l22.695 13.512-.3 4.098z" fill="#3752EF"/><path d="M37.353 48.045a25.35 25.35 0 0 0-.485-2.186l1.111-.291c.194.74.361 1.516.502 2.283l-1.128.194zM24.018 73.71a9.527 9.527 0 0 1-4.592-1.533l.634-.952a8.364 8.364 0 0 0 4.037 1.34l-.08 1.146zm4.75-.934-.502-1.03a11.503 11.503 0 0 0 3.411-2.69l.882.768a12.797 12.797 0 0 1-3.755 2.952h-.035zm-12.524-4.274a9.351 9.351 0 0 1-.978-4.152v-.599l1.137.088V64.403a8.196 8.196 0 0 0 .881 3.64l-1.04.459zm44.228-.265v-1.146c1.49 0 3.023-.061 4.557-.176l.08 1.137a55.18 55.18 0 0 1-4.637.212v-.027zm-4.636-.15-.731-.053a52.78 52.78 0 0 1-3.896-.484l.194-1.128c1.18.202 2.423.36 3.798.467l.714.061-.079 1.137zm13.873-.52-.159-1.128a87.102 87.102 0 0 0 4.504-.749l.22 1.128a92.285 92.285 0 0 1-4.565.802v-.053zm-23.04-1.154a22.62 22.62 0 0 1-3.745-1.657l-.53-.318.591-.978.503.3a21.012 21.012 0 0 0 3.525 1.569l-.343 1.084zm-11.405-.459-.996-.564a25.622 25.622 0 0 0 1.887-4.08l1.075.387a25.936 25.936 0 0 1-1.966 4.284v-.027zm43.523-.123-.264-1.11a99.912 99.912 0 0 0 4.407-1.173l.317 1.102a82.813 82.813 0 0 1-4.46 1.207v-.026zm8.885-2.53-.353-1.093c1.457-.464 2.903-.954 4.337-1.471l.379 1.075c-1.446.54-2.9 1.046-4.363 1.516V63.3zm-49.094-1.507a32.9 32.9 0 0 0-3.402-2.238l-.388-.203.53-1.014.405.212c1.221.7 2.399 1.474 3.525 2.318l-.67.925zm-20.554-1.718-.802-.82a9.81 9.81 0 0 1 4.213-2.257l.38 1.076a8.902 8.902 0 0 0-3.79 2.027v-.026zm12.595-2.23a18.234 18.234 0 0 0-3.966-.441h-.493v-1.146a19.652 19.652 0 0 1 4.706.459l-.247 1.128zm7.818-.679-1.119-.194c.258-1.479.393-2.976.405-4.477h1.137a27.725 27.725 0 0 1-.423 4.697v-.026zM96.415 60.225l-.405-1.066 2.133-.82.414 1.067-2.142.82z" fill="#0AD9BA"/><path d="M132.402 88.086a1.144 1.144 0 0 1-.851-1.883c.186-.222.449-.364.737-.4a27.138 27.138 0 0 0 17.892-9.28 1.157 1.157 0 0 1 1.763 1.498 29.394 29.394 0 0 1-19.391 10.056l-.15.01z" fill="#00C8B7"/><path d="m118.468 87.284-39.822 23.524-39.82-23.48a.153.153 0 0 1 0-.062c0-.15 2.23-1.983 5.578-4.706l.089-.08c11-8.928 34.145-27.208 34.145-27.208s23.145 18.28 34.145 27.209c3.402 2.758 5.641 4.627 5.667 4.785a.298.298 0 0 1 .018.018z" fill="#0B1C96"/><path d="M95.023 35.776H52.055a6.672 6.672 0 0 0-6.672 6.672v64.958a6.67 6.67 0 0 0 6.672 6.681h53.844a6.667 6.667 0 0 0 4.721-1.957 6.673 6.673 0 0 0 1.951-4.724V53.324L95.023 35.776z" fill="#fff"/><path d="M95.023 46.652a6.672 6.672 0 0 0 6.672 6.672h10.841L94.987 35.776l.036 10.876z" fill="#E6E8E8"/><path d="M72.75 46.758H57.934a2.38 2.38 0 0 0-2.38 2.38v14.816a2.38 2.38 0 0 0 2.38 2.38H72.75a2.38 2.38 0 0 0 2.38-2.38V49.138a2.38 2.38 0 0 0-2.38-2.38z" fill="#82EBE3"/><path d="M93.057 71.772H57.484a1.921 1.921 0 0 0-1.912 1.921 1.913 1.913 0 0 0 1.912 1.913h35.573a1.913 1.913 0 0 0 1.353-3.268 1.921 1.921 0 0 0-1.353-.566zM93.057 81.317H57.484a1.912 1.912 0 1 0 0 3.825h35.573a1.913 1.913 0 0 0 0-3.825zM76.901 90.536h-19.39a1.913 1.913 0 1 0 0 3.826H76.9a1.913 1.913 0 0 0 0-3.826z" fill="#D9DBDB"/><path d="M118.477 87.284v38.2a4.873 4.873 0 0 1-4.857 4.856H43.673a4.855 4.855 0 0 1-4.839-4.856v-38.2l39.821 23.524 39.822-23.524z" fill="#7D86FB"/><path d="m117.128 128.815-25.63-25.631-12.843 7.624-12.833-7.624-25.64 25.631a4.82 4.82 0 0 0 3.526 1.525h69.947a4.832 4.832 0 0 0 3.473-1.525z" fill="#526ADD"/><path d="M126.515 34.841a23.9 23.9 0 0 0-19.309 13.766 23.888 23.888 0 0 0 2.06 23.623 5.77 5.77 0 0 1 .555 5.526l-1.886 4.557 7.721-2.01a5.834 5.834 0 0 1 3.79.3 23.921 23.921 0 1 0 7.051-45.762h.018z" fill="#0AD9BA"/><path d="m129.529 70.731 1.313-1.313s-1.049-2.459 3.332-6.61c2.644-2.468 3.191-4.865 2.979-6.822a6.843 6.843 0 0 0-5.993-5.994c-1.957-.211-4.346.38-6.822 2.98-4.143 4.407-6.611 3.331-6.611 3.331l-1.313 1.322 13.115 13.106zM119.384 62.702a3.626 3.626 0 0 0 .355 4.705 3.624 3.624 0 0 0 4.704.363l-5.059-5.068zM138.096 51.588l-.819.82a7.779 7.779 0 0 0-2.521-2.504l.828-.828a1.775 1.775 0 0 1 2.512 0 1.77 1.77 0 0 1 .52 1.256 1.762 1.762 0 0 1-.52 1.256z" fill="#fff"/><path d="M128.286 34.736a20.66 20.66 0 1 1-21.153 33.783 25.143 25.143 0 0 0 2.098 3.71 5.78 5.78 0 0 1 .555 5.526l-1.886 4.558 7.721-2.01a5.835 5.835 0 0 1 3.79.3 23.918 23.918 0 0 0 33.06-17.406 23.912 23.912 0 0 0-5.291-20.04 23.92 23.92 0 0 0-18.955-8.386l.061-.035z" fill="#1DBCA1"/><path d="m3.737 14.896 5.227 11.986a1.207 1.207 0 0 1-.635 1.587l-.185.08a1.207 1.207 0 0 1-1.586-.644L1.525 15.847a1.207 1.207 0 0 1 .687-1.604 1.216 1.216 0 0 1 1.525.652z" fill="#7D86FB"/><path d="M24.194 99.245a3.842 3.842 0 1 0 3.843 3.834 3.835 3.835 0 0 0-3.843-3.834zm0 5.394a1.564 1.564 0 0 1-1.441-.963 1.562 1.562 0 0 1 1.137-2.128 1.563 1.563 0 0 1 .903 2.974c-.19.078-.394.118-.599.117zM127.096 114.783c-.76 0-1.503.226-2.135.649a3.836 3.836 0 0 0-1.633 3.947 3.845 3.845 0 0 0 3.024 3.017 3.839 3.839 0 0 0 3.944-1.641 3.842 3.842 0 0 0-.485-4.849 3.845 3.845 0 0 0-2.715-1.123zm0 5.395a1.558 1.558 0 0 1-1.115-2.66 1.556 1.556 0 0 1 1.702-.343 1.563 1.563 0 0 1 .009 2.884 1.561 1.561 0 0 1-.596.119zM158.509 55.14a2.942 2.942 0 0 0-2.081 5.025 2.94 2.94 0 0 0 3.208.638 2.945 2.945 0 0 0-1.127-5.663zm0 4.133a1.196 1.196 0 0 1-1.114-.735 1.197 1.197 0 0 1 1.568-1.569 1.196 1.196 0 0 1 .385 1.953 1.2 1.2 0 0 1-.839.352zM106.745 8.109a3.115 3.115 0 0 0-2.85 1.947 3.107 3.107 0 0 0 .701 3.38 3.111 3.111 0 1 0 2.149-5.327zm0 4.407a1.262 1.262 0 0 1-1.246-1.501 1.262 1.262 0 0 1 2.285-.46c.139.207.213.45.213.7a1.26 1.26 0 0 1-1.252 1.217v.044zM7.307 80.541a3.27 3.27 0 1 0 0 6.54 3.27 3.27 0 0 0 0-6.54zM138.431 91.356a2.378 2.378 0 0 0-2.334 2.844 2.38 2.38 0 1 0 2.334-2.844zM59.714 9.087a3.473 3.473 0 1 0 3.473 3.473 3.463 3.463 0 0 0-3.473-3.473zM78.311 134.932a2.535 2.535 0 0 0-2.351 1.561 2.538 2.538 0 1 0 4.881.977 2.527 2.527 0 0 0-2.53-2.538zM127.317 22.484a2.968 2.968 0 0 0-2.913 3.55 2.967 2.967 0 0 0 4.05 2.165 2.973 2.973 0 0 0-1.137-5.714zM22.07 48.979a1.692 1.692 0 1 0 0-3.385 1.692 1.692 0 0 0 0 3.385zM159.54 40.297a2.882 2.882 0 1 0 2.883 2.882 2.885 2.885 0 0 0-.842-2.04 2.875 2.875 0 0 0-2.041-.842zM5.685 59.282a1.842 1.842 0 1 0 0-3.684 1.842 1.842 0 0 0 0 3.684zM83.089 2.909l1.154-1.155A1.03 1.03 0 0 0 82.79.3l-1.163 1.154L80.47.3a1.031 1.031 0 0 0-1.454 1.454l1.154 1.155-1.128 1.154a1.03 1.03 0 1 0 1.454 1.463l1.155-1.154 1.163 1.154a1.031 1.031 0 0 0 1.455-1.463L83.089 2.91zM4.372 37.856 5.526 36.7a1.032 1.032 0 0 0-1.463-1.454L2.91 36.4l-1.155-1.154A1.03 1.03 0 0 0 .3 36.7l1.154 1.155L.3 39.01a1.032 1.032 0 0 0 1.454 1.464l1.155-1.155 1.154 1.154a1.035 1.035 0 0 0 1.463-1.463l-1.154-1.154zM140.74 108.473l.979-.979a.88.88 0 0 0-1.234-1.234l-.961 1.023-.978-.979a.885.885 0 0 0-1.234 0 .881.881 0 0 0 0 1.234l.978.979-.978.978a.88.88 0 0 0 0 1.234.877.877 0 0 0 1.234 0l.978-.978.978.978a.88.88 0 0 0 1.329.094.873.873 0 0 0 .256-.685.878.878 0 0 0-.351-.643l-.996-1.022z" fill="#BAF4EE"/></svg>
-        <div class="msg-email-activate__msg-info" hidden></div>
-        <div class="msg-email-activate__t">Congratulation</div>
-        <div class="msg-email-activate__t-sub">You can activate your account</div>
-        <div class="msg-email-activate__tx response"></div>
-        <div class="msg-email-activate__w-tx is-full" hidden>
-            <div class="msg-email-activate__tx">Please activate your account!<br>To start advertising, top up your balance within 24 hours and receive a <span class="green">$15 welcome bonus</span>.</div>
-        </div>
-        <div class="msg-email-activate__w-tx is-short" hidden>
-                        <div class="msg-email-activate__tx">Complete your registration by verifying your email and adding your preferred messenger. Get started and boost your advertising journey with us!</div>
-        </div>
-        <div class="msg-email-activate__tx">If you haven't received an email, please <span class="green">check your spam</span> folder or <button class="my-btn no-bg reset is-btn-resend green" type="button">Resend Email</button>.</div>
-    </div>
-</template>
+        </section>
 
-    <noscript><div class="msg-off-js" style="align-items:center;background-color:#fff;display:flex;font:2rem Arial,sans-serif;justify-content:center;height:100vh;position:fixed;text-align:center;top:0;width:100vw;z-index:100">To use the site, enable JavaScript</div></noscript>
-    <input id="csrf-token" type="hidden" name="_csrf" value="oNqeHGElV-KxPsyMIx2fmAtQQZF9QP0OZ9cxheO6pRzFi85GFFIgoPN74c5KcPffPDo2ojVxtWYm4gi3r9X6SQ==">
-    <input id="re-captcha" type="hidden" value="6LeWFYspAAAAAEnQYJl43irxE6dk0CtYF8De9-E9">
+        <!-- Mission Vision -->
+        <section class="mission-section">
+            <div class="mission-container">
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="bi bi-bullseye"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>To empower advertisers and publishers with innovative technology, premium inventory, and data-driven solutions that maximize revenue and ROI. We strive to create a transparent, efficient marketplace where quality traffic meets effective advertising.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <h3>Our Vision</h3>
+                        <p>To become the world's most trusted ad network, setting industry standards for transparency, quality, and performance. We envision a future where digital advertising is accessible, profitable, and beneficial for all stakeholders in the ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <script src="/js/prod/bundle.guest.js?v=1760527197"></script>
+        <!-- Core Values -->
+        <section class="values-section">
+            <div class="section-header">
+                <h2 class="section-title">Our Core Values</h2>
+                <p class="section-subtitle">The principles that guide everything we do and shape our company culture</p>
+            </div>
+            <div class="values-container">
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h4>Transparency</h4>
+                        <p>We believe in complete transparency with our partners. Clear reporting, honest communication, and no hidden fees - ever.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+                        <h4>Excellence</h4>
+                        <p>We strive for excellence in everything we do, from our platform technology to customer support and partner relationships.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="bi bi-lightbulb"></i>
+                        </div>
+                        <h4>Innovation</h4>
+                        <p>Continuous innovation drives us forward. We invest heavily in technology to stay ahead of industry trends.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h4>Partnership</h4>
+                        <p>Your success is our success. We build long-term partnerships based on mutual growth and shared goals.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <h4>Performance</h4>
+                        <p>We're obsessed with performance - delivering the best CPM rates, fill rates, and ROI for all our partners.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="bi bi-hand-thumbs-up"></i>
+                        </div>
+                        <h4>Integrity</h4>
+                        <p>We operate with the highest ethical standards, ensuring fair practices and honest dealings in every interaction.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="team-container">
+                <div class="team-intro">
+                    <h2>Our Global Team</h2>
+                    <p>Behind Adsteric's success is a dedicated team of industry experts, tech innovators, and support professionals working around the clock to serve our partners across the globe.</p>
+                </div>
+                
+                <div class="team-stats-grid">
+                    <div class="team-stat-card">
+                        <div class="team-stat-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="team-stat-number">150+</div>
+                        <div class="team-stat-label">Team Members</div>
+                    </div>
+                    <div class="team-stat-card">
+                        <div class="team-stat-icon">
+                            <i class="bi bi-globe"></i>
+                        </div>
+                        <div class="team-stat-number">25+</div>
+                        <div class="team-stat-label">Countries Represented</div>
+                    </div>
+                    <div class="team-stat-card">
+                        <div class="team-stat-icon">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <div class="team-stat-number">24/7</div>
+                        <div class="team-stat-label">Support Coverage</div>
+                    </div>
+                    <div class="team-stat-card">
+                        <div class="team-stat-icon">
+                            <i class="bi bi-award"></i>
+                        </div>
+                        <div class="team-stat-number">15+</div>
+                        <div class="team-stat-label">Years Combined Experience</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section class="tech-section">
+            <div class="tech-container">
+                <div class="section-header">
+                    <h2 class="section-title">Powered by Advanced Technology</h2>
+                    <p class="section-subtitle">Cutting-edge infrastructure and intelligent algorithms drive our platform's performance</p>
+                </div>
+                
+                <div class="tech-content">
+                    <div class="tech-features">
+                        <div class="tech-feature">
+                            <div class="tech-feature-icon">
+                                <i class="bi bi-cpu"></i>
+                            </div>
+                            <div class="tech-feature-text">
+                                <h4>AI-Powered Optimization</h4>
+                                <p>Machine learning algorithms automatically optimize bids, placements, and targeting for maximum performance</p>
+                            </div>
+                        </div>
+                        <div class="tech-feature">
+                            <div class="tech-feature-icon">
+                                <i class="bi bi-lightning-charge"></i>
+                            </div>
+                            <div class="tech-feature-text">
+                                <h4>Real-Time Bidding</h4>
+                                <p>Advanced RTB technology ensures optimal pricing and instant ad serving across our entire network</p>
+                            </div>
+                        </div>
+                        <div class="tech-feature">
+                            <div class="tech-feature-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                            <div class="tech-feature-text">
+                                <h4>Fraud Prevention</h4>
+                                <p>Sophisticated fraud detection systems protect your ad spend and ensure only quality traffic</p>
+                            </div>
+                        </div>
+                        <div class="tech-feature">
+                            <div class="tech-feature-icon">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <div class="tech-feature-text">
+                                <h4>Advanced Analytics</h4>
+                                <p>Comprehensive dashboards with real-time reporting and actionable insights to guide your decisions</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-visual">
+                        <div class="tech-circle tech-circle-1"></div>
+                        <div class="tech-circle tech-circle-2"></div>
+                        <div class="tech-circle tech-circle-3"></div>
+                        
+                        <div class="tech-icon tech-icon-1">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <div class="tech-icon tech-icon-2">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="tech-icon tech-icon-3">
+                            <i class="bi bi-cpu"></i>
+                        </div>
+                        <div class="tech-icon tech-icon-4">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Presence -->
+        <section class="global-section">
+            <div class="global-container">
+                <div class="section-header">
+                    <h2 class="section-title">Global Reach, Local Expertise</h2>
+                    <p class="section-subtitle">Serving advertisers and publishers across every continent with localized support and global scale</p>
+                </div>
+                
+                <div class="global-map">
+                    <i class="bi bi-globe"></i>
+                </div>
+                
+                <div class="global-stats">
+                    <div class="global-stat">
+                        <h3>200+</h3>
+                        <p>Countries Worldwide</p>
+                    </div>
+                    <div class="global-stat">
+                        <h3>50+</h3>
+                        <p>Languages Supported</p>
+                    </div>
+                    <div class="global-stat">
+                        <h3>5</h3>
+                        <p>Regional Offices</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2>Ready to Join the Adsteric Family?</h2>
+                    <p>Whether you're an advertiser seeking quality traffic or a publisher looking to maximize revenue, we're here to help you succeed.</p>
+                    <div class="cta-buttons">
+                        <a href="/login.html" class="btn-white">
+                            <i class="bi bi-rocket-takeoff"></i>
+                            Get Started Today
+                        </a>
+                        <a href="/contact-us.html" class="btn-outline">
+                            <i class="bi bi-chat-dots"></i>
+                            Contact Our Team
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-f">
+        <div class="centring">
+            <nav class="main-f__nav">
+                <div class="main-f__nav-i">
+                    <span class="main-f__nav-i-a">Projects</span>
+                    <a class="main-f__nav-i-a" href="/about-us.html" title="About Us">About Us</a>
+                    <a class="main-f__nav-i-a" href="./advertiser.html" title="Advertisers">Advertisers</a>
+                    <a class="main-f__nav-i-a" href="./publisher.html" title="Publishers">Publishers</a>
+                    <a class="main-f__nav-i-a" href="/contact-us.html" title="Contact Us">Contact Us</a>
+                </div>
+                <div class="main-f__nav-i">
+                    <span class="main-f__nav-i-a">Policies</span>
+                    <a class="main-f__nav-i-a" href="/privacy-policy#content" title="Privacy Policy">Privacy Policy</a>
+                    <a class="main-f__nav-i-a" href="/terms-of-use#content" title="Terms">Terms</a>
+                    <a class="main-f__nav-i-a" href="/cookie#content" title="Cookies Policy">Cookies Policy</a>
+                    <a class="main-f__nav-i-a" href="/prohibited-materials-rules#content" title="Prohibited Materials Rules">Prohibited Materials Rules</a>
+                </div>
+            </nav>
+            <div class="main-f__lks">
+                <div class="main-f__soc">
+                    <a class="main-f__soc-a" href="https://www.linkedin.com/company/Adsteric/" title="Adsteric on Linkedin" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on Linkedin</span>
+                        <svg class="main-f__soc-a-ic" width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.752 3.115C6.712 1.347 5.448 0 3.395 0S0 1.347 0 3.115C0 4.846 1.303 6.23 3.317 6.23h.039c2.092 0 3.396-1.385 3.396-3.116zm-.396 5.578H.355v18.032h6.001V8.693zm14.734-.424c3.95 0 6.91 2.578 6.91 8.117v10.339h-6.002v-9.647c0-2.423-.868-4.077-3.04-4.077-1.659 0-2.646 1.115-3.08 2.191-.159.386-.197.924-.197 1.463v10.07H9.678s.08-16.34 0-18.032h6.002v2.554c.797-1.227 2.224-2.978 5.41-2.978z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://www.instagram.com/Adsteric_general/" title="Adsteric on Instagram" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on Instagram</span>
+                        <svg class="main-f__soc-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M27.923 8.232c-.065-1.488-.306-2.51-.65-3.397a6.833 6.833 0 0 0-1.62-2.483A6.892 6.892 0 0 0 23.177.738c-.892-.344-1.91-.585-3.397-.65C18.28.016 17.804 0 14.003 0 10.2 0 9.725.016 8.233.082c-1.489.066-2.511.306-3.398.65a6.832 6.832 0 0 0-2.483 1.62A6.894 6.894 0 0 0 .738 4.83c-.344.892-.585 1.909-.65 3.397C.016 9.725 0 10.2 0 14.003c0 3.801.016 4.277.082 5.77.066 1.488.306 2.511.651 3.397.356.941.908 1.783 1.619 2.483a6.89 6.89 0 0 0 2.478 1.614c.892.345 1.909.585 3.397.65 1.493.067 1.969.083 5.77.083 3.802 0 4.278-.016 5.771-.082 1.488-.066 2.51-.306 3.397-.651a7.162 7.162 0 0 0 4.097-4.097c.344-.891.585-1.909.65-3.397.066-1.493.083-1.969.083-5.77 0-3.802-.006-4.278-.072-5.77zm-2.521 11.432c-.06 1.367-.29 2.106-.481 2.598a4.645 4.645 0 0 1-2.659 2.659c-.492.191-1.236.42-2.598.48-1.477.067-1.92.083-5.656.083-3.736 0-4.184-.016-5.656-.082-1.367-.06-2.106-.29-2.598-.481a4.31 4.31 0 0 1-1.608-1.045 4.354 4.354 0 0 1-1.045-1.608c-.191-.493-.42-1.236-.48-2.598-.067-1.477-.083-1.92-.083-5.656 0-3.736.016-4.185.082-5.656.06-1.368.29-2.106.481-2.598.225-.607.58-1.16 1.05-1.608.455-.465 1.002-.821 1.609-1.045.492-.192 1.236-.421 2.598-.481 1.477-.066 1.92-.083 5.656-.083 3.741 0 4.184.017 5.656.083 1.367.06 2.105.29 2.598.48.607.225 1.16.58 1.608 1.046.465.454.82 1 1.045 1.608.191.492.42 1.236.481 2.598.066 1.477.082 1.92.082 5.656 0 3.736-.016 4.173-.082 5.65z" fill="#01b69b" />
+                            <path d="M14.002 6.81a7.195 7.195 0 0 0-7.192 7.193 7.195 7.195 0 0 0 7.192 7.193 7.194 7.194 0 0 0 7.193-7.193 7.194 7.194 0 0 0-7.193-7.192zm0 11.86a4.667 4.667 0 1 1 .002-9.334 4.667 4.667 0 0 1-.002 9.333zM23.16 6.525a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://t.me/Adstericchat" title="Adsteric on Telegram" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on Telegram</span>
+                        <svg class="main-f__soc-a-ic" width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.482 22.062c.644 0 .928-.294 1.287-.643l3.434-3.339-4.283-2.582" fill="#01b69b" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="m11.92 15.498 10.377 7.667c1.184.653 2.038.315 2.333-1.1l4.224-19.904c.433-1.734-.66-2.52-1.794-2.006L2.258 9.72c-1.693.68-1.683 1.624-.309 2.045l6.365 1.986L23.05 4.454c.696-.422 1.335-.195.81.27" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://www.youtube.com/channel/UCrAXi8GCx-K2QrJ1csuAlog?reload=9" title="Adsteric on YouTube" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on YouTube</span>
+                        <svg class="main-f__soc-a-ic" width="29" height="21" viewBox="0 0 29 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M25.89.6c1.205.331 2.154 1.306 2.476 2.543.585 2.242.585 6.92.585 6.92s0 4.677-.585 6.92c-.322 1.236-1.271 2.21-2.476 2.541-2.183.601-10.94.601-10.94.601s-8.755 0-10.939-.6c-1.205-.331-2.153-1.305-2.475-2.543C.95 14.74.95 10.062.95 10.062s0-4.677.585-6.92C1.858 1.907 2.806.933 4.01.602 6.195 0 14.951 0 14.951 0s8.756 0 10.939.6zM12.326 6.126v8.75l7-4.375-7-4.375z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://x.com/Adsteric2" title="Adsteric on X" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on X</span>
+                        <svg class="main-f__soc-a-ic" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="main-f__help">
+                    <div class="main-f__help-a" style="cursor: pointer;">
+                        <svg class="main-f__help-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M27.009 16.353c.144-.787.22-1.592.22-2.397 0-1.785-.35-3.516-1.04-5.146a13.168 13.168 0 0 0-2.833-4.203A13.172 13.172 0 0 0 14.008.735c-.841 0-1.684.079-2.504.236l-.006.001a7.836 7.836 0 0 0-3.67-.917c-2.091 0-4.057.814-5.535 2.293A7.777 7.777 0 0 0 0 7.882c0 1.331.342 2.64.985 3.795-.13.75-.2 1.515-.2 2.279 0 1.785.35 3.516 1.04 5.147a13.16 13.16 0 0 0 2.833 4.202 13.153 13.153 0 0 0 4.203 2.833c1.63.69 3.362 1.04 5.147 1.04.777 0 1.555-.07 2.315-.205a7.82 7.82 0 0 0 3.851 1.014 7.77 7.77 0 0 0 5.534-2.292A7.772 7.772 0 0 0 28 20.161a7.828 7.828 0 0 0-.991-3.808z" fill="#3498D8" />
+                            <path d="M14.06 22.053c-4.697 0-6.798-2.309-6.798-4.04 0-.887.655-1.51 1.559-1.51 2.01 0 1.49 2.887 5.24 2.887 1.92 0 2.98-1.043 2.98-2.11 0-.641-.317-1.352-1.581-1.664l-4.178-1.043c-3.365-.844-3.975-2.663-3.975-4.373 0-3.55 3.342-4.883 6.481-4.883 2.892 0 6.3 1.598 6.3 3.728 0 .913-.79 1.444-1.693 1.444-1.715 0-1.4-2.375-4.855-2.375-1.715 0-2.665.777-2.665 1.888 0 1.109 1.355 1.463 2.53 1.73l3.093.687c3.387.755 4.246 2.733 4.246 4.596 0 2.884-2.214 5.038-6.684 5.038z" fill="#fff" />
+                        </svg>
+                        <span class="main-f__help-a-tx">live:Adsterichelp</span>
+                    </div>
+                    <a class="main-f__help-a" href="https://t.me/Adsterichelp" title="Our Telegram" target="_blank" rel="nofollow noopener">
+                        <svg class="main-f__help-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14 0c7.73 0 14 6.27 14 14s-6.27 14-14 14S0 21.73 0 14 6.27 0 14 0z" fill="#0087CB" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="m21.005 9.088-2.198 10.355-1.481.269-3.053-2.24-1.584 1.571-2.329-3.996 2.535-3.74 6.566-2.309 1.544.09z" fill="#fff" />
+                        </svg>
+                        <span class="main-f__help-a-tx">@Adsterichelp</span>
+                    </a>
+                </div>
+            </div>
+            <p class="main-f__copy">
+                &copy; 2025 Cassandera Capital LTD<br> Agias Faneromenis, 143-145 PATSIAS COURT, Flat/Office 201
+                6031, Larnaca, Cyprus
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>

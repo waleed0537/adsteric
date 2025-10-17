@@ -26,7 +26,6 @@
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer');
     </script>
-    <base href="https://evadav.com/">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
@@ -39,20 +38,28 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="msapplication-config" content="/forWin.xml">
     <link rel="canonical" href="https://adsteric.com/advertiser" />
-    <link rel="manifest" href="/manifest.json">
+        <link rel="manifest" href="https://evadav.com/manifest.json">
+
     <link rel="mask-icon" color="#01b69b" href="/img/icons/ic.svg">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/icons/ic57.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/img/icons/ic76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="/img/icons/ic120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/img/icons/ic144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/img/icons/ic152.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="/img/icons/ic167.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/ic180.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/ic32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/ic96.png">
-    <link rel="icon" type="image/png" sizes="128x128" href="/img/icons/ic128.png">
-    <link rel="icon" type="image/png" sizes="195x195" href="/img/icons/ic195.png">
-    <link rel="icon" type="image/png" sizes="228x228" href="/img/icons/ic228.png">
+        <link rel="stylesheet" href="https://evadav.com/css/main.css">
+
+    <link rel="mask-icon" color="#01b69b" href="https://evadav.com/img/icons/ic.svg">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://evadav.com/img/icons/ic57.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://evadav.com/img/icons/ic76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://evadav.com/img/icons/ic120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://evadav.com/img/icons/ic144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://evadav.com/img/icons/ic152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="https://evadav.com/img/icons/ic167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://evadav.com/img/icons/ic180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://evadav.com/img/icons/ic32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://evadav.com/img/icons/ic96.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="https://evadav.com/img/icons/ic128.png">
+    <link rel="icon" type="image/png" sizes="195x195" href="https://evadav.com/img/icons/ic195.png">
+    <link rel="icon" type="image/png" sizes="228x228" href="https://evadav.com/img/icons/ic228.png">
+    
     <style>
         body {
             margin: 0;
@@ -60,7 +67,7 @@
         }
 
         body.no-scroll {
-            overflow: hidden
+            overflow: auto !important 
         }
 
         .my-loading {
@@ -74,6 +81,7 @@
             top: 0;
             width: 100vw;
             z-index: 50;
+            display: none !important;
         }
 
         .my-loading__ic {
@@ -88,7 +96,7 @@
         }
 
         .main-w {
-            display: none
+            display: none !important
         }
     </style>
     <script type="application/ld+json">
@@ -741,8 +749,104 @@
     <noscript><div class="msg-off-js" style="align-items:center;background-color:#fff;display:flex;font:2rem Arial,sans-serif;justify-content:center;height:100vh;position:fixed;text-align:center;top:0;width:100vw;z-index:100">To use the site, enable JavaScript</div></noscript>
     <input id="csrf-token" type="hidden" name="_csrf" value="KRZF8bDHzoXm8AZNCDZA8RKPV1fgc8QWKpyZWxlUaQxMRxWrxbC5x6S1Kw9hWyi2JeUgZKhCjH5rqaBpVTs2WQ==">
     <input id="re-captcha" type="hidden" value="6LeWFYspAAAAAEnQYJl43irxE6dk0CtYF8De9-E9">
+<script>
+  // Set the public path for webpack chunks
+  window.__webpack_public_path__ = 'https://evadav.com/';
+  
+  // Also set for RequireJS if used
+  window.__REQUIRE_PUBLIC_PATH__ = 'https://evadav.com/';
+</script>
+    <script src="https://evadav.com/js/prod/bundle.guest.js?v=1760527197"></script>
+<script>
+  (function() {
+    const baseUrl = 'https://evadav.com';
+    
+    // Force remove loading screen immediately
+    document.body.classList.remove('no-scroll');
+    const loader = document.getElementById('my-loading');
+    if (loader) loader.style.display = 'none';
+    const mainW = document.querySelector('.main-w');
+    if (mainW) mainW.style.display = 'block';
+    
+    // Intercept all dynamic script and link creation
+    const originalCreateElement = document.createElement;
+    document.createElement = function(tagName) {
+      const element = originalCreateElement.call(document, tagName);
+      
+      if (tagName.toLowerCase() === 'script' || tagName.toLowerCase() === 'link') {
+        const originalSetAttribute = element.setAttribute;
+        element.setAttribute = function(name, value) {
+          if ((name === 'src' || name === 'href') && value && value.startsWith('/')) {
+            value = baseUrl + value;
+          }
+          return originalSetAttribute.call(element, name, value);
+        };
+        
+        // Also intercept direct property assignment
+        Object.defineProperty(element, 'src', {
+          set: function(value) {
+            if (value && value.startsWith('/')) {
+              value = baseUrl + value;
+            }
+            return originalSetAttribute.call(this, 'src', value);
+          },
+          get: function() {
+            return this.getAttribute('src');
+          }
+        });
+        
+        Object.defineProperty(element, 'href', {
+          set: function(value) {
+            if (value && value.startsWith('/')) {
+              value = baseUrl + value;
+            }
+            return originalSetAttribute.call(this, 'href', value);
+          },
+          get: function() {
+            return this.getAttribute('href');
+          }
+        });
+      }
+      
+      return element;
+    };
+    
+    // Fix URLs when DOM is ready
+    function fixUrls() {
+      // Fix images
+      document.querySelectorAll('img[src^="/"], img[data-src^="/"]').forEach(img => {
+        if (img.src && img.src.includes('localhost') && img.src.includes('/img/')) {
+          const path = new URL(img.src).pathname;
+          img.src = baseUrl + path;
+        }
+        const dataSrc = img.getAttribute('data-src');
+        if (dataSrc && dataSrc.startsWith('/')) {
+          img.setAttribute('data-src', baseUrl + dataSrc);
+        }
+      });
+      
+      // Fix videos
+      document.querySelectorAll('video[src^="/"], video[data-src^="/"]').forEach(video => {
+        if (video.src && video.src.includes('localhost')) {
+          const path = new URL(video.src).pathname;
+          video.src = baseUrl + path;
+        }
+        const dataSrc = video.getAttribute('data-src');
+        if (dataSrc && dataSrc.startsWith('/')) {
+          video.setAttribute('data-src', baseUrl + dataSrc);
+        }
+        video.load();
+      });
+    }
+    
+    // Run immediately and on DOMContentLoaded
+    fixUrls();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fixUrls);
+    }
+  })();
+</script>
 
-    <script src="/js/prod/bundle.guest.js?v=1760527197"></script>
 </body>
 
 </html>

@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+    <title>Advertisers | Adsteric Traffic Group - Premium Ad Network Solutions</title>
+    <meta name="theme-color" content="#fff">
+    <meta name="description" content="Drive high-quality traffic and maximize ROI with Adsteric's advanced advertising solutions. Access premium inventory, sophisticated targeting, and real-time optimization.">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles - Matching Index */
+        .main-h {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .centring {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .main-h__logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .main-h__nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        .main-h__nav-lst {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .main-h__nav-lst-a {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .main-h__nav-lst-a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #01b69b;
+            transition: width 0.3s;
+        }
+
+        .main-h__nav-lst-a:hover {
+            color: #01b69b;
+        }
+
+        .main-h__nav-lst-a:hover::after {
+            width: 100%;
+        }
+
+        .main-h__w-btn {
+            display: flex;
+            gap: 15px;
+        }
+
+        .my-btn {
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-block;
+            border: 2px solid #01b69b;
+            letter-spacing: 0.3px;
+        }
+
+        .my-btn.sm {
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(1, 182, 155, 0.3);
+        }
+
+        .my-btn.sm:hover {
+            background: linear-gradient(135deg, #019680, #00b890);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(1, 182, 155, 0.4);
+        }
+
+        .my-btn.no-bg {
+            background: transparent;
+            color: #01b69b;
+        }
+
+        .my-btn.no-bg:hover {
+            background: #01b69b;
+            color: #fff;
+        }
+
+        .main-h__btn-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-cnt {
+            margin-top: 80px;
+        }
+
+        /* Hero Section - Enhanced */
+        .hero-section {
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 50%, #0a1628 100%);
+            padding: 140px 20px 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(1, 182, 155, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 164, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 30px) rotate(180deg); }
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            background: rgba(1, 182, 155, 0.15);
+            border: 1px solid rgba(1, 182, 155, 0.3);
+            border-radius: 50px;
+            color: #00d4a4;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero-section h1 {
+            font-size: 64px;
+            margin-bottom: 25px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #fff;
+            background: linear-gradient(135deg, #fff 0%, #00d4a4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 22px;
+            margin-bottom: 45px;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            color: #fff;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.4);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(1, 182, 155, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 18px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section - Enhanced */
+        .stats-section {
+            background: #fff;
+            padding: 0;
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 50px 30px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #01b69b, #00d4a4);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(1, 182, 155, 0.15);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 36px;
+            box-shadow: 0 8px 25px rgba(1, 182, 155, 0.3);
+        }
+
+        .stat-number {
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        /* Features Section - Enhanced */
+        .features-section {
+            padding: 120px 20px;
+            background: linear-gradient(180deg, #fff 0%, #f7fafc 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #01b69b, #00d4a4);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: #718096;
+            max-width: 700px;
+            margin: 20px auto 0;
+            line-height: 1.8;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+        }
+
+        .feature-card {
+            padding: 45px;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            transition: all 0.4s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(1, 182, 155, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(1, 182, 155, 0.3);
+            box-shadow: 0 20px 60px rgba(1, 182, 155, 0.15);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 38px;
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(1, 182, 155, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-title {
+            font-size: 26px;
+            color: #1a202c;
+            margin-bottom: 18px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-list li {
+            padding-left: 30px;
+            margin-bottom: 12px;
+            position: relative;
+            color: #4a5568;
+            font-size: 15px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #01b69b;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Ad Formats Section - Enhanced */
+        .formats-section {
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            padding: 120px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(1,182,155,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .formats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .formats-section .section-title {
+            color: #fff;
+        }
+
+        .formats-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .format-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 45px 35px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s;
+            border: 2px solid rgba(1, 182, 155, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .format-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(1, 182, 155, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .format-card:hover::before {
+            left: 100%;
+        }
+
+        .format-card:hover {
+            border-color: #01b69b;
+            background: rgba(1, 182, 155, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(1, 182, 155, 0.2);
+        }
+
+        .format-icon-wrapper {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.4);
+        }
+
+        .format-icon-wrapper i {
+            font-size: 42px;
+            color: #fff;
+        }
+
+        .format-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .format-desc {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* Benefits Section - New */
+        .benefits-section {
+            padding: 120px 20px;
+            background: #fff;
+        }
+
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .benefits-image {
+            position: relative;
+        }
+
+        .benefits-shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .benefits-visual {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            padding: 60px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(1, 182, 155, 0.3);
+        }
+
+        .benefits-visual i {
+            font-size: 120px;
+            color: #fff;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefit-item {
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f7fafc 0%, #fff 100%);
+            border-radius: 16px;
+            border-left: 5px solid #01b69b;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .benefit-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.15);
+            background: linear-gradient(135deg, #fff 0%, #f7fafc 100%);
+        }
+
+        .benefit-item strong {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            color: #1a202c;
+        }
+
+        .benefit-item strong i {
+            color: #01b69b;
+            font-size: 24px;
+        }
+
+        .benefit-item p {
+            margin: 0;
+            color: #4a5568;
+            font-size: 15px;
+            line-height: 1.7;
+            padding-left: 36px;
+        }
+
+        /* Performance Section - New */
+        .performance-section {
+            padding: 120px 20px;
+            background: linear-gradient(180deg, #f7fafc 0%, #fff 100%);
+        }
+
+        .performance-grid {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .performance-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s;
+            border-top: 4px solid #01b69b;
+        }
+
+        .performance-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(1, 182, 155, 0.15);
+        }
+
+        .performance-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .performance-icon i {
+            font-size: 32px;
+            color: #01b69b;
+        }
+
+        .performance-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+
+        .performance-desc {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        /* CTA Section - Enhanced */
+        .cta-section {
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(1, 182, 155, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 48px;
+            margin-bottom: 25px;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            margin-bottom: 45px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer - Matching Index */
+        .main-f {
+            background: #0f172a;
+            color: #fff;
+            padding: 70px 20px 30px;
+        }
+
+        .main-f .centring {
+            flex-direction: column;
+            max-width: 1200px;
+        }
+
+        .main-f__nav {
+            display: flex;
+            gap: 100px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-f__nav-i {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .main-f__nav-i-a {
+            color: #cbd5e0;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .main-f__nav-i-a:first-child {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #01b69b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-f__nav-i-a:hover {
+            color: #01b69b;
+            transform: translateX(5px);
+        }
+
+        .main-f__lks {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-f__soc {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-f__soc-a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(1, 182, 155, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .main-f__soc-a:hover {
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            transform: translateY(-5px);
+            border-color: rgba(1, 182, 155, 0.3);
+            box-shadow: 0 10px 25px rgba(1, 182, 155, 0.3);
+        }
+
+        .main-f__soc-a-tx {
+            display: none;
+        }
+
+        .main-f__soc-a-ic {
+            width: 24px;
+            height: 24px;
+        }
+
+        .main-f__help {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .main-f__help-a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e0;
+            text-decoration: none;
+            padding: 14px 28px;
+            background: rgba(1, 182, 155, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s;
+            font-size: 15px;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+
+        .main-f__help-a:hover {
+            background: rgba(1, 182, 155, 0.2);
+            border-color: rgba(1, 182, 155, 0.3);
+            transform: translateY(-3px);
+            color: #01b69b;
+        }
+
+        .main-f__help-a-ic {
+            width: 28px;
+            height: 28px;
+        }
+
+        .main-f__copy {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-h__nav {
+                display: none;
+            }
+
+            .main-h__w-btn {
+                display: none;
+            }
+
+            .main-h__btn-menu {
+                display: block;
+            }
+
+            .main-h__btn-menu-cnt {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .main-h__btn-menu-line {
+                width: 28px;
+                height: 3px;
+                background: #01b69b;
+                border-radius: 2px;
+                transition: all 0.3s;
+            }
+
+            .hero-section {
+                padding: 100px 20px 80px;
+            }
+
+            .hero-section h1 {
+                font-size: 42px;
+            }
+
+            .hero-section p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .formats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-section {
+                padding: 80px 20px 60px;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 16px 35px;
+                font-size: 15px;
+            }
+
+            .stat-number {
+                font-size: 42px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cta-section h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="main-h">
+        <div class="centring">
+            <a class="main-h__logo" href="./index.html" title="Adsteric - traffic group">
+                <img src="./img/adsteric_logo.png" height="50" width="auto" alt="Adsteric Logo">
+            </a>
+            <nav class="main-h__nav">
+                <ul class="main-h__nav-lst">
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./about-us.html" title="About us">About us</a>
+                    </li>
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./advertiser.html" title="Advertiser">Advertiser</a>
+                    </li>
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./publisher.html" title="Publisher">Publisher</a>
+                    </li>
+                    <li class="main-h__nav-lst-i">
+                        <a class="main-h__nav-lst-a" href="./contact-us.html" title="Contact us">Contact us</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="main-h__w-btn">
+                <a class="my-btn sm" href="/login.html" title="Go to registration">Sign up</a>
+                <a class="my-btn no-bg" href="/login.html" title="Go to login">Login</a>
+            </div>
+            <button class="main-h__btn-menu" type="button">
+                <span class="main-h__btn-menu-cnt">
+                    <span class="main-h__btn-menu-line"></span>
+                    <span class="main-h__btn-menu-line"></span>
+                    <span class="main-h__btn-menu-line"></span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-cnt">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="bi bi-lightning-charge"></i> Premium Ad Network
+                </div>
+                <h1>Drive High-Quality Traffic with Precision Targeting</h1>
+                <p>Access premium inventory, advanced targeting capabilities, and real-time optimization to maximize your advertising ROI across 200+ countries</p>
+                <div class="hero-cta">
+                    <a href="/login.html" class="btn-primary">
+                        <i class="bi bi-rocket-takeoff"></i> Start Your Campaign
+                    </a>
+                    <a href="#features" class="btn-secondary">
+                        <i class="bi bi-info-circle"></i> Explore Features
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <div class="stat-number">10B+</div>
+                        <div class="stat-label">Daily Impressions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-globe"></i>
+                        </div>
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Countries Covered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Average Viewability</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support Available</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Adsteric?</h2>
+                <p class="section-subtitle">Leverage cutting-edge technology and premium inventory to achieve your advertising goals with unmatched precision and performance</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-bullseye"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Targeting</h3>
+                    <p class="feature-description">Reach your ideal audience with precision targeting options</p>
+                    <ul class="feature-list">
+                        <li>Demographics & interests</li>
+                        <li>Device & OS targeting</li>
+                        <li>Behavioral patterns</li>
+                        <li>Custom audience segments</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Analytics</h3>
+                    <p class="feature-description">Monitor campaign performance with comprehensive dashboards</p>
+                    <ul class="feature-list">
+                        <li>Live performance tracking</li>
+                        <li>Detailed reporting</li>
+                        <li>ROI optimization insights</li>
+                        <li>Custom metric tracking</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <h3 class="feature-title">Fast Campaign Launch</h3>
+                    <p class="feature-description">Get campaigns live within minutes</p>
+                    <ul class="feature-list">
+                        <li>Streamlined approval</li>
+                        <li>Intuitive interface</li>
+                        <li>Quick setup wizard</li>
+                        <li>Instant activation</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-cash-coin"></i>
+                    </div>
+                    <h3 class="feature-title">Flexible Pricing Models</h3>
+                    <p class="feature-description">Choose pricing that aligns with your objectives</p>
+                    <ul class="feature-list">
+                        <li>CPM, CPC, CPA, CPV</li>
+                        <li>No minimum deposit</li>
+                        <li>Transparent billing</li>
+                        <li>Volume discounts</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3 class="feature-title">Brand Safety</h3>
+                    <p class="feature-description">Protect your brand with advanced security</p>
+                    <ul class="feature-list">
+                        <li>Fraud detection</li>
+                        <li>Viewability verification</li>
+                        <li>Premium publishers</li>
+                        <li>Content filtering</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Optimization</h3>
+                    <p class="feature-description">Leverage machine learning for maximum performance</p>
+                    <ul class="feature-list">
+                        <li>Auto-optimization</li>
+                        <li>Predictive analytics</li>
+                        <li>Smart bidding</li>
+                        <li>Performance forecasting</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad Formats Section -->
+        <section class="formats-section">
+            <div class="formats-container">
+                <div class="section-header">
+                    <h2 class="section-title">Diverse Ad Formats</h2>
+                    <p class="section-subtitle">Choose from a wide range of engaging ad formats designed to capture attention and drive exceptional results</p>
+                </div>
+                <div class="formats-grid">
+                    <div class="format-card">
+                        <div class="format-icon-wrapper">
+                            <i class="bi bi-bell"></i>
+                        </div>
+                        <h3 class="format-name">Push Notifications</h3>
+                        <p class="format-desc">High-engagement push ads that reach users directly on desktop and mobile devices with instant delivery</p>
+                    </div>
+                    <div class="format-card">
+                        <div class="format-icon-wrapper">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <h3 class="format-name">Native Ads</h3>
+                        <p class="format-desc">Seamlessly integrated ads that match the look and feel of premium publisher content for higher engagement</p>
+                    </div>
+                    <div class="format-card">
+                        <div class="format-icon-wrapper">
+                            <i class="bi bi-play-circle"></i>
+                        </div>
+                        <h3 class="format-name">Video Ads</h3>
+                        <p class="format-desc">Captivating in-stream and out-stream video advertisements with high completion rates and viewability</p>
+                    </div>
+                    <div class="format-card">
+                        <div class="format-icon-wrapper">
+                            <i class="bi bi-chat-dots"></i>
+                        </div>
+                        <h3 class="format-name">In-Page Push</h3>
+                        <p class="format-desc">Banner-style ads that look like push notifications, bypassing browser limitations for maximum reach</p>
+                    </div>
+                    <div class="format-card">
+                        <div class="format-icon-wrapper">
+                            <i class="bi bi-window"></i>
+                        </div>
+                        <h3 class="format-name">Popunder Ads</h3>
+                        <p class="format-desc">Full-page advertisements that maximize visibility and user engagement without intrusive overlays</p>
+                    </div>
+                    <div class="format-card">
+                        <div class="format-icon-wrapper">
+                            <i class="bi bi-image"></i>
+                        </div>
+                        <h3 class="format-name">Display Banners</h3>
+                        <p class="format-desc">Traditional banner ads in various sizes optimized for all screen types and responsive layouts</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="benefits-container">
+                <div class="section-header">
+                    <h2 class="section-title">Precision Targeting Capabilities</h2>
+                    <p class="section-subtitle">Reach the right audience at the right time with our comprehensive targeting options and advanced segmentation</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefits-image">
+                        <div class="benefits-shape"></div>
+                        <div class="benefits-visual">
+                            <i class="bi bi-crosshair"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="benefits-list">
+                            <li class="benefit-item">
+                                <strong>
+                                    <i class="bi bi-geo-alt"></i>
+                                    Geographic Targeting
+                                </strong>
+                                <p>Target by country, region, city, or even postal code for hyper-local campaigns with precision accuracy</p>
+                            </li>
+                            <li class="benefit-item">
+                                <strong>
+                                    <i class="bi bi-phone"></i>
+                                    Device & OS Targeting
+                                </strong>
+                                <p>Reach users on specific devices, operating systems, browsers, and screen resolutions</p>
+                            </li>
+                            <li class="benefit-item">
+                                <strong>
+                                    <i class="bi bi-people"></i>
+                                    Demographic Targeting
+                                </strong>
+                                <p>Filter by age, gender, language, income level, and other demographic attributes</p>
+                            </li>
+                            <li class="benefit-item">
+                                <strong>
+                                    <i class="bi bi-graph-up"></i>
+                                    Behavioral Targeting
+                                </strong>
+                                <p>Target based on user interests, browsing behavior, purchase intent, and engagement history</p>
+                            </li>
+                            <li class="benefit-item">
+                                <strong>
+                                    <i class="bi bi-clock"></i>
+                                    Time & Day Parting
+                                </strong>
+                                <p>Schedule your ads to run at optimal times for maximum engagement and conversion rates</p>
+                            </li>
+                            <li class="benefit-item">
+                                <strong>
+                                    <i class="bi bi-person-check"></i>
+                                    Custom Audiences
+                                </strong>
+                                <p>Upload your own audience lists for retargeting and create lookalike campaigns</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section class="performance-section">
+            <div class="section-header">
+                <h2 class="section-title">Performance-Driven Solutions</h2>
+                <p class="section-subtitle">Optimize every aspect of your campaigns with our advanced tools and technologies</p>
+            </div>
+            <div class="performance-grid">
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <h3 class="performance-title">Real-Time Bidding</h3>
+                    <p class="performance-desc">Leverage programmatic RTB technology for optimal ad placement and cost efficiency</p>
+                </div>
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="bi bi-funnel"></i>
+                    </div>
+                    <h3 class="performance-title">Conversion Tracking</h3>
+                    <p class="performance-desc">Track conversions accurately with multiple attribution models and detailed funnel analysis</p>
+                </div>
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="bi bi-arrows-angle-contract"></i>
+                    </div>
+                    <h3 class="performance-title">A/B Testing</h3>
+                    <p class="performance-desc">Test multiple creatives, landing pages, and strategies to find winning combinations</p>
+                </div>
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <h3 class="performance-title">Auto-Optimization</h3>
+                    <p class="performance-desc">Let AI automatically optimize bids, placements, and targeting for best performance</p>
+                </div>
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                    </div>
+                    <h3 class="performance-title">Custom Reports</h3>
+                    <p class="performance-desc">Generate detailed custom reports with the metrics that matter most to your business</p>
+                </div>
+                <div class="performance-card">
+                    <div class="performance-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h3 class="performance-title">Fraud Prevention</h3>
+                    <p class="performance-desc">Advanced fraud detection and prevention systems to protect your ad spend</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Scale Your Advertising?</h2>
+                <p>Join thousands of advertisers who trust Adsteric to deliver high-quality traffic and exceptional results. Start your campaign today and experience the difference.</p>
+                <div class="cta-buttons">
+                    <a href="/login.html" class="btn-primary">
+                        <i class="bi bi-rocket-takeoff"></i> Get Started Now
+                    </a>
+                    <a href="/contact-us.html" class="btn-secondary">
+                        <i class="bi bi-chat-dots"></i> Contact Sales
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-f">
+        <div class="centring">
+            <nav class="main-f__nav">
+                <div class="main-f__nav-i">
+                    <span class="main-f__nav-i-a">Projects</span>
+                    <a class="main-f__nav-i-a" href="/about-us.html" title="About Us">About Us</a>
+                    <a class="main-f__nav-i-a" href="./advertiser.html" title="Advertisers">Advertisers</a>
+                    <a class="main-f__nav-i-a" href="./publisher.html" title="Publishers">Publishers</a>
+                    <a class="main-f__nav-i-a" href="/contact-us.html" title="Contact Us">Contact Us</a>
+                </div>
+                <div class="main-f__nav-i">
+                    <span class="main-f__nav-i-a">Policies</span>
+                    <a class="main-f__nav-i-a" href="/privacy-policy#content" title="Privacy Policy">Privacy Policy</a>
+                    <a class="main-f__nav-i-a" href="/terms-of-use#content" title="Terms">Terms</a>
+                    <a class="main-f__nav-i-a" href="/cookie#content" title="Cookies Policy">Cookies Policy</a>
+                    <a class="main-f__nav-i-a" href="/prohibited-materials-rules#content" title="Prohibited Materials Rules">Prohibited Materials Rules</a>
+                </div>
+            </nav>
+            <div class="main-f__lks">
+                <div class="main-f__soc">
+                    <a class="main-f__soc-a" href="https://www.linkedin.com/company/Adsteric/" title="Adsteric on Linkedin" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on Linkedin</span>
+                        <svg class="main-f__soc-a-ic" width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.752 3.115C6.712 1.347 5.448 0 3.395 0S0 1.347 0 3.115C0 4.846 1.303 6.23 3.317 6.23h.039c2.092 0 3.396-1.385 3.396-3.116zm-.396 5.578H.355v18.032h6.001V8.693zm14.734-.424c3.95 0 6.91 2.578 6.91 8.117v10.339h-6.002v-9.647c0-2.423-.868-4.077-3.04-4.077-1.659 0-2.646 1.115-3.08 2.191-.159.386-.197.924-.197 1.463v10.07H9.678s.08-16.34 0-18.032h6.002v2.554c.797-1.227 2.224-2.978 5.41-2.978z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://www.instagram.com/Adsteric_general/" title="Adsteric on Instagram" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on Instagram</span>
+                        <svg class="main-f__soc-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M27.923 8.232c-.065-1.488-.306-2.51-.65-3.397a6.833 6.833 0 0 0-1.62-2.483A6.892 6.892 0 0 0 23.177.738c-.892-.344-1.91-.585-3.397-.65C18.28.016 17.804 0 14.003 0 10.2 0 9.725.016 8.233.082c-1.489.066-2.511.306-3.398.65a6.832 6.832 0 0 0-2.483 1.62A6.894 6.894 0 0 0 .738 4.83c-.344.892-.585 1.909-.65 3.397C.016 9.725 0 10.2 0 14.003c0 3.801.016 4.277.082 5.77.066 1.488.306 2.511.651 3.397.356.941.908 1.783 1.619 2.483a6.89 6.89 0 0 0 2.478 1.614c.892.345 1.909.585 3.397.65 1.493.067 1.969.083 5.77.083 3.802 0 4.278-.016 5.771-.082 1.488-.066 2.51-.306 3.397-.651a7.162 7.162 0 0 0 4.097-4.097c.344-.891.585-1.909.65-3.397.066-1.493.083-1.969.083-5.77 0-3.802-.006-4.278-.072-5.77zm-2.521 11.432c-.06 1.367-.29 2.106-.481 2.598a4.645 4.645 0 0 1-2.659 2.659c-.492.191-1.236.42-2.598.48-1.477.067-1.92.083-5.656.083-3.736 0-4.184-.016-5.656-.082-1.367-.06-2.106-.29-2.598-.481a4.31 4.31 0 0 1-1.608-1.045 4.354 4.354 0 0 1-1.045-1.608c-.191-.493-.42-1.236-.48-2.598-.067-1.477-.083-1.92-.083-5.656 0-3.736.016-4.185.082-5.656.06-1.368.29-2.106.481-2.598.225-.607.58-1.16 1.05-1.608.455-.465 1.002-.821 1.609-1.045.492-.192 1.236-.421 2.598-.481 1.477-.066 1.92-.083 5.656-.083 3.741 0 4.184.017 5.656.083 1.367.06 2.105.29 2.598.48.607.225 1.16.58 1.608 1.046.465.454.82 1 1.045 1.608.191.492.42 1.236.481 2.598.066 1.477.082 1.92.082 5.656 0 3.736-.016 4.173-.082 5.65z" fill="#01b69b" />
+                            <path d="M14.002 6.81a7.195 7.195 0 0 0-7.192 7.193 7.195 7.195 0 0 0 7.192 7.193 7.194 7.194 0 0 0 7.193-7.193 7.194 7.194 0 0 0-7.193-7.192zm0 11.86a4.667 4.667 0 1 1 .002-9.334 4.667 4.667 0 0 1-.002 9.333zM23.16 6.525a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://t.me/Adstericchat" title="Adsteric on Telegram" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on Telegram</span>
+                        <svg class="main-f__soc-a-ic" width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.482 22.062c.644 0 .928-.294 1.287-.643l3.434-3.339-4.283-2.582" fill="#01b69b" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="m11.92 15.498 10.377 7.667c1.184.653 2.038.315 2.333-1.1l4.224-19.904c.433-1.734-.66-2.52-1.794-2.006L2.258 9.72c-1.693.68-1.683 1.624-.309 2.045l6.365 1.986L23.05 4.454c.696-.422 1.335-.195.81.27" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://www.youtube.com/channel/UCrAXi8GCx-K2QrJ1csuAlog?reload=9" title="Adsteric on YouTube" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on YouTube</span>
+                        <svg class="main-f__soc-a-ic" width="29" height="21" viewBox="0 0 29 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M25.89.6c1.205.331 2.154 1.306 2.476 2.543.585 2.242.585 6.92.585 6.92s0 4.677-.585 6.92c-.322 1.236-1.271 2.21-2.476 2.541-2.183.601-10.94.601-10.94.601s-8.755 0-10.939-.6c-1.205-.331-2.153-1.305-2.475-2.543C.95 14.74.95 10.062.95 10.062s0-4.677.585-6.92C1.858 1.907 2.806.933 4.01.602 6.195 0 14.951 0 14.951 0s8.756 0 10.939.6zM12.326 6.126v8.75l7-4.375-7-4.375z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                    <a class="main-f__soc-a" href="https://x.com/Adsteric2" title="Adsteric on X" target="_blank" rel="nofollow noopener">
+                        <span class="main-f__soc-a-tx">Adsteric on X</span>
+                        <svg class="main-f__soc-a-ic" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#01b69b" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="main-f__help">
+                    <div class="main-f__help-a" style="cursor: pointer;">
+                        <svg class="main-f__help-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M27.009 16.353c.144-.787.22-1.592.22-2.397 0-1.785-.35-3.516-1.04-5.146a13.168 13.168 0 0 0-2.833-4.203A13.172 13.172 0 0 0 14.008.735c-.841 0-1.684.079-2.504.236l-.006.001a7.836 7.836 0 0 0-3.67-.917c-2.091 0-4.057.814-5.535 2.293A7.777 7.777 0 0 0 0 7.882c0 1.331.342 2.64.985 3.795-.13.75-.2 1.515-.2 2.279 0 1.785.35 3.516 1.04 5.147a13.16 13.16 0 0 0 2.833 4.202 13.153 13.153 0 0 0 4.203 2.833c1.63.69 3.362 1.04 5.147 1.04.777 0 1.555-.07 2.315-.205a7.82 7.82 0 0 0 3.851 1.014 7.77 7.77 0 0 0 5.534-2.292A7.772 7.772 0 0 0 28 20.161a7.828 7.828 0 0 0-.991-3.808z" fill="#3498D8" />
+                            <path d="M14.06 22.053c-4.697 0-6.798-2.309-6.798-4.04 0-.887.655-1.51 1.559-1.51 2.01 0 1.49 2.887 5.24 2.887 1.92 0 2.98-1.043 2.98-2.11 0-.641-.317-1.352-1.581-1.664l-4.178-1.043c-3.365-.844-3.975-2.663-3.975-4.373 0-3.55 3.342-4.883 6.481-4.883 2.892 0 6.3 1.598 6.3 3.728 0 .913-.79 1.444-1.693 1.444-1.715 0-1.4-2.375-4.855-2.375-1.715 0-2.665.777-2.665 1.888 0 1.109 1.355 1.463 2.53 1.73l3.093.687c3.387.755 4.246 2.733 4.246 4.596 0 2.884-2.214 5.038-6.684 5.038z" fill="#fff" />
+                        </svg>
+                        <span class="main-f__help-a-tx">live:Adsterichelp</span>
+                    </div>
+                    <a class="main-f__help-a" href="https://t.me/Adsterichelp" title="Our Telegram" target="_blank" rel="nofollow noopener">
+                        <svg class="main-f__help-a-ic" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14 0c7.73 0 14 6.27 14 14s-6.27 14-14 14S0 21.73 0 14 6.27 0 14 0z" fill="#0087CB" />
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="m21.005 9.088-2.198 10.355-1.481.269-3.053-2.24-1.584 1.571-2.329-3.996 2.535-3.74 6.566-2.309 1.544.09z" fill="#fff" />
+                        </svg>
+                        <span class="main-f__help-a-tx">@Adsterichelp</span>
+                    </a>
+                </div>
+            </div>
+            <p class="main-f__copy">
+                &copy; 2025 Cassandera Capital LTD<br> Agias Faneromenis, 143-145 PATSIAS COURT, Flat/Office 201
+                6031, Larnaca, Cyprus
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

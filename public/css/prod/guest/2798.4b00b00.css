@@ -716,9 +716,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .first-block__img {
-    height: 100%;
+    left: 80px;
+    height: 80%;
     position: absolute;
-    width: 100%
+    width: 80%
 }
 
 .first-block__cnt {
