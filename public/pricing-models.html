@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
-    <title>About Us | Adsteric Traffic Group - Our Story & Mission</title>
+    <title>Pricing Models | Adsteric Traffic Group - Flexible Ad Pricing</title>
     <meta name="theme-color" content="#fff">
-    <meta name="description" content="Learn about Adsteric Traffic Group - a leading ad network connecting advertisers and publishers worldwide. Discover our mission, values, and commitment to excellence.">
+    <meta name="description" content="Choose the perfect pricing model for your campaigns - CPA, CPC, or CPM. Competitive rates, smart optimization, and maximum ROI with Adsteric.">
     
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -150,34 +150,41 @@
 
         /* Hero Section */
         .hero-section {
-            padding: 120px 20px;
-            background: linear-gradient(135deg, #f7fafc 0%, #fff 100%);
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
             position: relative;
             overflow: hidden;
         }
 
         .hero-shape-1 {
             position: absolute;
-            top: -10%;
-            right: -5%;
+            top: -20%;
+            right: -10%;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(1, 182, 155, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(1, 182, 155, 0.15) 0%, transparent 70%);
             border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
         }
 
         .hero-shape-2 {
             position: absolute;
-            bottom: -15%;
+            bottom: -25%;
             left: -8%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(0, 212, 164, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 212, 164, 0.12) 0%, transparent 70%);
             border-radius: 50%;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
         }
 
         .hero-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             text-align: center;
             position: relative;
@@ -187,10 +194,10 @@
         .hero-badge {
             display: inline-block;
             padding: 10px 28px;
-            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
-            border: 2px solid rgba(1, 182, 155, 0.2);
+            background: rgba(1, 182, 155, 0.15);
+            border: 2px solid rgba(1, 182, 155, 0.3);
             border-radius: 50px;
-            color: #01b69b;
+            color: #00d4a4;
             font-size: 14px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -199,205 +206,25 @@
         }
 
         .hero-section h1 {
-            font-size: 62px;
-            color: #1a202c;
+            font-size: 56px;
+            color: #fff;
             margin-bottom: 25px;
             font-weight: 800;
             line-height: 1.2;
         }
 
-        .hero-section h1 span {
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         .hero-section p {
-            font-size: 22px;
-            color: #4a5568;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.85);
             max-width: 800px;
-            margin: 0 auto 50px;
+            margin: 0 auto;
             line-height: 1.8;
         }
 
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 16px;
-            color: #718096;
-            font-weight: 600;
-        }
-
-        /* Story Section */
-        .story-section {
+        /* Who Can Benefit Section */
+        .benefit-section {
             padding: 100px 20px;
             background: #fff;
-        }
-
-        .story-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .story-visual {
-            position: relative;
-            height: 500px;
-        }
-
-        .story-shape {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            border-radius: 30px;
-            transform: rotate(-6deg);
-            opacity: 0.1;
-        }
-
-        .story-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 90%;
-            background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-
-        .story-image i {
-            font-size: 150px;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0.4;
-        }
-
-        .story-content h2 {
-            font-size: 42px;
-            color: #1a202c;
-            margin-bottom: 25px;
-            font-weight: 800;
-        }
-
-        .story-content p {
-            font-size: 17px;
-            color: #4a5568;
-            line-height: 1.9;
-            margin-bottom: 20px;
-        }
-
-        /* Mission Vision Section */
-        .mission-section {
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mission-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="1.5" fill="rgba(1,182,155,0.15)"/></svg>') repeat;
-            opacity: 0.4;
-        }
-
-        .mission-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .mission-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-        }
-
-        .mission-card {
-            padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            border: 2px solid rgba(1, 182, 155, 0.2);
-            transition: all 0.3s;
-        }
-
-        .mission-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(1, 182, 155, 0.4);
-            transform: translateY(-10px);
-        }
-
-        .mission-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.3);
-        }
-
-        .mission-icon i {
-            font-size: 40px;
-            color: #fff;
-        }
-
-        .mission-card h3 {
-            font-size: 32px;
-            color: #fff;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .mission-card p {
-            font-size: 17px;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.8;
-        }
-
-        /* Values Section */
-        .values-section {
-            padding: 100px 20px;
-            background: linear-gradient(180deg, #f7fafc 0%, #fff 100%);
         }
 
         .section-header {
@@ -420,20 +247,20 @@
             line-height: 1.8;
         }
 
-        .values-container {
+        .benefit-container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .values-grid {
+        .benefit-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 35px;
         }
 
-        .value-card {
-            padding: 45px 35px;
-            background: #fff;
+        .benefit-card {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #f7fafc, #fff);
             border-radius: 25px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
             transition: all 0.4s;
@@ -442,7 +269,7 @@
             overflow: hidden;
         }
 
-        .value-card::before {
+        .benefit-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -455,336 +282,439 @@
             transition: transform 0.4s;
         }
 
-        .value-card:hover {
+        .benefit-card:hover {
             transform: translateY(-15px);
             border-color: rgba(1, 182, 155, 0.3);
             box-shadow: 0 20px 60px rgba(1, 182, 155, 0.15);
         }
 
-        .value-card:hover::before {
+        .benefit-card:hover::before {
             transform: scaleX(1);
         }
 
-        .value-icon {
-            width: 70px;
-            height: 70px;
+        .benefit-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 30px rgba(1, 182, 155, 0.3);
+        }
+
+        .benefit-icon i {
+            font-size: 42px;
+            color: #fff;
+        }
+
+        .benefit-card h3 {
+            font-size: 28px;
+            color: #1a202c;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+
+        .benefit-card p {
+            font-size: 16px;
+            color: #718096;
+            line-height: 1.8;
+        }
+
+        /* Pricing Models Section */
+        .pricing-section {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #f7fafc 0%, #fff 100%);
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            padding: 50px 40px;
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(1, 182, 155, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            border-color: #01b69b;
+            box-shadow: 0 25px 70px rgba(1, 182, 155, 0.2);
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            color: #fff;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .pricing-icon {
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, rgba(1, 182, 155, 0.1), rgba(0, 212, 164, 0.1));
-            border-radius: 18px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 25px;
         }
 
-        .value-icon i {
-            font-size: 36px;
+        .pricing-icon i {
+            font-size: 40px;
             color: #01b69b;
         }
 
-        .value-card h4 {
-            font-size: 24px;
+        .pricing-card h3 {
+            font-size: 32px;
             color: #1a202c;
             margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .value-card p {
-            font-size: 16px;
-            color: #718096;
-            line-height: 1.8;
-        }
-
-        /* Team Section */
-        .team-section {
-            padding: 100px 20px;
-            background: #fff;
-        }
-
-        .team-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .team-intro {
-            max-width: 800px;
-            margin: 0 auto 60px;
-            text-align: center;
-        }
-
-        .team-intro h2 {
-            font-size: 48px;
-            color: #1a202c;
-            margin-bottom: 20px;
             font-weight: 800;
         }
 
-        .team-intro p {
-            font-size: 18px;
+        .pricing-subtitle {
+            font-size: 16px;
             color: #718096;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .pricing-description {
+            font-size: 16px;
+            color: #4a5568;
             line-height: 1.8;
+            margin-bottom: 30px;
         }
 
-        .team-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin-top: 50px;
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
         }
 
-        .team-stat-card {
-            padding: 40px 30px;
-            background: linear-gradient(135deg, #f7fafc, #fff);
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .team-stat-card:hover {
-            border-color: rgba(1, 182, 155, 0.3);
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(1, 182, 155, 0.1);
-        }
-
-        .team-stat-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            border-radius: 50%;
+        .pricing-features li {
+            padding: 12px 0;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+            color: #4a5568;
+            font-size: 15px;
+        }
+
+        .pricing-features li i {
+            color: #01b69b;
+            font-size: 18px;
+        }
+
+        .pricing-button {
+            width: 100%;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
             box-shadow: 0 8px 20px rgba(1, 182, 155, 0.3);
         }
 
-        .team-stat-icon i {
-            font-size: 32px;
-            color: #fff;
+        .pricing-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(1, 182, 155, 0.4);
         }
 
-        .team-stat-number {
-            font-size: 36px;
-            font-weight: 800;
-            color: #01b69b;
-            margin-bottom: 8px;
-        }
-
-        .team-stat-label {
-            font-size: 15px;
-            color: #718096;
-            font-weight: 600;
-        }
-
-        /* Technology Section */
-        .tech-section {
+        /* Stats Section */
+        .stats-section {
             padding: 100px 20px;
-            background: linear-gradient(180deg, #f7fafc 0%, #fff 100%);
-        }
-
-        .tech-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tech-content {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 60px;
-            align-items: center;
-            margin-top: 60px;
-        }
-
-        .tech-features {
-            display: grid;
-            gap: 25px;
-        }
-
-        .tech-feature {
-            display: flex;
-            gap: 25px;
-            padding: 30px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-        }
-
-        .tech-feature:hover {
-            transform: translateX(10px);
-            box-shadow: 0 10px 30px rgba(1, 182, 155, 0.15);
-        }
-
-        .tech-feature-icon {
-            width: 60px;
-            height: 60px;
             background: linear-gradient(135deg, #01b69b, #00d4a4);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .tech-feature-icon i {
-            font-size: 28px;
-            color: #fff;
-        }
-
-        .tech-feature-text h4 {
-            font-size: 20px;
-            color: #1a202c;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .tech-feature-text p {
-            font-size: 15px;
-            color: #718096;
-            line-height: 1.7;
-        }
-
-        .tech-visual {
-            position: relative;
-            height: 500px;
-            background: linear-gradient(135deg, rgba(1, 182, 155, 0.05), rgba(0, 212, 164, 0.05));
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .tech-circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 3px solid rgba(1, 182, 155, 0.2);
-        }
-
-        .tech-circle-1 {
-            width: 300px;
-            height: 300px;
-            animation: rotate 20s linear infinite;
-        }
-
-        .tech-circle-2 {
-            width: 200px;
-            height: 200px;
-            animation: rotate 15s linear infinite reverse;
-        }
-
-        .tech-circle-3 {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .tech-icon {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: #fff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .tech-icon i {
-            font-size: 24px;
-            color: #01b69b;
-        }
-
-        .tech-icon-1 { top: 15%; left: 20%; }
-        .tech-icon-2 { top: 25%; right: 15%; }
-        .tech-icon-3 { bottom: 30%; left: 15%; }
-        .tech-icon-4 { bottom: 20%; right: 20%; }
-
-        /* Global Presence */
-        .global-section {
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
             position: relative;
             overflow: hidden;
         }
 
-        .global-section::before {
+        .stats-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1" fill="rgba(1,182,155,0.2)"/></svg>') repeat;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
         }
 
-        .global-container {
+        .stats-container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
-            text-align: center;
         }
 
-        .global-section .section-title {
+        .stats-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .stats-intro h2 {
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .stats-intro p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon i {
+            font-size: 32px;
             color: #fff;
         }
 
-        .global-section .section-subtitle {
-            color: rgba(255, 255, 255, 0.85);
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
         }
 
-        .global-map {
-            max-width: 900px;
-            margin: 60px auto;
-            padding: 60px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            border: 2px solid rgba(1, 182, 155, 0.2);
+        .stat-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
         }
 
-        .global-map i {
-            font-size: 200px;
-            background: linear-gradient(135deg, #01b69b, #00d4a4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0.3;
+        /* Features Section */
+        .features-section {
+            padding: 100px 20px;
+            background: #fff;
         }
 
-        .global-stats {
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             margin-top: 60px;
         }
 
-        .global-stat {
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 2px solid rgba(1, 182, 155, 0.2);
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        .global-stat h3 {
-            font-size: 48px;
+        .feature-row:nth-child(even) .feature-content {
+            order: 2;
+        }
+
+        .feature-row:nth-child(even) .feature-visual {
+            order: 1;
+        }
+
+        .feature-content h3 {
+            font-size: 36px;
+            color: #1a202c;
+            margin-bottom: 20px;
             font-weight: 800;
-            color: #00d4a4;
-            margin-bottom: 10px;
         }
 
-        .global-stat p {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 600;
+        .feature-content p {
+            font-size: 17px;
+            color: #4a5568;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            color: #4a5568;
+            font-size: 16px;
+        }
+
+        .feature-list li i {
+            color: #01b69b;
+            font-size: 22px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-visual {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.08), rgba(0, 212, 164, 0.08));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .feature-shape {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .feature-shape-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(1, 182, 155, 0.15), transparent);
+            top: -20%;
+            right: -10%;
+        }
+
+        .feature-shape-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(0, 212, 164, 0.12), transparent);
+            bottom: -10%;
+            left: -8%;
+        }
+
+        .feature-visual i {
+            font-size: 150px;
+            background: linear-gradient(135deg, #01b69b, #00d4a4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.4;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Trust Section */
+        .trust-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -15%;
+            width: 500px;
+            height: 500px;
+            background: rgba(1, 182, 155, 0.1);
+            border-radius: 50%;
+        }
+
+        .trust-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 212, 164, 0.08);
+            border-radius: 50%;
+        }
+
+        .trust-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trust-section h2 {
+            font-size: 42px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .trust-section p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.8;
         }
 
         /* CTA Section */
@@ -794,7 +724,7 @@
         }
 
         .cta-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 80px 60px;
             background: linear-gradient(135deg, #01b69b, #00d4a4);
@@ -815,17 +745,6 @@
             border-radius: 50%;
         }
 
-        .cta-container::after {
-            content: '';
-            position: absolute;
-            bottom: -40%;
-            left: -20%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-        }
-
         .cta-content {
             position: relative;
             z-index: 1;
@@ -842,7 +761,7 @@
             font-size: 20px;
             color: rgba(255, 255, 255, 0.95);
             margin-bottom: 40px;
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -1053,35 +972,28 @@
             }
 
             .hero-section h1 {
-                font-size: 42px;
+                font-size: 38px;
             }
 
-            .hero-stats {
+            .benefit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .story-container {
+            .feature-row {
                 grid-template-columns: 1fr;
             }
 
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .team-stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .tech-content {
-                grid-template-columns: 1fr;
-            }
-
-            .global-stats {
-                grid-template-columns: 1fr;
+            .feature-row:nth-child(even) .feature-content,
+            .feature-row:nth-child(even) .feature-visual {
+                order: unset;
             }
 
             .cta-container {
@@ -1098,23 +1010,11 @@
                 font-size: 32px;
             }
 
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-
             .section-title {
                 font-size: 32px;
             }
 
-            .story-content h2 {
-                font-size: 32px;
-            }
-
-            .mission-card {
-                padding: 35px 25px;
-            }
-
-            .team-stats-grid {
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1174,264 +1074,226 @@
             <div class="hero-shape-2"></div>
             <div class="hero-container">
                 <div class="hero-badge">
-                    <i class="bi bi-building"></i> About Adsteric
+                    <i class="bi bi-currency-dollar"></i> Flexible Pricing
                 </div>
-                <h1>Connecting <span>Advertisers & Publishers</span> Globally</h1>
-                <p>We are a leading traffic monetization platform, empowering thousands of publishers and advertisers worldwide with innovative ad technology, premium inventory, and exceptional support.</p>
-                
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">$50M+</div>
-                        <div class="stat-label">Revenue Generated</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15K+</div>
-                        <div class="stat-label">Active Publishers</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">200+</div>
-                        <div class="stat-label">Countries Served</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">10B+</div>
-                        <div class="stat-label">Daily Impressions</div>
-                    </div>
-                </div>
+                <h1>Pricing Models</h1>
+                <p>Whether your focus is global reach or a specific segment, Adsteric empowers you with balanced pricing models for maximum ROI. Avoid overpaying through smart campaign tests and our cutting-edge traffic estimator.</p>
             </div>
         </section>
 
-        <!-- Story Section -->
-        <section class="story-section">
-            <div class="story-container">
-                <div class="story-visual">
-                    <div class="story-shape"></div>
-                    <div class="story-image">
-                        <i class="bi bi-graph-up-arrow"></i>
-                    </div>
-                </div>
-                <div class="story-content">
-                    <h2>Our Story</h2>
-                    <p>Founded with a vision to revolutionize digital advertising, Adsteric has grown from a small startup to a global ad network serving thousands of partners worldwide.</p>
-                    <p>We recognized the challenges faced by both advertisers seeking quality traffic and publishers looking to maximize their revenue. Our mission was simple: create a transparent, efficient, and profitable ecosystem for all.</p>
-                    <p>Today, we process billions of impressions daily, connect advertisers with premium inventory across 200+ countries, and help publishers earn top-tier CPM rates through our advanced technology platform.</p>
-                    <p>Our success is built on trust, innovation, and an unwavering commitment to our partners' growth. We continue to invest in cutting-edge ad technology, expand our global reach, and provide the best service in the industry.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Mission Vision -->
-        <section class="mission-section">
-            <div class="mission-container">
-                <div class="mission-grid">
-                    <div class="mission-card">
-                        <div class="mission-icon">
-                            <i class="bi bi-bullseye"></i>
-                        </div>
-                        <h3>Our Mission</h3>
-                        <p>To empower advertisers and publishers with innovative technology, premium inventory, and data-driven solutions that maximize revenue and ROI. We strive to create a transparent, efficient marketplace where quality traffic meets effective advertising.</p>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon">
-                            <i class="bi bi-eye"></i>
-                        </div>
-                        <h3>Our Vision</h3>
-                        <p>To become the world's most trusted ad network, setting industry standards for transparency, quality, and performance. We envision a future where digital advertising is accessible, profitable, and beneficial for all stakeholders in the ecosystem.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Core Values -->
-        <section class="values-section">
+        <!-- Who Can Benefit Section -->
+        <section class="benefit-section">
             <div class="section-header">
-                <h2 class="section-title">Our Core Values</h2>
-                <p class="section-subtitle">The principles that guide everything we do and shape our company culture</p>
+                <h2 class="section-title">Who Can Benefit from Adsteric AD Network</h2>
+                <p class="section-subtitle">Comprehensive solutions tailored for every type of digital marketer</p>
             </div>
-            <div class="values-container">
-                <div class="values-grid">
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="bi bi-shield-check"></i>
+            <div class="benefit-container">
+                <div class="benefit-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="bi bi-megaphone"></i>
                         </div>
-                        <h4>Transparency</h4>
-                        <p>We believe in complete transparency with our partners. Clear reporting, honest communication, and no hidden fees - ever.</p>
+                        <h3>Advertisers</h3>
+                        <p>Adsteric is a strong online advertising network for brands, agencies, and media buyers. We offer over 20 targeting options, allowing you to show ads to the most relevant audiences. Get access to top-notch CPM, CPC, and CPA traffic from 28,000+ direct publishers.</p>
                     </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="bi bi-trophy"></i>
-                        </div>
-                        <h4>Excellence</h4>
-                        <p>We strive for excellence in everything we do, from our platform technology to customer support and partner relationships.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="bi bi-lightbulb"></i>
-                        </div>
-                        <h4>Innovation</h4>
-                        <p>Continuous innovation drives us forward. We invest heavily in technology to stay ahead of industry trends.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <h4>Partnership</h4>
-                        <p>Your success is our success. We build long-term partnerships based on mutual growth and shared goals.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="bi bi-speedometer2"></i>
-                        </div>
-                        <h4>Performance</h4>
-                        <p>We're obsessed with performance - delivering the best CPM rates, fill rates, and ROI for all our partners.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="bi bi-hand-thumbs-up"></i>
-                        </div>
-                        <h4>Integrity</h4>
-                        <p>We operate with the highest ethical standards, ensuring fair practices and honest dealings in every interaction.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Team Section -->
-        <section class="team-section">
-            <div class="team-container">
-                <div class="team-intro">
-                    <h2>Our Global Team</h2>
-                    <p>Behind Adsteric's success is a dedicated team of industry experts, tech innovators, and support professionals working around the clock to serve our partners across the globe.</p>
-                </div>
-                
-                <div class="team-stats-grid">
-                    <div class="team-stat-card">
-                        <div class="team-stat-icon">
-                            <i class="bi bi-people"></i>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="bi bi-newspaper"></i>
                         </div>
-                        <div class="team-stat-number">150+</div>
-                        <div class="team-stat-label">Team Members</div>
+                        <h3>Publishers</h3>
+                        <p>Earn more money from your website, blog, or social media with the top-paying ad network. No website? No problem! Our smart AI algorithms ensure you get the best CPM rates and relevant ads to boost your earnings. Join now!</p>
                     </div>
-                    <div class="team-stat-card">
-                        <div class="team-stat-icon">
-                            <i class="bi bi-globe"></i>
-                        </div>
-                        <div class="team-stat-number">25+</div>
-                        <div class="team-stat-label">Countries Represented</div>
-                    </div>
-                    <div class="team-stat-card">
-                        <div class="team-stat-icon">
-                            <i class="bi bi-headset"></i>
-                        </div>
-                        <div class="team-stat-number">24/7</div>
-                        <div class="team-stat-label">Support Coverage</div>
-                    </div>
-                    <div class="team-stat-card">
-                        <div class="team-stat-icon">
-                            <i class="bi bi-award"></i>
-                        </div>
-                        <div class="team-stat-number">15+</div>
-                        <div class="team-stat-label">Years Combined Experience</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Technology Section -->
-        <section class="tech-section">
-            <div class="tech-container">
-                <div class="section-header">
-                    <h2 class="section-title">Powered by Advanced Technology</h2>
-                    <p class="section-subtitle">Cutting-edge infrastructure and intelligent algorithms drive our platform's performance</p>
-                </div>
-                
-                <div class="tech-content">
-                    <div class="tech-features">
-                        <div class="tech-feature">
-                            <div class="tech-feature-icon">
-                                <i class="bi bi-cpu"></i>
-                            </div>
-                            <div class="tech-feature-text">
-                                <h4>AI-Powered Optimization</h4>
-                                <p>Machine learning algorithms automatically optimize bids, placements, and targeting for maximum performance</p>
-                            </div>
-                        </div>
-                        <div class="tech-feature">
-                            <div class="tech-feature-icon">
-                                <i class="bi bi-lightning-charge"></i>
-                            </div>
-                            <div class="tech-feature-text">
-                                <h4>Real-Time Bidding</h4>
-                                <p>Advanced RTB technology ensures optimal pricing and instant ad serving across our entire network</p>
-                            </div>
-                        </div>
-                        <div class="tech-feature">
-                            <div class="tech-feature-icon">
-                                <i class="bi bi-shield-lock"></i>
-                            </div>
-                            <div class="tech-feature-text">
-                                <h4>Fraud Prevention</h4>
-                                <p>Sophisticated fraud detection systems protect your ad spend and ensure only quality traffic</p>
-                            </div>
-                        </div>
-                        <div class="tech-feature">
-                            <div class="tech-feature-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="tech-feature-text">
-                                <h4>Advanced Analytics</h4>
-                                <p>Comprehensive dashboards with real-time reporting and actionable insights to guide your decisions</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="tech-visual">
-                        <div class="tech-circle tech-circle-1"></div>
-                        <div class="tech-circle tech-circle-2"></div>
-                        <div class="tech-circle tech-circle-3"></div>
-                        
-                        <div class="tech-icon tech-icon-1">
-                            <i class="bi bi-speedometer2"></i>
-                        </div>
-                        <div class="tech-icon tech-icon-2">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <div class="tech-icon tech-icon-3">
-                            <i class="bi bi-cpu"></i>
-                        </div>
-                        <div class="tech-icon tech-icon-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
                             <i class="bi bi-graph-up-arrow"></i>
                         </div>
+                        <h3>Affiliates</h3>
+                        <p>Adsteric CPA Network offers money-making deals from trusted advertisers. Earn without risks, get fast payouts, and boost your profits using handy tools like backlinks and postbacks. Join us for a rewarding affiliate experience!</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Global Presence -->
-        <section class="global-section">
-            <div class="global-container">
+        <!-- Pricing Models Section -->
+        <section class="pricing-section">
+            <div class="pricing-container">
                 <div class="section-header">
-                    <h2 class="section-title">Global Reach, Local Expertise</h2>
-                    <p class="section-subtitle">Serving advertisers and publishers across every continent with localized support and global scale</p>
+                    <h2 class="section-title">Choose Your Pricing Model</h2>
+                    <p class="section-subtitle">Launch campaigns and set up offers with the best-matching pricing model for your goals</p>
                 </div>
-                
-                <div class="global-map">
-                    <i class="bi bi-globe"></i>
+
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-icon">
+                            <i class="bi bi-bullseye"></i>
+                        </div>
+                        <h3>CPA</h3>
+                        <p class="pricing-subtitle">Cost Per Acquisition</p>
+                        <p class="pricing-description">You state that you will only pay for target actions (conversions). You are charged when your ad leads to a conversion.</p>
+                        <ul class="pricing-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Pay only for conversions</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Maximum ROI guarantee</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Risk-free advertising</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Performance-based pricing</li>
+                        </ul>
+                        <button class="pricing-button">Get Started</button>
+                    </div>
+
+                    <div class="pricing-card">
+                        <div class="pricing-badge">Budget Friendly</div>
+                        <div class="pricing-icon">
+                            <i class="bi bi-cursor"></i>
+                        </div>
+                        <h3>CPC</h3>
+                        <p class="pricing-subtitle">Cost Per Click</p>
+                        <p class="pricing-description">With our CPC plan you only pay when a motivated user clicks on your ad.</p>
+                        <ul class="pricing-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Pay per click only</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Targeted traffic</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Cost-effective</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Easy to track</li>
+                        </ul>
+                        <button class="pricing-button">Get Started</button>
+                    </div>
+
+                    <div class="pricing-card">
+                        <div class="pricing-badge">Brand Awareness</div>
+                        <div class="pricing-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <h3>CPM</h3>
+                        <p class="pricing-subtitle">Cost Per Mille</p>
+                        <p class="pricing-description">You bid for 1K impressions of your ad (aka for 1K views of your ad by your target audience).</p>
+                        <ul class="pricing-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Maximum visibility</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Brand exposure</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Predictable costs</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Reach optimization</li>
+                        </ul>
+                        <button class="pricing-button">Get Started</button>
+                    </div>
                 </div>
-                
-                <div class="global-stats">
-                    <div class="global-stat">
-                        <h3>200+</h3>
-                        <p>Countries Worldwide</p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stats-intro">
+                    <h2>Help You Achieve More</h2>
+                    <p>Experience real growth with Adsteric's genuine traffic from 248 countries. Start your ad campaigns with any budget, and our eCPM revenue model ensures earnings rise as your traffic performs. With competitive CPM rates, Adsteric maximizes your revenue potential, considering clicks and conversions. Join Adsteric, where publishers earn over $50 million annually, and unleash unlimited income growth with our reliable platform. Your journey to growth begins now!</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <div class="stat-number">2B+</div>
+                        <div class="stat-label">Conversions/Year</div>
                     </div>
-                    <div class="global-stat">
-                        <h3>50+</h3>
-                        <p>Languages Supported</p>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+                        <div class="stat-number">$46M+</div>
+                        <div class="stat-label">Payouts/Year</div>
                     </div>
-                    <div class="global-stat">
-                        <h3>5</h3>
-                        <p>Regional Offices</p>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="stat-number">27K</div>
+                        <div class="stat-label">Active Partners</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="bi bi-globe"></i>
+                        </div>
+                        <div class="stat-number">248</div>
+                        <div class="stat-label">Countries Served</div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="features-container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Choose the Leading Online AD Network?</h2>
+                    <p class="section-subtitle">Adsteric has been connecting brands and marketing professionals through top-tier advertising and monetization solutions</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-row">
+                        <div class="feature-content">
+                            <h3>Ad Safety and Traffic Quality</h3>
+                            <p>Adsteric employs a robust 3-level security system in-house, guarding against malware, ad fraud, and bot traffic. This ensures top-notch views and clicks.</p>
+                            <ul class="feature-list">
+                                <li><i class="bi bi-shield-check"></i> 3-level security system protecting your campaigns</li>
+                                <li><i class="bi bi-bug"></i> Advanced malware and ad fraud detection</li>
+                                <li><i class="bi bi-robot"></i> Bot traffic prevention with AI algorithms</li>
+                                <li><i class="bi bi-bullseye"></i> Strategic offer presentation to fitting audiences</li>
+                                <li><i class="bi bi-sliders"></i> Over 20 targeting parameters for precision</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <div class="feature-shape feature-shape-1"></div>
+                            <div class="feature-shape feature-shape-2"></div>
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                    </div>
+
+                    <div class="feature-row">
+                        <div class="feature-content">
+                            <h3>Performance-Boosting Tools</h3>
+                            <p>Advertisers streamline their bidding strategies using Traffic Estimator and Smart CPM, or they can establish rules to fine-tune traffic based on conversions.</p>
+                            <ul class="feature-list">
+                                <li><i class="bi bi-graph-up"></i> Traffic Estimator for accurate forecasting</li>
+                                <li><i class="bi bi-cpu"></i> Smart CPM for automated optimization</li>
+                                <li><i class="bi bi-gear"></i> CPA Goal for conversion-based targeting</li>
+                                <li><i class="bi bi-sliders"></i> Custom Bid for precise adjustments</li>
+                                <li><i class="bi bi-trophy"></i> Enhanced payouts for top placements</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <div class="feature-shape feature-shape-1"></div>
+                            <div class="feature-shape feature-shape-2"></div>
+                            <i class="bi bi-tools"></i>
+                        </div>
+                    </div>
+
+                    <div class="feature-row">
+                        <div class="feature-content">
+                            <h3>Competitive CPMs</h3>
+                            <p>Adsteric stands out as one of the most lucrative ad networks, offering competitive CPM rates to publishers.</p>
+                            <ul class="feature-list">
+                                <li><i class="bi bi-cash-coin"></i> Industry-leading CPM rates</li>
+                                <li><i class="bi bi-graph-up-arrow"></i> Priority on conversions over views</li>
+                                <li><i class="bi bi-globe"></i> Profit from all traffic types</li>
+                                <li><i class="bi bi-infinity"></i> No entry limits on impression volumes</li>
+                                <li><i class="bi bi-currency-dollar"></i> Accessible and profitable for everyone</li>
+                            </ul>
+                        </div>
+                        <div class="feature-visual">
+                            <div class="feature-shape feature-shape-1"></div>
+                            <div class="feature-shape feature-shape-2"></div>
+                            <i class="bi bi-piggy-bank"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section class="trust-section">
+            <div class="trust-content">
+                <h2>20,000+ Users Around the World Love Us</h2>
+                <p>Join Adsteric today and unlock high-performing ad campaigns and premium traffic in just a few minutes. Experience the trust and success that thousands of marketers worldwide have discovered.</p>
             </div>
         </section>
 
@@ -1439,16 +1301,16 @@
         <section class="cta-section">
             <div class="cta-container">
                 <div class="cta-content">
-                    <h2>Ready to Join the Adsteric Family?</h2>
-                    <p>Whether you're an advertiser seeking quality traffic or a publisher looking to maximize revenue, we're here to help you succeed.</p>
+                    <h2>Ready to Get Started?</h2>
+                    <p>Launch your first campaign or start monetizing your traffic today. Join thousands of successful advertisers and publishers on Adsteric.</p>
                     <div class="cta-buttons">
                         <a href="/login.html" class="btn-white">
                             <i class="bi bi-rocket-takeoff"></i>
-                            Get Started Today
+                            Start Your Campaign
                         </a>
                         <a href="/contact-us.html" class="btn-outline">
                             <i class="bi bi-chat-dots"></i>
-                            Contact Our Team
+                            Contact Us
                         </a>
                     </div>
                 </div>
