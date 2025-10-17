@@ -269,9 +269,10 @@
             </form>
         </div>
     </div>
+<script src="config.js"></script>
 
     <script>
-        const API_URL = 'http://localhost:5000/api';
+        const API_URL = config.API_URL;
 
         function showAlert(containerId, message, type) {
             const alertDiv = document.getElementById(containerId);
