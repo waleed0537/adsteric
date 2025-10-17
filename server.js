@@ -15,11 +15,11 @@ app.use(cors());
 app.use(express.static('public')); // Serve static files
 
 // Environment variables
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://adshark00:0KKX2YSBGY9Zrz21@cluster0.g7lpz.mongodb.net/adsteric?retryWrites=true&w=majority&appName=Cluster0';
 const isProduction = process.env.NODE_ENV === 'production';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5000';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5002';
 
 // MongoDB Connection
 mongoose.connect(MONGODB_URI, {
