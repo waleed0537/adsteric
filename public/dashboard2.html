@@ -414,7 +414,7 @@
         .btn-primary {
             background: linear-gradient(135deg, #6d28d9, #5b21b6);
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 0.2rem 0.5rem;
             border: none;
             border-radius: 8px;
             font-size: 0.875rem;
@@ -2082,10 +2082,13 @@
                 <div id="campaignsSection" class="campaigns-section hidden">
                     <div class="campaigns-header">
                         <h2>Your Campaigns</h2>
-                        <button class="btn-primary" onclick="showSection('createCampaignSection')">
-                            <i class="fa-solid fa-plus"></i>
-                            Create Campaign
-                        </button>
+                        <button class="btn-primary" 
+        style="padding: 6px 12px; font-size: 13px; border-radius: 6px;" 
+        onclick="showSection('createCampaignSection')">
+    <i class="fa-solid fa-plus"></i>
+    Create Campaign
+</button>
+
                     </div>
                     <div id="campaignsContainer" class="campaigns-container">
                         <!-- Campaigns will be loaded here -->
