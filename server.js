@@ -26,11 +26,13 @@ mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => {
-  console.log('MongoDB connected successfully');
-  seedAdminUser(); // ADD THIS LINE
-})
-.catch(err => console.error('MongoDB connection error:', err));
+  .then(() => {
+    console.log('MongoDB connected successfully');
+    seedAdminUser(); // ADD THIS LINE
+      checkPendingCampaigns(); // ADD THIS LINE
+
+  })
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -65,9 +67,9 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  
+
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -78,7 +80,7 @@ userSchema.pre('save', async function(next) {
 });
 
 // Method to compare password
-userSchema.methods.comparePassword = async function(candidatePassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
@@ -89,96 +91,63 @@ const campaignSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
-    index: true
+    required: true
   },
   campaignName: {
     type: String,
-    required: true,
-    trim: true,
-    minlength: 3,
-    maxlength: 100
+    required: true
   },
   targetUrl: {
     type: String,
-    required: true,
-    trim: true,
-    validate: {
-      validator: function(v) {
-        return /^https?:\/\/.+\..+/.test(v);
-      },
-      message: 'Please enter a valid URL'
-    }
+    required: true
   },
   dailyBudget: {
     type: Number,
-    required: true,
-    min: 5,
-    max: 100000
+    required: true
   },
   totalBudget: {
     type: Number,
-    required: true,
-    min: 10,
-    max: 1000000
+    required: true
   },
   campaignType: {
     type: String,
     required: true,
-    enum: ['cpc', 'cpm', 'cpa'],
-    lowercase: true
+    enum: ['cpc', 'cpm', 'cpa']
   },
   targetAudience: {
     type: String,
-    required: true,
-    enum: ['global', 'us', 'uk', 'eu', 'asia'],
-    lowercase: true
+    required: true
   },
   description: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 10,
-    maxlength: 1000
+    type: String
   },
   status: {
     type: String,
-    enum: ['pending', 'active', 'paused', 'completed', 'rejected'],
+    enum: ['pending', 'active', 'paused', 'completed'],
     default: 'pending'
   },
   statistics: {
     impressions: { type: Number, default: 0 },
     clicks: { type: Number, default: 0 },
     conversions: { type: Number, default: 0 },
-    spent: { type: Number, default: 0 },
-    revenue: { type: Number, default: 0 }
+    spent: { type: Number, default: 0 }
   },
-  startDate: {
-    type: Date,
-    default: null
-  },
-  endDate: {
-    type: Date,
-    default: null
-  },
+  startDate: Date,
   createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
     type: Date,
     default: Date.now
   }
 });
 
+
 // Update timestamp on save
-campaignSchema.pre('save', function(next) {
+campaignSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
 // Validate budget constraints
-campaignSchema.pre('save', function(next) {
+campaignSchema.pre('save', function (next) {
   if (this.dailyBudget > this.totalBudget) {
     next(new Error('Daily budget cannot exceed total budget'));
   }
@@ -212,9 +181,9 @@ const adminSchema = new mongoose.Schema({
   }
 });
 
-adminSchema.pre('save', async function(next) {
+adminSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  
+
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -224,7 +193,7 @@ adminSchema.pre('save', async function(next) {
   }
 });
 
-adminSchema.methods.comparePassword = async function(candidatePassword) {
+adminSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
@@ -266,7 +235,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Verify email configuration
-transporter.verify(function(error, success) {
+transporter.verify(function (error, success) {
   if (error) {
     console.log('Email server error:', error);
   } else {
@@ -394,7 +363,7 @@ app.post('/api/auth/signup', async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-                balance: user.balance  // ← ADD THIS LINE
+        balance: user.balance  // ← ADD THIS LINE
 
       }
     });
@@ -613,21 +582,24 @@ app.get('/api/auth/me', authenticateToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    
+
     // Add balance if missing
     if (user.balance === undefined || user.balance === null) {
       user.balance = 100.00;
       await user.save();
     }
-    
+
     console.log('User data being sent:', { id: user._id, balance: user.balance }); // DEBUG LOG
-    
+
     res.json({ user });
   } catch (error) {
     console.error('Get user error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+// Create Campaign
+// Replace the "Create Campaign" route in server.js (around line 420) with this updated version:
+
 // Create Campaign
 app.post('/api/campaigns', authenticateToken, async (req, res) => {
   try {
@@ -641,36 +613,34 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       description 
     } = req.body;
 
+    console.log('Campaign creation request:', req.body);
+
     // Validation
-    if (!campaignName || !targetUrl || !dailyBudget || !totalBudget || !campaignType || !targetAudience || !description) {
-      return res.status(400).json({ message: 'All fields are required' });
+    if (!campaignName || !targetUrl || !dailyBudget || !totalBudget || !campaignType || !targetAudience) {
+      return res.status(400).json({ message: 'All required fields must be provided' });
     }
 
-    // Validate campaign name length
+    // Validate campaign name
     if (campaignName.length < 3 || campaignName.length > 100) {
       return res.status(400).json({ message: 'Campaign name must be between 3 and 100 characters' });
     }
 
-    // Validate URL format
+    // Validate URL
     const urlRegex = /^https?:\/\/.+\..+/;
     if (!urlRegex.test(targetUrl)) {
-      return res.status(400).json({ message: 'Please enter a valid URL (must start with http:// or https://)' });
+      return res.status(400).json({ message: 'Please enter a valid URL starting with http:// or https://' });
     }
 
     // Validate budgets
     const daily = parseFloat(dailyBudget);
     const total = parseFloat(totalBudget);
 
-    if (isNaN(daily) || daily < 5) {
-      return res.status(400).json({ message: 'Daily budget must be at least $5' });
+    if (isNaN(daily) || daily <= 0) {
+      return res.status(400).json({ message: 'Daily budget must be greater than 0' });
     }
 
-    if (isNaN(total) || total < 10) {
-      return res.status(400).json({ message: 'Total budget must be at least $10' });
-    }
-
-    if (daily > total) {
-      return res.status(400).json({ message: 'Daily budget cannot exceed total budget' });
+    if (isNaN(total) || total <= 0) {
+      return res.status(400).json({ message: 'Total budget must be greater than 0' });
     }
 
     // Validate campaign type
@@ -683,21 +653,25 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       return res.status(400).json({ message: 'Invalid target audience' });
     }
 
-    // Validate description length
-    if (description.length < 10 || description.length > 1000) {
-      return res.status(400).json({ message: 'Description must be between 10 and 1000 characters' });
-    }
-
-    // Check user's account balance (assuming you have a balance field in User model)
+    // Check user exists and has balance
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Optional: Check if user has sufficient balance
+    console.log('User balance:', user.balance, 'Required:', total);
+
+    // Check sufficient balance
     if (user.balance < total) {
-      return res.status(400).json({ message: 'Insufficient balance. Please add funds to your account.' });
+      return res.status(400).json({ 
+        message: `Insufficient balance. Campaign requires $${total.toFixed(2)} but you have $${user.balance.toFixed(2)}. Please add funds.` 
+      });
+      
     }
+      user.balance -= total;
+    await user.save();
+    console.log('✅ Balance deducted. Amount:', total, 'New balance:', user.balance);
+
 
     // Create campaign
     const campaign = new Campaign({
@@ -708,13 +682,58 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       totalBudget: total,
       campaignType: campaignType.toLowerCase(),
       targetAudience: targetAudience.toLowerCase(),
-      description: description.trim(),
-      status: 'pending' // Campaigns start as pending for review
+      description: description || `Campaign with $${daily} daily budget`,
+      status: 'pending'
     });
 
     await campaign.save();
+    console.log('Campaign created:', campaign._id);
 
-    // Send email notification
+    // Schedule auto-activation after 1.5 hours
+    setTimeout(async () => {
+      try {
+        const campaignToActivate = await Campaign.findById(campaign._id);
+        if (campaignToActivate && campaignToActivate.status === 'pending') {
+          campaignToActivate.status = 'active';
+          campaignToActivate.startDate = new Date();
+          await campaignToActivate.save();
+          console.log(`Campaign ${campaign._id} auto-activated`);
+
+          // Send activation email
+          try {
+            const user = await User.findById(campaignToActivate.userId);
+            if (user) {
+              await transporter.sendMail({
+                from: '"Adsteric" <adshark00@gmail.com>',
+                to: user.email,
+                subject: 'Campaign Activated!',
+                html: `
+                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <div style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); padding: 30px; text-align: center;">
+                      <h1 style="color: white; margin: 0;">ADSTERIC</h1>
+                    </div>
+                    <div style="padding: 30px; background: #f5f7fa;">
+                      <h2 style="color: #1a202c;">Campaign Activated! 🎉</h2>
+                      <p style="color: #4a5568;">Your campaign "${campaignToActivate.campaignName}" is now active!</p>
+                      <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <p style="margin: 8px 0;"><strong>Daily Budget:</strong> $${campaignToActivate.dailyBudget.toFixed(2)}</p>
+                        <p style="margin: 8px 0;"><strong>Total Budget:</strong> $${campaignToActivate.totalBudget.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+                `
+              });
+            }
+          } catch (emailError) {
+            console.error('Email error:', emailError);
+          }
+        }
+      } catch (error) {
+        console.error('Auto-activation error:', error);
+      }
+    }, 5400000); // 1.5 hours
+
+    // Send creation email
     try {
       await transporter.sendMail({
         from: '"Adsteric" <adshark00@gmail.com>',
@@ -727,39 +746,20 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
             </div>
             <div style="padding: 30px; background: #f5f7fa;">
               <h2 style="color: #1a202c;">Campaign Created!</h2>
-              <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">
-                Hi ${user.fullName},
-              </p>
-              <p style="color: #4a5568; font-size: 16px; line-height: 1.6;">
-                Your campaign "<strong>${campaign.campaignName}</strong>" has been created successfully and is currently under review.
-              </p>
-              <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <h3 style="color: #1a202c; margin-top: 0;">Campaign Details:</h3>
-                <p style="margin: 8px 0; color: #4a5568;"><strong>Type:</strong> ${campaign.campaignType.toUpperCase()}</p>
-                <p style="margin: 8px 0; color: #4a5568;"><strong>Daily Budget:</strong> $${campaign.dailyBudget.toFixed(2)}</p>
-                <p style="margin: 8px 0; color: #4a5568;"><strong>Total Budget:</strong> $${campaign.totalBudget.toFixed(2)}</p>
-                <p style="margin: 8px 0; color: #4a5568;"><strong>Target:</strong> ${campaign.targetAudience.toUpperCase()}</p>
+              <p style="color: #4a5568;">Your campaign "${campaign.campaignName}" has been created.</p>
+              <div style="background: #fef3c7; padding: 16px; margin: 20px 0; border-radius: 8px;">
+                <p style="margin: 0; color: #92400e;"><strong>⏱️ Auto-Activation:</strong> Your campaign will be activated in 1.5 hours.</p>
               </div>
-              <div style="text-align: center; margin: 30px 0;">
-                <a href="${FRONTEND_URL}/dashboard.html" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); 
-                   color: white; padding: 14px 30px; text-decoration: none; border-radius: 8px; 
-                   display: inline-block; font-weight: 600;">
-                  View Campaign
-                </a>
-              </div>
-              <p style="color: #718096; font-size: 14px;">
-                Your campaign will be reviewed and activated within 24 hours.
-              </p>
             </div>
           </div>
         `
       });
     } catch (emailError) {
-      console.error('Error sending campaign creation email:', emailError);
+      console.error('Email error:', emailError);
     }
 
     res.status(201).json({
-      message: 'Campaign created successfully',
+      message: 'Campaign created successfully! It will be activated in 1.5 hours.',
       campaign: {
         id: campaign._id,
         campaignName: campaign.campaignName,
@@ -775,50 +775,31 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
 
   } catch (error) {
     console.error('Create campaign error:', error);
-    if (error.message === 'Daily budget cannot exceed total budget') {
-      return res.status(400).json({ message: error.message });
-    }
-    res.status(500).json({ message: 'Server error while creating campaign' });
+    res.status(500).json({ message: 'Server error: ' + error.message });
   }
 });
 
 // Get All Campaigns for User
 app.get('/api/campaigns', authenticateToken, async (req, res) => {
   try {
-    const { status, sort = '-createdAt', limit = 50, page = 1 } = req.query;
-
-    const query = { userId: req.user.userId };
-    
-    // Filter by status if provided
-    if (status && ['pending', 'active', 'paused', 'completed', 'rejected'].includes(status)) {
-      query.status = status;
-    }
-
-    const skip = (parseInt(page) - 1) * parseInt(limit);
-
-    const campaigns = await Campaign.find(query)
-      .sort(sort)
-      .limit(parseInt(limit))
-      .skip(skip)
+    const campaigns = await Campaign.find({ userId: req.user.userId })
+      .sort('-createdAt')
       .select('-__v');
-
-    const total = await Campaign.countDocuments(query);
 
     res.json({
       campaigns,
       pagination: {
-        total,
-        page: parseInt(page),
-        pages: Math.ceil(total / parseInt(limit))
+        total: campaigns.length,
+        page: 1,
+        pages: 1
       }
     });
 
   } catch (error) {
     console.error('Get campaigns error:', error);
-    res.status(500).json({ message: 'Server error while fetching campaigns' });
+    res.status(500).json({ message: 'Server error: ' + error.message });
   }
 });
-
 // Get Single Campaign
 app.get('/api/campaigns/:id', authenticateToken, async (req, res) => {
   try {
@@ -845,13 +826,13 @@ app.get('/api/campaigns/:id', authenticateToken, async (req, res) => {
 // Update Campaign
 app.put('/api/campaigns/:id', authenticateToken, async (req, res) => {
   try {
-    const { 
-      campaignName, 
-      targetUrl, 
-      dailyBudget, 
-      totalBudget, 
-      targetAudience, 
-      description 
+    const {
+      campaignName,
+      targetUrl,
+      dailyBudget,
+      totalBudget,
+      targetAudience,
+      description
     } = req.body;
 
     const campaign = await Campaign.findOne({
@@ -1001,7 +982,7 @@ app.patch('/api/campaigns/:id/status', authenticateToken, async (req, res) => {
                 Your campaign "<strong>${campaign.campaignName}</strong>" has been ${statusMessages[status]}.
               </p>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="${FRONTEND_URL}/dashboard.html" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); 
+                <a href="${FRONTEND_URL}/dashboard2.html" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); 
                    color: white; padding: 14px 30px; text-decoration: none; border-radius: 8px; 
                    display: inline-block; font-weight: 600;">
                   View Campaign
@@ -1043,7 +1024,9 @@ app.delete('/api/campaigns/:id', authenticateToken, async (req, res) => {
 
     // Cannot delete active campaigns
     if (campaign.status === 'active') {
-      return res.status(400).json({ message: 'Cannot delete active campaign. Please pause it first.' });
+      return res.status(400).json({ 
+        message: 'Cannot delete active campaign. Please pause it first.' 
+      });
     }
 
     await Campaign.deleteOne({ _id: req.params.id });
@@ -1058,6 +1041,101 @@ app.delete('/api/campaigns/:id', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Server error while deleting campaign' });
   }
 });
+app.patch('/api/campaigns/:id/pause', authenticateToken, async (req, res) => {
+  try {
+    const campaign = await Campaign.findOne({
+      _id: req.params.id,
+      userId: req.user.userId
+    });
+
+    if (!campaign) {
+      return res.status(404).json({ message: 'Campaign not found' });
+    }
+
+    if (campaign.status !== 'active') {
+      return res.status(400).json({ message: 'Only active campaigns can be paused' });
+    }
+
+    campaign.status = 'paused';
+    await campaign.save();
+
+    res.json({
+      message: 'Campaign paused successfully',
+      campaign
+    });
+
+  } catch (error) {
+    console.error('Pause campaign error:', error);
+    res.status(500).json({ message: 'Server error while pausing campaign' });
+  }
+});
+
+app.patch('/api/campaigns/:id/resume', authenticateToken, async (req, res) => {
+  try {
+    const campaign = await Campaign.findOne({
+      _id: req.params.id,
+      userId: req.user.userId
+    });
+
+    if (!campaign) {
+      return res.status(404).json({ message: 'Campaign not found' });
+    }
+
+    if (campaign.status !== 'paused') {
+      return res.status(400).json({ message: 'Only paused campaigns can be resumed' });
+    }
+
+    campaign.status = 'active';
+    await campaign.save();
+
+    res.json({
+      message: 'Campaign resumed successfully',
+      campaign
+    });
+
+  } catch (error) {
+    console.error('Resume campaign error:', error);
+    res.status(500).json({ message: 'Server error while resuming campaign' });
+  }
+});
+async function checkPendingCampaigns() {
+  try {
+    const pendingCampaigns = await Campaign.find({ status: 'pending' });
+    console.log(`Found ${pendingCampaigns.length} pending campaigns`);
+    
+    for (const campaign of pendingCampaigns) {
+      const createdTime = new Date(campaign.createdAt).getTime();
+      const currentTime = Date.now();
+      const timeDiff = currentTime - createdTime;
+      const activationTime = 5400000; // 1.5 hours
+
+      if (timeDiff >= activationTime) {
+        campaign.status = 'active';
+        campaign.startDate = new Date();
+        await campaign.save();
+        console.log(`Campaign ${campaign._id} activated on startup`);
+      } else {
+        const remainingTime = activationTime - timeDiff;
+        setTimeout(async () => {
+          try {
+            const c = await Campaign.findById(campaign._id);
+            if (c && c.status === 'pending') {
+              c.status = 'active';
+              c.startDate = new Date();
+              await c.save();
+              console.log(`Campaign ${campaign._id} auto-activated`);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }, remainingTime);
+        console.log(`Scheduled campaign ${campaign._id} for activation in ${(remainingTime/60000).toFixed(1)} minutes`);
+      }
+    }
+  } catch (error) {
+    console.error('Error checking pending campaigns:', error);
+  }
+}
 
 // Get Campaign Statistics Summary
 app.get('/api/campaigns/stats/summary', authenticateToken, async (req, res) => {
@@ -1077,14 +1155,14 @@ app.get('/api/campaigns/stats/summary', authenticateToken, async (req, res) => {
     };
 
     // Calculate averages
-    summary.averageCTR = summary.totalImpressions > 0 
+    summary.averageCTR = summary.totalImpressions > 0
       ? ((summary.totalClicks / summary.totalImpressions) * 100).toFixed(2)
       : 0;
-    
+
     summary.averageConversionRate = summary.totalClicks > 0
       ? ((summary.totalConversions / summary.totalClicks) * 100).toFixed(2)
       : 0;
-    
+
     summary.roi = summary.totalSpent > 0
       ? (((summary.totalRevenue - summary.totalSpent) / summary.totalSpent) * 100).toFixed(2)
       : 0;
@@ -1346,11 +1424,11 @@ app.patch('/api/admin/campaigns/:id/status', authenticateAdmin, async (req, res)
     }
 
     campaign.status = status;
-    
+
     if (status === 'active' && !campaign.startDate) {
       campaign.startDate = new Date();
     }
-    
+
     if (status === 'completed' && !campaign.endDate) {
       campaign.endDate = new Date();
     }
@@ -1372,7 +1450,7 @@ app.patch('/api/admin/campaigns/:id/status', authenticateAdmin, async (req, res)
               <h2 style="color: #1a202c;">Campaign Status Updated</h2>
               <p>Your campaign "${campaign.campaignName}" has been ${status}.</p>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="${FRONTEND_URL}/dashboard.html" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); 
+                <a href="${FRONTEND_URL}/dashboard2.html" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); 
                    color: white; padding: 14px 30px; text-decoration: none; border-radius: 8px; 
                    display: inline-block; font-weight: 600;">View Dashboard</a>
               </div>
