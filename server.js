@@ -30,6 +30,10 @@ mongoose.connect(MONGODB_URI, {
     console.log('MongoDB connected successfully');
     seedAdminUser(); // ADD THIS LINE
       checkPendingCampaigns(); // ADD THIS LINE
+        scheduleDailyStatsGeneration();  // NEW: Start daily stats scheduler
+    
+    // Generate stats for existing active campaigns on startup
+    generateDailyStatsForAllCampaigns();  // NEW
 
   })
   .catch(err => console.error('MongoDB connection error:', err));
@@ -53,10 +57,20 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6
   },
-  balance: {              // ← MAKE SURE THIS IS HERE
+  balance: {
     type: Number,
     default: 100.00,
     min: 0
+  },
+  totalSpent: {  // NEW: Track total lifetime spending
+    type: Number,
+    default: 0,
+    min: 0
+  },
+  currentPackage: {  // NEW: Current package tier
+    type: String,
+    enum: ['standard', 'bronze', 'silver', 'gold', 'platinum', 'diamond'],
+    default: 'standard'
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
@@ -65,7 +79,6 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   }
 });
-
 // Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
@@ -85,7 +98,53 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 const User = mongoose.model('User', userSchema);
+// Daily Statistics Schema
+const dailyStatisticsSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  campaignId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Campaign',
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  // Raw metrics
+  impressions: { type: Number, default: 0 },
+  clicks: { type: Number, default: 0 },
+  conversions: {
+    approved: { type: Number, default: 0 },
+    hold: { type: Number, default: 0 },
+    declined: { type: Number, default: 0 },
+    total: { type: Number, default: 0 }
+  },
+  // Financial metrics
+  spent: { type: Number, default: 0 },
+  payouts: {
+    approved: { type: Number, default: 0 },
+    hold: { type: Number, default: 0 },
+    declined: { type: Number, default: 0 },
+    total: { type: Number, default: 0 }
+  },
+  // Calculated metrics
+  ctr: { type: Number, default: 0 }, // Click-through rate
+  conversionRate: { type: Number, default: 0 },
+  epc: { type: Number, default: 0 }, // Earnings per click
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
+// Compound index for efficient queries
+dailyStatisticsSchema.index({ userId: 1, campaignId: 1, date: 1 }, { unique: true });
+
+const DailyStatistics = mongoose.model('DailyStatistics', dailyStatisticsSchema);
 // Campaign Schema
 const campaignSchema = new mongoose.Schema({
   userId: {
@@ -613,7 +672,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       description 
     } = req.body;
 
-    console.log('Campaign creation request:', req.body);
+    console.log('📝 Campaign creation request:', req.body);
 
     // Validation
     if (!campaignName || !targetUrl || !dailyBudget || !totalBudget || !campaignType || !targetAudience) {
@@ -648,30 +707,28 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       return res.status(400).json({ message: 'Invalid campaign type' });
     }
 
-    // Validate target audience
-    if (!['global', 'us', 'uk', 'eu', 'asia'].includes(targetAudience.toLowerCase())) {
-      return res.status(400).json({ message: 'Invalid target audience' });
-    }
-
     // Check user exists and has balance
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('User balance:', user.balance, 'Required:', total);
+    console.log('💰 User balance:', user.balance, 'Required:', total);
 
     // Check sufficient balance
     if (user.balance < total) {
       return res.status(400).json({ 
         message: `Insufficient balance. Campaign requires $${total.toFixed(2)} but you have $${user.balance.toFixed(2)}. Please add funds.` 
       });
-      
     }
-      user.balance -= total;
-    await user.save();
-    console.log('✅ Balance deducted. Amount:', total, 'New balance:', user.balance);
 
+    // Deduct balance
+    user.balance -= total;
+        user.totalSpent += total;  // NEW: Track total spending
+    user.currentPackage = calculatePackageTier(user.totalSpent);  // NEW
+
+    await user.save();
+    console.log('✅ Balance deducted. New balance:', user.balance);
 
     // Create campaign
     const campaign = new Campaign({
@@ -687,51 +744,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
     });
 
     await campaign.save();
-    console.log('Campaign created:', campaign._id);
-
-    // Schedule auto-activation after 1.5 hours
-    setTimeout(async () => {
-      try {
-        const campaignToActivate = await Campaign.findById(campaign._id);
-        if (campaignToActivate && campaignToActivate.status === 'pending') {
-          campaignToActivate.status = 'active';
-          campaignToActivate.startDate = new Date();
-          await campaignToActivate.save();
-          console.log(`Campaign ${campaign._id} auto-activated`);
-
-          // Send activation email
-          try {
-            const user = await User.findById(campaignToActivate.userId);
-            if (user) {
-              await transporter.sendMail({
-                from: '"Adsteric" <adshark00@gmail.com>',
-                to: user.email,
-                subject: 'Campaign Activated!',
-                html: `
-                  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <div style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); padding: 30px; text-align: center;">
-                      <h1 style="color: white; margin: 0;">ADSTERIC</h1>
-                    </div>
-                    <div style="padding: 30px; background: #f5f7fa;">
-                      <h2 style="color: #1a202c;">Campaign Activated! 🎉</h2>
-                      <p style="color: #4a5568;">Your campaign "${campaignToActivate.campaignName}" is now active!</p>
-                      <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                        <p style="margin: 8px 0;"><strong>Daily Budget:</strong> $${campaignToActivate.dailyBudget.toFixed(2)}</p>
-                        <p style="margin: 8px 0;"><strong>Total Budget:</strong> $${campaignToActivate.totalBudget.toFixed(2)}</p>
-                      </div>
-                    </div>
-                  </div>
-                `
-              });
-            }
-          } catch (emailError) {
-            console.error('Email error:', emailError);
-          }
-        }
-      } catch (error) {
-        console.error('Auto-activation error:', error);
-      }
-    }, 5400000); // 1.5 hours
+    console.log('✅ Campaign created:', campaign._id);
 
     // Send creation email
     try {
@@ -758,6 +771,25 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       console.error('Email error:', emailError);
     }
 
+    // Schedule auto-activation after 1.5 hours
+    // Schedule auto-activation after 1.5 hours
+setTimeout(async () => {
+  try {
+    const campaignToActivate = await Campaign.findById(campaign._id);
+    if (campaignToActivate && campaignToActivate.status === 'pending') {
+      campaignToActivate.status = 'active';
+      campaignToActivate.startDate = new Date();
+      await campaignToActivate.save();
+      console.log(`✅ Campaign ${campaign._id} auto-activated`);
+
+      // Generate first day's statistics
+      await generateAndSaveDailyStats(campaign._id);  // NEW
+    }
+  } catch (error) {
+    console.error('Auto-activation error:', error);
+  }
+}, 5400000); // 1.5 hours
+
     res.status(201).json({
       message: 'Campaign created successfully! It will be activated in 1.5 hours.',
       campaign: {
@@ -774,7 +806,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Create campaign error:', error);
+    console.error('❌ Create campaign error:', error);
     res.status(500).json({ message: 'Server error: ' + error.message });
   }
 });
@@ -915,7 +947,163 @@ app.put('/api/campaigns/:id', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Server error while updating campaign' });
   }
 });
+// Package Tier Ranges and Multipliers
+const PACKAGE_TIERS = {
+  standard: {
+    range: { min: 0, max: 300 },
+    multipliers: {
+      impressions: { min: 1000, max: 3000 },
+      ctr: { min: 1.5, max: 2.5 }, // %
+      conversionRate: { min: 2.0, max: 4.0 }, // %
+      approvedRate: { min: 60, max: 70 }, // %
+      holdRate: { min: 15, max: 20 }, // %
+      declinedRate: { min: 10, max: 20 }, // %
+      payoutPerConversion: { min: 3, max: 8 }
+    }
+  },
+  bronze: {
+    range: { min: 301, max: 1000 },
+    multipliers: {
+      impressions: { min: 3000, max: 8000 },
+      ctr: { min: 2.0, max: 3.5 },
+      conversionRate: { min: 3.0, max: 5.0 },
+      approvedRate: { min: 65, max: 75 },
+      holdRate: { min: 12, max: 18 },
+      declinedRate: { min: 7, max: 15 },
+      payoutPerConversion: { min: 5, max: 10 }
+    }
+  },
+  silver: {
+    range: { min: 1001, max: 3000 },
+    multipliers: {
+      impressions: { min: 8000, max: 20000 },
+      ctr: { min: 2.5, max: 4.0 },
+      conversionRate: { min: 3.5, max: 6.0 },
+      approvedRate: { min: 70, max: 80 },
+      holdRate: { min: 10, max: 15 },
+      declinedRate: { min: 5, max: 10 },
+      payoutPerConversion: { min: 8, max: 15 }
+    }
+  },
+  gold: {
+    range: { min: 3001, max: 8000 },
+    multipliers: {
+      impressions: { min: 20000, max: 50000 },
+      ctr: { min: 3.0, max: 5.0 },
+      conversionRate: { min: 4.0, max: 7.0 },
+      approvedRate: { min: 75, max: 85 },
+      holdRate: { min: 8, max: 12 },
+      declinedRate: { min: 3, max: 8 },
+      payoutPerConversion: { min: 12, max: 20 }
+    }
+  },
+  platinum: {
+    range: { min: 8001, max: 25000 },
+    multipliers: {
+      impressions: { min: 50000, max: 150000 },
+      ctr: { min: 3.5, max: 6.0 },
+      conversionRate: { min: 5.0, max: 8.5 },
+      approvedRate: { min: 80, max: 90 },
+      holdRate: { min: 5, max: 10 },
+      declinedRate: { min: 2, max: 5 },
+      payoutPerConversion: { min: 18, max: 30 }
+    }
+  },
+  diamond: {
+    range: { min: 25001, max: Infinity },
+    multipliers: {
+      impressions: { min: 150000, max: 500000 },
+      ctr: { min: 4.0, max: 7.5 },
+      conversionRate: { min: 6.0, max: 10.0 },
+      approvedRate: { min: 85, max: 95 },
+      holdRate: { min: 3, max: 7 },
+      declinedRate: { min: 1, max: 3 },
+      payoutPerConversion: { min: 25, max: 50 }
+    }
+  }
+};
 
+// Calculate user's package tier based on total spent
+function calculatePackageTier(totalSpent) {
+  for (const [tier, config] of Object.entries(PACKAGE_TIERS)) {
+    if (totalSpent >= config.range.min && totalSpent <= config.range.max) {
+      return tier;
+    }
+  }
+  return 'standard';
+}
+
+// Generate random number within range
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// Generate daily statistics for a campaign
+function generateDailyStats(dailyBudget, packageTier, campaignType) {
+  const tier = PACKAGE_TIERS[packageTier];
+  const multipliers = tier.multipliers;
+
+  // Base impressions from tier range
+  const impressions = Math.floor(randomInRange(
+    multipliers.impressions.min,
+    multipliers.impressions.max
+  ));
+
+  // CTR (Click-Through Rate)
+  const ctr = randomInRange(multipliers.ctr.min, multipliers.ctr.max);
+  const clicks = Math.floor(impressions * (ctr / 100));
+
+  // Conversion Rate
+  const conversionRate = randomInRange(
+    multipliers.conversionRate.min,
+    multipliers.conversionRate.max
+  );
+  const totalConversions = Math.floor(clicks * (conversionRate / 100));
+
+  // Split conversions by status
+  const approvedRate = randomInRange(multipliers.approvedRate.min, multipliers.approvedRate.max);
+  const holdRate = randomInRange(multipliers.holdRate.min, multipliers.holdRate.max);
+  const declinedRate = 100 - approvedRate - holdRate;
+
+  const approvedConversions = Math.floor(totalConversions * (approvedRate / 100));
+  const holdConversions = Math.floor(totalConversions * (holdRate / 100));
+  const declinedConversions = totalConversions - approvedConversions - holdConversions;
+
+  // Calculate payouts
+  const payoutPerConversion = randomInRange(
+    multipliers.payoutPerConversion.min,
+    multipliers.payoutPerConversion.max
+  );
+
+  const approvedPayout = approvedConversions * payoutPerConversion;
+  const holdPayout = holdConversions * payoutPerConversion * 0.8; // Hold gets 80%
+  const declinedPayout = declinedConversions * payoutPerConversion * 0.3; // Declined gets 30%
+
+  // Calculate EPC (Earnings Per Click)
+  const totalPayout = approvedPayout + holdPayout + declinedPayout;
+  const epc = clicks > 0 ? totalPayout / clicks : 0;
+
+  return {
+    impressions,
+    clicks,
+    conversions: {
+      approved: approvedConversions,
+      hold: holdConversions,
+      declined: declinedConversions,
+      total: totalConversions
+    },
+    spent: Math.min(dailyBudget, dailyBudget * randomInRange(0.85, 1.0)), // 85-100% of budget
+    payouts: {
+      approved: parseFloat(approvedPayout.toFixed(2)),
+      hold: parseFloat(holdPayout.toFixed(2)),
+      declined: parseFloat(declinedPayout.toFixed(2)),
+      total: parseFloat(totalPayout.toFixed(2))
+    },
+    ctr: parseFloat(ctr.toFixed(3)),
+    conversionRate: parseFloat(conversionRate.toFixed(3)),
+    epc: parseFloat(epc.toFixed(3))
+  };
+}
 // Update Campaign Status (Pause/Resume/Delete)
 app.patch('/api/campaigns/:id/status', authenticateToken, async (req, res) => {
   try {
@@ -1174,6 +1362,230 @@ app.get('/api/campaigns/stats/summary', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching statistics' });
   }
 });
+// Function to generate and save daily statistics
+async function generateAndSaveDailyStats(campaignId) {
+  try {
+    const campaign = await Campaign.findById(campaignId);
+    if (!campaign || campaign.status !== 'active') {
+      return;
+    }
+
+    const user = await User.findById(campaign.userId);
+    if (!user) {
+      return;
+    }
+
+    // Get today's date at midnight
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Check if stats already exist for today
+    const existingStats = await DailyStatistics.findOne({
+      userId: user._id,
+      campaignId: campaign._id,
+      date: today
+    });
+
+    if (existingStats) {
+      console.log(`Stats already exist for campaign ${campaignId} on ${today}`);
+      return;
+    }
+
+    // Generate stats based on user's package tier
+    const stats = generateDailyStats(
+      campaign.dailyBudget,
+      user.currentPackage,
+      campaign.campaignType
+    );
+
+    // Save daily statistics
+    const dailyStats = new DailyStatistics({
+      userId: user._id,
+      campaignId: campaign._id,
+      date: today,
+      ...stats
+    });
+
+    await dailyStats.save();
+
+    // Update campaign cumulative statistics
+    campaign.statistics.impressions += stats.impressions;
+    campaign.statistics.clicks += stats.clicks;
+    campaign.statistics.conversions += stats.conversions.total;
+    campaign.statistics.spent += stats.spent;
+    await campaign.save();
+
+    console.log(`✅ Generated daily stats for campaign ${campaignId}:`, {
+      package: user.currentPackage,
+      impressions: stats.impressions,
+      clicks: stats.clicks,
+      conversions: stats.conversions.total,
+      spent: stats.spent
+    });
+
+  } catch (error) {
+    console.error('Error generating daily stats:', error);
+  }
+}
+// Get Statistics for User
+// Get Statistics for User
+app.get('/api/statistics', authenticateToken, async (req, res) => {
+  try {
+    console.log('📊 Statistics request from user:', req.user.userId);
+    
+    const { startDate, endDate, campaignId, groupBy = 'date' } = req.query;
+
+    // Build query
+    const query = { userId: req.user.userId };
+
+    if (campaignId) {
+      query.campaignId = campaignId;
+    }
+
+    if (startDate || endDate) {
+      query.date = {};
+      if (startDate) query.date.$gte = new Date(startDate);
+      if (endDate) query.date.$lte = new Date(endDate);
+    } else {
+      // Default: last 30 days
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      query.date = { $gte: thirtyDaysAgo };
+    }
+
+    console.log('📊 Query:', JSON.stringify(query));
+
+    // Fetch statistics
+    const statistics = await DailyStatistics.find(query)
+      .populate('campaignId', 'campaignName')
+      .sort({ date: -1 });
+
+    console.log(`📊 Found ${statistics.length} statistics records`);
+
+    // Get user info for package display
+    const user = await User.findById(req.user.userId).select('currentPackage totalSpent');
+
+    console.log('📊 User package:', user.currentPackage, 'Total spent:', user.totalSpent);
+
+    // Calculate totals
+    const totals = statistics.reduce((acc, stat) => {
+      acc.clicks += stat.clicks;
+      acc.impressions += stat.impressions;
+      acc.conversions.approved += stat.conversions.approved;
+      acc.conversions.hold += stat.conversions.hold;
+      acc.conversions.declined += stat.conversions.declined;
+      acc.conversions.total += stat.conversions.total;
+      acc.spent += stat.spent;
+      acc.payouts.approved += stat.payouts.approved;
+      acc.payouts.hold += stat.payouts.hold;
+      acc.payouts.declined += stat.payouts.declined;
+      acc.payouts.total += stat.payouts.total;
+      return acc;
+    }, {
+      clicks: 0,
+      impressions: 0,
+      conversions: { approved: 0, hold: 0, declined: 0, total: 0 },
+      spent: 0,
+      payouts: { approved: 0, hold: 0, declined: 0, total: 0 }
+    });
+
+    // Calculate averages
+    const avgCTR = totals.impressions > 0 
+      ? ((totals.clicks / totals.impressions) * 100).toFixed(3)
+      : '0.000';
+    
+    const avgEPC = totals.clicks > 0
+      ? (totals.payouts.total / totals.clicks).toFixed(3)
+      : '0.000';
+
+    const response = {
+      statistics: statistics.map(stat => ({
+        date: stat.date,
+        campaignName: stat.campaignId?.campaignName || 'Unknown Campaign',
+        clicks: stat.clicks,
+        impressions: stat.impressions,
+        conversions: stat.conversions,
+        payouts: stat.payouts,
+        ctr: stat.ctr,
+        conversionRate: stat.conversionRate,
+        epc: stat.epc,
+        spent: stat.spent
+      })),
+      totals: {
+        ...totals,
+        avgCTR: parseFloat(avgCTR),
+        avgEPC: parseFloat(avgEPC)
+      },
+      userPackage: {
+        current: user.currentPackage,
+        totalSpent: user.totalSpent,
+        nextTier: getNextTierInfo(user.totalSpent)
+      }
+    };
+
+    console.log('📊 Sending response with', statistics.length, 'records');
+    res.json(response);
+
+  } catch (error) {
+    console.error('❌ Get statistics error:', error);
+    res.status(500).json({ message: 'Server error while fetching statistics' });
+  }
+});
+// Helper function to get next tier info
+function getNextTierInfo(totalSpent) {
+  const tiers = ['standard', 'bronze', 'silver', 'gold', 'platinum', 'diamond'];
+  const currentTier = calculatePackageTier(totalSpent);
+  const currentIndex = tiers.indexOf(currentTier);
+  
+  if (currentIndex === tiers.length - 1) {
+    return { tier: 'diamond', amountNeeded: 0, message: 'Maximum tier reached!' };
+  }
+  
+  const nextTier = tiers[currentIndex + 1];
+  const nextTierMin = PACKAGE_TIERS[nextTier].range.min;
+  const amountNeeded = nextTierMin - totalSpent;
+  
+  return {
+    tier: nextTier,
+    amountNeeded: Math.max(0, amountNeeded),
+    message: `Spend $${amountNeeded.toFixed(2)} more to reach ${nextTier.toUpperCase()} tier`
+  };
+}
+// Schedule daily stats generation for all active campaigns
+async function generateDailyStatsForAllCampaigns() {
+  try {
+    const activeCampaigns = await Campaign.find({ status: 'active' });
+    console.log(`Generating daily stats for ${activeCampaigns.length} active campaigns...`);
+
+    for (const campaign of activeCampaigns) {
+      await generateAndSaveDailyStats(campaign._id);
+    }
+
+    console.log('✅ Daily stats generation completed');
+  } catch (error) {
+    console.error('Error in daily stats generation:', error);
+  }
+}
+
+// Run daily stats generation every 24 hours (at midnight)
+function scheduleDailyStatsGeneration() {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
+  
+  const timeUntilMidnight = tomorrow - now;
+
+  // First run at midnight
+  setTimeout(() => {
+    generateDailyStatsForAllCampaigns();
+    
+    // Then run every 24 hours
+    setInterval(generateDailyStatsForAllCampaigns, 24 * 60 * 60 * 1000);
+  }, timeUntilMidnight);
+
+  console.log(`📅 Daily stats will generate in ${(timeUntilMidnight / 1000 / 60).toFixed(0)} minutes`);
+}
 app.post('/api/admin/signin', async (req, res) => {
   try {
     const { email, password } = req.body;

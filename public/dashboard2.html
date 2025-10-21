@@ -9,388 +9,1087 @@
     <link rel="stylesheet" href="/finances.css">
     <link rel="stylesheet" href="/campaigns.css">
     <link rel="stylesheet" href="/create-campaign.css">
+    <link rel="stylesheet" href="/fullpage-campaign.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Statistics Section - Table Design */
+
         .statistics-section {
-    padding: 0;
+            position: fixed;
+            top: 0;
+            left: 280px;
+            right: 0;
+            bottom: 0;
+            background: #f9fafb;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .alert.hidden {
+            display: none;
+        }
+/* Package Info Banner */
+.package-info-banner {
+    background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+    margin: 1.5rem 2rem;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
 }
 
-.stats-header {
+.package-info-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-}
-
-.stats-header h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #111827;
-}
-
-.date-range-picker {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    color: #6b7280;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.date-range-picker:hover {
-    border-color: #6d28d9;
-}
-
-/* Stats Grid */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.stat-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.stat-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 1rem;
-}
-
-.stat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-}
-
-.stat-icon.purple {
-    background: #f3e8ff;
-    color: #6d28d9;
-}
-
-.stat-icon.blue {
-    background: #dbeafe;
-    color: #2563eb;
-}
-
-.stat-icon.green {
-    background: #d1fae5;
-    color: #059669;
-}
-
-.stat-icon.orange {
-    background: #fed7aa;
-    color: #ea580c;
-}
-
-.stat-trend {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-}
-
-.stat-trend.up {
-    color: #059669;
-}
-
-.stat-trend.down {
-    color: #dc2626;
-}
-
-.stat-label {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-bottom: 0.5rem;
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #111827;
-}
-
-.stat-detail {
-    font-size: 0.75rem;
-    color: #9ca3af;
-    margin-top: 0.5rem;
-}
-
-/* Charts Section */
-.charts-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.chart-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.chart-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #111827;
-}
-
-.chart-filter {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.filter-btn {
-    padding: 0.375rem 0.75rem;
-    background: #f3f4f6;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.filter-btn.active {
-    background: #6d28d9;
-    color: white;
-}
-
-.chart-container {
-    height: 280px;
-    position: relative;
-}
-
-.performance-chart {
-    width: 100%;
-    height: 100%;
-}
-
-.chart-bar {
-    transition: fill 0.3s ease;
-}
-
-.chart-bar:hover {
-    fill: #5b21b6;
-}
-
-.chart-label {
-    fill: #6b7280;
-    font-size: 12px;
-}
-
-.chart-value {
-    fill: #111827;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.chart-grid-line {
-    stroke: #f3f4f6;
-    stroke-width: 1;
-}
-
-/* Pie Chart */
-.pie-chart {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 2rem;
-    padding: 1rem;
 }
 
-.pie-svg {
-    width: 180px;
-    height: 180px;
+.package-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
-.pie-legend {
+.package-badge i {
+    font-size: 2rem;
+    color: #fbbf24;
+}
+
+.package-stats {
+    display: flex;
+    gap: 3rem;
+}
+
+.package-stat {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.25rem;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.legend-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-}
-
-.legend-label {
+.package-stat .stat-label {
+    color: rgba(255, 255, 255, 0.8);
     font-size: 0.875rem;
-    color: #6b7280;
-    flex: 1;
+    font-weight: 500;
 }
 
-.legend-value {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #111827;
-}
-
-/* Campaign Performance Table */
-.campaigns-table-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-.campaigns-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.campaigns-table thead {
-    background: #f9fafb;
-}
-
-.campaigns-table th {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #6b7280;
-    text-transform: uppercase;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.campaigns-table td {
-    padding: 1rem;
-    font-size: 0.875rem;
-    color: #111827;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.campaigns-table tr:hover {
-    background: #f9fafb;
-}
-
-.campaign-name {
-    font-weight: 600;
-    color: #111827;
-}
-
-.campaign-url {
-    font-size: 0.75rem;
-    color: #6b7280;
-    display: block;
-    margin-top: 0.25rem;
-}
-
-.campaign-status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.status-active {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-pending {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.metric-positive {
-    color: #059669;
-    font-weight: 600;
-}
-
-.metric-neutral {
-    color: #6b7280;
-}
-
-/* Empty State */
-.empty-stats {
-    background: white;
-    padding: 4rem 2rem;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.empty-stats i {
-    font-size: 3rem;
-    color: #d1d5db;
-    margin-bottom: 1rem;
-}
-
-.empty-stats h3 {
+.package-stat .stat-value {
+    color: white;
     font-size: 1.25rem;
-    color: #111827;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
 }
 
-.empty-stats p {
-    color: #6b7280;
-    margin-bottom: 1.5rem;
-}
+/* Package tier colors */
+.package-standard { color: #94a3b8; }
+.package-bronze { color: #cd7f32; }
+.package-silver { color: #c0c0c0; }
+.package-gold { color: #ffd700; }
+.package-platinum { color: #e5e4e2; }
+.package-diamond { color: #b9f2ff; }
+        /* Statistics Header */
+        .stats-page-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
+        .stats-page-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
 
-    .stats-header {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
+        /* Filters Section */
+        .filters-section {
+            background: white;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
 
-    .pie-chart {
-        flex-direction: column;
-    }
+        .filters-header {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-}
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            min-height: 36px;
+            padding: 0.5rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+        }
+
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: #e0e7ff;
+            color: #3730a3;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .filter-tag-close {
+            background: none;
+            border: none;
+            color: #6366f1;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .filter-tag-close:hover {
+            color: #4f46e5;
+        }
+
+        .filter-select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: #f9fafb;
+            font-size: 0.875rem;
+            color: #374151;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #6d28d9;
+        }
+
+        .filters-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .filter-grouped-by {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .filter-grouped-by select {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            font-size: 0.875rem;
+            color: #374151;
+            cursor: pointer;
+        }
+
+        .update-stats-btn {
+            margin-left: auto;
+            padding: 0.5rem 1.5rem;
+            background: #6d28d9;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .update-stats-btn:hover {
+            background: #5b21b6;
+            transform: translateY(-1px);
+        }
+
+        /* Statistics Table Section */
+        .stats-table-wrapper {
+            background: white;
+            margin: 2rem 2rem 2rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .table-scroll-container {
+            overflow-x: auto;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .stats-table thead {
+            background: #f9fafb;
+            border-bottom: 2px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .stats-table th {
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .stats-table th:first-child {
+            padding-left: 1.5rem;
+        }
+
+        .stats-table th:last-child {
+            padding-right: 1.5rem;
+        }
+
+        /* Table Header Groups */
+        .stats-table .header-group {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Table Body */
+        .stats-table tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.15s;
+        }
+
+        .stats-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .stats-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .stats-table td {
+            padding: 1rem;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+        .stats-table td:first-child {
+            padding-left: 1.5rem;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .stats-table td:last-child {
+            padding-right: 1.5rem;
+        }
+
+        /* Table Footer (Total Row) */
+        .stats-table tfoot {
+            background: #f9fafb;
+            border-top: 2px solid #e5e7eb;
+            font-weight: 600;
+        }
+
+        .stats-table tfoot td {
+            padding: 1rem;
+            color: #111827;
+        }
+
+        .stats-table tfoot td:first-child {
+            font-weight: 700;
+            color: #6d28d9;
+        }
+
+        /* Number Formatting */
+        .stats-number {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: 'tnum';
+        }
+
+        .stats-currency {
+            color: #059669;
+        }
+
+        .stats-percentage {
+            color: #6b7280;
+        }
+
+        /* Highlighted Columns */
+        .stats-table .highlight-col {
+            background: #faf5ff;
+        }
+
+        .stats-table tbody tr:hover .highlight-col {
+            background: #f3e8ff;
+        }
+
+        /* Column Dividers */
+        .stats-table th.col-divider,
+        .stats-table td.col-divider {
+            border-left: 2px solid #e5e7eb;
+        }
+
+        /* Empty State */
+        .stats-empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .stats-empty-state i {
+            font-size: 3rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .stats-empty-state h3 {
+            font-size: 1.25rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-empty-state p {
+            color: #6b7280;
+        }
+
+        /* Loading State */
+        .stats-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        .stats-loading i {
+            font-size: 2rem;
+            color: #6d28d9;
+            margin-bottom: 1rem;
+        }
+
+        .stats-loading p {
+            color: #6b7280;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .filters-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .filters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .statistics-section {
+                left: 0;
+            }
+
+            .stats-page-header,
+            .filters-section,
+            .stats-table-wrapper {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .update-stats-btn {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .stats-table th,
+            .stats-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .stats-table th:first-child,
+            .stats-table td:first-child {
+                padding-left: 1rem;
+            }
+
+            .stats-table th:last-child,
+            .stats-table td:last-child {
+                padding-right: 1rem;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .table-scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-track {
+            background: #f3f4f6;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .table-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* Enhanced Create Campaign Styles */
+        .create-campaign-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-subtitle {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .campaign-form-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-sections-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: #6d28d9;
+        }
+
+        .radio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .radio-grid-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .radio-card {
+            position: relative;
+            cursor: pointer;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .radio-card:hover {
+            border-color: #6d28d9;
+            background: #f9f5ff;
+        }
+
+        .radio-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-card input[type="radio"]:checked+.radio-content {
+            color: #6d28d9;
+        }
+
+        .radio-card input[type="radio"]:checked~.radio-content::before {
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 20px;
+            height: 20px;
+            background: #6d28d9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radio-card input[type="radio"]:checked~.radio-content::after {
+            content: '✓';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 20px;
+            height: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .radio-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            position: relative;
+        }
+
+        .radio-content i {
+            font-size: 1.125rem;
+        }
+
+        .tooltip-icon {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            cursor: help;
+            margin-left: 0.25rem;
+        }
+
+        /* Country Selector */
+        .country-selector {
+            position: relative;
+        }
+
+        .country-selector-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #374151;
+            transition: all 0.2s;
+        }
+
+        .country-selector-btn:hover {
+            border-color: #6d28d9;
+        }
+
+        .country-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-height: 300px;
+            overflow: hidden;
+        }
+
+        .country-search {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .country-search i {
+            color: #9ca3af;
+        }
+
+        .country-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+        }
+
+        .country-list {
+            max-height: 240px;
+            overflow-y: auto;
+        }
+
+        .country-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .country-item:hover {
+            background: #f9fafb;
+        }
+
+        .country-flag {
+            font-size: 1.25rem;
+        }
+
+        .country-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .selected-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .country-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .country-tag button {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .country-tag button:hover {
+            color: #ef4444;
+        }
+
+        .form-row-three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .budget-section {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-sections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row-three {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .campaign-form-wrapper {
+                padding: 1rem;
+            }
+
+            .form-section-card {
+                padding: 1.5rem;
+            }
+
+            .radio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .stat-trend.up {
+            color: #059669;
+        }
+
+        .stat-trend.down {
+            color: #dc2626;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .stat-detail {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .chart-filter {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.375rem 0.75rem;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #6d28d9;
+            color: white;
+        }
+
+        .chart-container {
+            height: 280px;
+            position: relative;
+        }
+
+        .performance-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-bar {
+            transition: fill 0.3s ease;
+        }
+
+        .chart-bar:hover {
+            fill: #5b21b6;
+        }
+
+        .chart-label {
+            fill: #6b7280;
+            font-size: 12px;
+        }
+
+        .chart-value {
+            fill: #111827;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .chart-grid-line {
+            stroke: #f3f4f6;
+            stroke-width: 1;
+        }
+
+        /* Pie Chart */
+        .pie-chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .pie-svg {
+            width: 180px;
+            height: 180px;
+        }
+
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            flex: 1;
+        }
+
+        .legend-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Campaign Performance Table */
+        .campaigns-table-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .campaigns-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .campaigns-table thead {
+            background: #f9fafb;
+        }
+
+        .campaigns-table th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .campaigns-table td {
+            padding: 1rem;
+            font-size: 0.875rem;
+            color: #111827;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .campaigns-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .campaign-name {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .campaign-url {
+            font-size: 0.75rem;
+            color: #6b7280;
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        .campaign-status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .metric-positive {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .metric-neutral {
+            color: #6b7280;
+        }
+
+        /* Empty State */
+        .empty-stats {
+            background: white;
+            padding: 4rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .empty-stats i {
+            font-size: 3rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .empty-stats h3 {
+            font-size: 1.25rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-stats p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .pie-chart {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
         /* === CAMPAIGNS SECTION === */
         .campaigns-section {
@@ -516,275 +1215,8 @@
             border-radius: 12px;
         }
 
-        .create-campaign-section {
-            padding: 0;
-            max-width: 800px;
-            margin: 0 auto;
-        }
 
-        .create-campaign-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
 
-        .campaign-header {
-            padding: 2rem;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .campaign-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 0.25rem;
-        }
-
-        .campaign-header p {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        .close-btn {
-            background: #f3f4f6;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            transition: all 0.2s;
-        }
-
-        .close-btn:hover {
-            background: #e5e7eb;
-            color: #111827;
-        }
-
-        .campaign-form-content {
-            padding: 2rem;
-        }
-
-        .form-field {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .field-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .required {
-            color: #ef4444;
-        }
-
-        .field-input,
-        .field-select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .field-input:focus,
-        .field-select:focus {
-            outline: none;
-            border-color: #6d28d9;
-            box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1);
-        }
-
-        .field-hint {
-            display: block;
-            font-size: 0.75rem;
-            color: #9ca3af;
-            margin-top: 0.25rem;
-        }
-
-        .budget-summary {
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        .summary-row:not(:last-child) {
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .summary-row.total {
-            padding-top: 1rem;
-            margin-top: 0.5rem;
-            border-top: 2px solid #6d28d9;
-            font-size: 1rem;
-            color: #111827;
-        }
-
-        .summary-row.total strong {
-            color: #6d28d9;
-            font-size: 1.25rem;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.875rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        .btn-cancel {
-            background: #f3f4f6;
-            color: #374151;
-        }
-
-        .btn-cancel:hover {
-            background: #e5e7eb;
-        }
-
-        .btn-submit {
-            background: linear-gradient(135deg, #6d28d9, #5b21b6);
-            color: white;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.3);
-        }
-
-        .btn-submit:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .alert {
-            margin: 0 2rem 0 2rem;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            margin-bottom: 0;
-            animation: slideDown 0.3s ease;
-        }
-
-        .alert.hidden {
-            display: none;
-        }
-
-        .alert.error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
-        }
-
-        .alert.success {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Loading State */
-        .btn-submit.loading {
-            position: relative;
-            color: transparent;
-        }
-
-        .btn-submit.loading::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            top: 50%;
-            left: 50%;
-            margin-left: -8px;
-            margin-top: -8px;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.6s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .campaign-header {
-                padding: 1.5rem;
-            }
-
-            .campaign-form-content {
-                padding: 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .alert {
-                margin: 0 1.5rem;
-            }
-        }
 
         /* Reset and base styles */
         * {
@@ -1758,18 +2190,18 @@
                         </a>
                     </li>
                     <li>
-    <a href="#statistics" onclick="showSection('statisticsSection'); return false;">
-        <i class="fa-solid fa-chart-line"></i>
-        <span>Statistics</span>
-    </a>
-</li>
+                        <a href="#statistics" onclick="showSection('statisticsSection'); return false;">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Statistics</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="#add-funds" onclick="showSection('paymentForm'); return false;">
                             <i class="fa-solid fa-wallet"></i>
                             <span>Add Funds</span>
                         </a>
                     </li>
-                   
+
                     <li>
                         <a href="#campaigns" onclick="showSection('campaignsSection'); return false;">
                             <i class="fa-solid fa-bullhorn"></i>
@@ -1782,7 +2214,7 @@
                             <span>Create Campaign</span>
                         </a>
                     </li>
-                
+
                 </ul>
             </nav>
 
@@ -1932,124 +2364,380 @@
                     </div>
                 </div>
                 <div id="createCampaignSection" class="create-campaign-section hidden">
-                    <div class="create-campaign-card">
-                        <div class="campaign-header">
-                            <div>
-                                <h2>Create New Campaign</h2>
-                                <p>Fill in the details to launch your advertising campaign</p>
-                            </div>
-                            <button class="close-btn" onclick="showSection('campaignsSection')">
-                                <i class="fa-solid fa-times"></i>
-                            </button>
+                    <!-- Campaign Form Header -->
+                    <div class="create-campaign-header">
+                        <div>
+                            <h1>Create New Campaign</h1>
+                            <p class="header-subtitle">Configure your advertising campaign with advanced targeting
+                                options</p>
                         </div>
+                        <button class="close-btn" onclick="showSection('campaignsSection')">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
 
-                        <div id="campaignAlert" class="alert hidden"></div>
+                    <div id="campaignAlert" class="alert hidden"></div>
 
-                        <form id="createCampaignForm" class="campaign-form-content">
-                            <!-- Campaign Name -->
-                            <div class="form-field">
-                                <label class="field-label">
-                                    Campaign Name <span class="required">*</span>
-                                </label>
-                                <input type="text" id="campaignName" class="field-input"
-                                    placeholder="e.g., Summer Sale 2024" required minlength="3" maxlength="100">
-                                <span class="field-hint">Choose a descriptive name for your campaign</span>
+                    <!-- Campaign Form Content -->
+                    <div class="campaign-form-wrapper">
+                        <form id="createCampaignForm">
+                            <!-- Two Column Layout -->
+                            <div class="form-sections-grid">
+
+                                <!-- Left Column: Basic Settings -->
+                                <div class="form-section-card">
+                                    <h3 class="section-title">
+                                        <i class="fa-solid fa-gear"></i>
+                                        Basic Settings
+                                    </h3>
+
+                                    <!-- Campaign Name -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Campaign Name <span class="required">*</span>
+                                        </label>
+                                        <input type="text" id="campaignName" class="field-input"
+                                            placeholder="e.g., Summer Sale 2024" required>
+                                    </div>
+
+                                    <!-- Ad Format -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Advertising Format <span class="required">*</span>
+                                        </label>
+                                        <div class="radio-grid">
+                                            <label class="radio-card">
+                                                <input type="radio" name="adFormat" value="push" checked>
+                                                <div class="radio-content">
+                                                    <i class="fa-solid fa-bell"></i>
+                                                    <span>Push Notifications</span>
+                                                </div>
+                                            </label>
+                                            <label class="radio-card">
+                                                <input type="radio" name="adFormat" value="inpage">
+                                                <div class="radio-content">
+                                                    <i class="fa-solid fa-window-maximize"></i>
+                                                    <span>InPage</span>
+                                                </div>
+                                            </label>
+                                            <label class="radio-card">
+                                                <input type="radio" name="adFormat" value="popunder">
+                                                <div class="radio-content">
+                                                    <i class="fa-solid fa-up-right-from-square"></i>
+                                                    <span>Popunder</span>
+                                                </div>
+                                            </label>
+                                            <label class="radio-card">
+                                                <input type="radio" name="adFormat" value="native">
+                                                <div class="radio-content">
+                                                    <i class="fa-solid fa-newspaper"></i>
+                                                    <span>NativeAds</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pricing Model -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Pricing Model <span class="required">*</span>
+                                        </label>
+                                        <div class="radio-grid-two">
+                                            <label class="radio-card">
+                                                <input type="radio" name="pricingModel" value="cpc" checked>
+                                                <div class="radio-content">
+                                                    <i class="fa-solid fa-mouse-pointer"></i>
+                                                    <span>CPC (Cost Per Click)</span>
+                                                </div>
+                                            </label>
+                                            <label class="radio-card">
+                                                <input type="radio" name="pricingModel" value="cpm">
+                                                <div class="radio-content">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                    <span>CPM (Cost Per Mille)</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Target URL -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Target URL <span class="required">*</span>
+                                            <i class="fa-solid fa-circle-info tooltip-icon"
+                                                title="Where users will be directed when they click your ad"></i>
+                                        </label>
+                                        <input type="url" id="targetUrl" class="field-input"
+                                            placeholder="https://example.com/landing-page" required>
+                                        <span class="field-hint">You can use macros like {COUNTRY}, {CITY},
+                                            {DEVICE}</span>
+                                    </div>
+
+                                    <!-- Frequency Capping -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Frequency Capping (per day) <span class="required">*</span>
+                                            <i class="fa-solid fa-circle-info tooltip-icon"
+                                                title="Maximum times a user sees your ad per day"></i>
+                                        </label>
+                                        <input type="number" id="frequencyCapping" class="field-input" value="3" min="1"
+                                            max="10" required>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Targeting & Budget -->
+                                <div class="form-section-card">
+                                    <h3 class="section-title">
+                                        <i class="fa-solid fa-bullseye"></i>
+                                        Targeting & Audience
+                                    </h3>
+
+                                    <!-- Countries Selection -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Target Countries <span class="required">*</span>
+                                        </label>
+                                        <div class="country-selector">
+                                            <button type="button" class="country-selector-btn"
+                                                onclick="toggleCountryDropdown()">
+                                                <span id="selectedCountriesText">Select countries...</span>
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </button>
+                                            <div id="countryDropdown" class="country-dropdown hidden">
+                                                <div class="country-search">
+                                                    <i class="fa-solid fa-search"></i>
+                                                    <input type="text" placeholder="Search countries..."
+                                                        onkeyup="filterCountries(this.value)">
+                                                </div>
+                                                <div class="country-list" id="countryList">
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="US"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇺🇸</span>
+                                                        <span>United States</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="GB"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇬🇧</span>
+                                                        <span>United Kingdom</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="CA"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇨🇦</span>
+                                                        <span>Canada</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="AU"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇦🇺</span>
+                                                        <span>Australia</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="DE"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇩🇪</span>
+                                                        <span>Germany</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="FR"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇫🇷</span>
+                                                        <span>France</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="IT"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇮🇹</span>
+                                                        <span>Italy</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="ES"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇪🇸</span>
+                                                        <span>Spain</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="JP"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇯🇵</span>
+                                                        <span>Japan</span>
+                                                    </label>
+                                                    <label class="country-item">
+                                                        <input type="checkbox" value="IN"
+                                                            onchange="updateCountrySelection()">
+                                                        <span class="country-flag">🇮🇳</span>
+                                                        <span>India</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="selectedCountriesTags" class="selected-tags"></div>
+                                    </div>
+
+                                    <!-- Device Type -->
+                                    <div class="form-field">
+                                        <label class="field-label">Device</label>
+                                        <select id="deviceType" class="field-select">
+                                            <option value="all">All Devices</option>
+                                            <option value="desktop">Desktop</option>
+                                            <option value="mobile">Mobile</option>
+                                            <option value="tablet">Tablet</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- OS -->
+                                    <div class="form-row">
+                                        <div class="form-field">
+                                            <label class="field-label">Operating System</label>
+                                            <select id="osType" class="field-select">
+                                                <option value="all">All OS</option>
+                                                <option value="windows">Windows</option>
+                                                <option value="macos">macOS</option>
+                                                <option value="linux">Linux</option>
+                                                <option value="android">Android</option>
+                                                <option value="ios">iOS</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-field">
+                                            <label class="field-label">OS Version</label>
+                                            <input type="text" id="osVersion" class="field-input"
+                                                placeholder="e.g., 10.0, 14+">
+                                        </div>
+                                    </div>
+
+                                    <!-- Browser -->
+                                    <div class="form-row">
+                                        <div class="form-field">
+                                            <label class="field-label">Browser</label>
+                                            <select id="browserType" class="field-select">
+                                                <option value="all">All Browsers</option>
+                                                <option value="chrome">Chrome</option>
+                                                <option value="firefox">Firefox</option>
+                                                <option value="safari">Safari</option>
+                                                <option value="edge">Edge</option>
+                                                <option value="opera">Opera</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-field">
+                                            <label class="field-label">Browser Language</label>
+                                            <select id="browserLanguage" class="field-select">
+                                                <option value="all">All Languages</option>
+                                                <option value="en">English</option>
+                                                <option value="es">Spanish</option>
+                                                <option value="fr">French</option>
+                                                <option value="de">German</option>
+                                                <option value="it">Italian</option>
+                                                <option value="pt">Portuguese</option>
+                                                <option value="ja">Japanese</option>
+                                                <option value="zh">Chinese</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Connection Type -->
+                                    <div class="form-field">
+                                        <label class="field-label">Connection Type</label>
+                                        <select id="connectionType" class="field-select">
+                                            <option value="all">All Connection Types</option>
+                                            <option value="wifi">WiFi</option>
+                                            <option value="cellular">Cellular</option>
+                                            <option value="3g">3G</option>
+                                            <option value="4g">4G</option>
+                                            <option value="5g">5G</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Subscription Period -->
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Subscription Period (days)
+                                            <i class="fa-solid fa-circle-info tooltip-icon"
+                                                title="Target users based on how long they've been subscribed"></i>
+                                        </label>
+                                        <input type="text" id="subscriptionPeriod" class="field-input"
+                                            placeholder="e.g., 0-30, 30+">
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Target URL -->
-                            <div class="form-field">
-                                <label class="field-label">
-                                    Target URL <span class="required">*</span>
-                                </label>
-                                <input type="url" id="targetUrl" class="field-input"
-                                    placeholder="https://example.com/landing-page" required>
-                                <span class="field-hint">Where should your campaign traffic go?</span>
-                            </div>
+                            <!-- Budget Section (Full Width) -->
+                            <div class="form-section-card budget-section">
+                                <h3 class="section-title">
+                                    <i class="fa-solid fa-wallet"></i>
+                                    Budget & Schedule
+                                </h3>
 
-                            <!-- Campaign Type & Target Audience (Row) -->
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label class="field-label">
-                                        Campaign Type <span class="required">*</span>
-                                    </label>
-                                    <select id="campaignType" class="field-select" required>
-                                        <option value="">Select type</option>
-                                        <option value="cpc">Cost Per Click (CPC)</option>
-                                        <option value="cpm">Cost Per Mille (CPM)</option>
-                                        <option value="cpa">Cost Per Action (CPA)</option>
-                                    </select>
-                                </div>
+                                <div class="form-row-three">
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Daily Budget <span class="required">*</span>
+                                        </label>
+                                        <select id="dailyBudget" class="field-select" required
+                                            onchange="calculateBudget()">
+                                            <option value="">Select daily budget</option>
+                                            <option value="60">$60 per day</option>
+                                            <option value="120">$120 per day</option>
+                                            <option value="200">$200 per day</option>
+                                            <option value="320">$320 per day</option>
+                                            <option value="540">$540 per day</option>
+                                        </select>
+                                    </div>
 
-                                <div class="form-field">
-                                    <label class="field-label">
-                                        Target Audience <span class="required">*</span>
-                                    </label>
-                                    <select id="targetAudience" class="field-select" required>
-                                        <option value="">Select audience</option>
-                                        <option value="global">Global</option>
-                                        <option value="us">United States</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="eu">European Union</option>
-                                        <option value="asia">Asia Pacific</option>
-                                    </select>
-                                </div>
-                            </div>
+                                    <div class="form-field">
+                                        <label class="field-label">
+                                            Campaign Duration <span class="required">*</span>
+                                        </label>
+                                        <select id="campaignDuration" class="field-select" required
+                                            onchange="calculateBudget()">
+                                            <option value="">Select duration</option>
+                                            <option value="7">1 Week (7 days)</option>
+                                            <option value="14">2 Weeks (14 days)</option>
+                                            <option value="30">1 Month (30 days)</option>
+                                            <option value="60">2 Months (60 days)</option>
+                                            <option value="90">3 Months (90 days)</option>
+                                        </select>
+                                    </div>
 
-                            <!-- Daily Budget & Duration (Row) -->
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label class="field-label">
-                                        Daily Budget <span class="required">*</span>
-                                    </label>
-                                    <select id="dailyBudget" class="field-select" required onchange="calculateBudget()">
-                                        <option value="">Select daily budget</option>
-                                        <option value="60">$60 per day</option>
-                                        <option value="120">$120 per day</option>
-                                        <option value="200">$200 per day</option>
-                                        <option value="320">$320 per day</option>
-                                        <option value="540">$540 per day</option>
-                                    </select>
+                                    <div class="form-field">
+                                        <label class="field-label">Campaign Group</label>
+                                        <select id="campaignGroup" class="field-select">
+                                            <option value="none">No Group</option>
+                                            <option value="seasonal">Seasonal Campaigns</option>
+                                            <option value="product">Product Launch</option>
+                                            <option value="brand">Brand Awareness</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-field">
-                                    <label class="field-label">
-                                        Campaign Duration <span class="required">*</span>
-                                    </label>
-                                    <select id="campaignDuration" class="field-select" required
-                                        onchange="calculateBudget()">
-                                        <option value="">Select duration</option>
-                                        <option value="7">1 Week (7 days)</option>
-                                        <option value="14">2 Weeks (14 days)</option>
-                                        <option value="30">1 Month (30 days)</option>
-                                        <option value="60">2 Months (60 days)</option>
-                                        <option value="90">3 Months (90 days)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Budget Summary Card -->
-                            <div class="budget-summary">
-                                <div class="summary-row">
-                                    <span>Your Balance:</span>
-                                    <strong id="userBalance">$0.00</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Daily Budget:</span>
-                                    <strong id="displayDailyBudget">$0.00</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Campaign Duration:</span>
-                                    <strong id="displayDuration">0 days</strong>
-                                </div>
-                                <div class="summary-row total">
-                                    <span>Total Campaign Cost:</span>
-                                    <strong id="displayTotalBudget">$0.00</strong>
+                                <!-- Budget Summary -->
+                                <div class="budget-summary">
+                                    <div class="summary-row">
+                                        <span>Your Balance:</span>
+                                        <strong id="userBalance">$0.00</strong>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Daily Budget:</span>
+                                        <strong id="displayDailyBudget">$0.00</strong>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span>Campaign Duration:</span>
+                                        <strong id="displayDuration">0 days</strong>
+                                    </div>
+                                    <div class="summary-row total">
+                                        <span>Total Campaign Cost:</span>
+                                        <strong id="displayTotalBudget">$0.00</strong>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Action Buttons -->
+                            <!-- Form Actions -->
                             <div class="form-actions">
                                 <button type="button" class="btn btn-cancel" onclick="showSection('campaignsSection')">
+                                    <i class="fa-solid fa-times"></i>
                                     Cancel
                                 </button>
                                 <button type="submit" class="btn btn-submit" id="submitBtn">
@@ -2061,29 +2749,96 @@
                     </div>
                 </div>
                 <div id="statisticsSection" class="statistics-section hidden">
-    <div class="stats-header">
-        <h2>Statistics Overview</h2>
-      
+    <!-- Page Header -->
+    <div class="stats-page-header">
+        <h1>Statistics & Performance</h1>
     </div>
 
-    <!-- Stats Content -->
-    <div id="statsContent">
-        <div class="empty-stats">
-            <i class="fa-solid fa-spinner fa-spin"></i>
-            <h3>Loading Statistics...</h3>
-            <p>Please wait while we fetch your campaign data</p>
+    <!-- Package Info Banner -->
+    <div class="package-info-banner" id="packageBanner">
+        <div class="package-info-content">
+            <div class="package-badge">
+                <i class="fa-solid fa-crown"></i>
+                <span id="currentPackage">STANDARD</span>
+            </div>
+            <div class="package-stats">
+                <div class="package-stat">
+                    <span class="stat-label">Total Spent:</span>
+                    <span class="stat-value" id="totalSpent">$0.00</span>
+                </div>
+                <div class="package-stat">
+                    <span class="stat-label" id="nextTierLabel">Next Tier:</span>
+                    <span class="stat-value" id="nextTierInfo">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Table -->
+    <div class="stats-table-wrapper">
+        <div class="table-scroll-container">
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>CAMPAIGN</th>
+                        <th>CLICKS</th>
+                        <th class="col-divider highlight-col">APPROVED</th>
+                        <th class="highlight-col">HOLD</th>
+                        <th class="highlight-col">DECLINED</th>
+                        <th class="highlight-col">TOTAL</th>
+                        <th class="col-divider">CTR</th>
+                        <th>EPC</th>
+                        <th class="col-divider">APPROVED</th>
+                        <th>HOLD</th>
+                        <th>DECLINED</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    <tr class="header-group">
+                        <th colspan="3"></th>
+                        <th colspan="4" class="col-divider">CONVERSIONS</th>
+                        <th colspan="2"></th>
+                        <th colspan="4" class="col-divider">PAYOUTS</th>
+                    </tr>
+                </thead>
+                <tbody id="statsTableBody">
+                    <tr>
+                        <td colspan="13" style="text-align: center; padding: 3rem;">
+                            <div class="stats-loading">
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                <p>Loading statistics...</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td class="stats-number">0</td>
+                        <td class="stats-number highlight-col">0</td>
+                        <td class="stats-number highlight-col">0</td>
+                        <td class="stats-number highlight-col">0</td>
+                        <td class="stats-number highlight-col">0</td>
+                        <td class="stats-percentage">0%</td>
+                        <td class="stats-currency">$ 0.00</td>
+                        <td class="stats-currency">$ 0.00</td>
+                        <td class="stats-currency">$ 0.00</td>
+                        <td class="stats-currency">$ 0.00</td>
+                        <td class="stats-currency">$ 0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>
                 <div id="campaignsSection" class="campaigns-section hidden">
                     <div class="campaigns-header">
                         <h2>Your Campaigns</h2>
-                        <button class="btn-primary" 
-        style="padding: 6px 12px; font-size: 13px; border-radius: 6px;" 
-        onclick="showSection('createCampaignSection')">
-    <i class="fa-solid fa-plus"></i>
-    Create Campaign
-</button>
+                        <button class="btn-primary" style="padding: 6px 12px; font-size: 13px; border-radius: 6px;"
+                            onclick="showSection('createCampaignSection')">
+                            <i class="fa-solid fa-plus"></i>
+                            Create Campaign
+                        </button>
 
                     </div>
                     <div id="campaignsContainer" class="campaigns-container">
@@ -2222,15 +2977,39 @@
             }
 
             // Show alert message
+            // Show alert message
             function showAlert(message, type = 'error') {
                 const alert = document.getElementById('campaignAlert');
+
+                if (!alert) {
+                    console.error('Campaign alert element not found');
+                    // Fallback: show browser alert
+                    window.alert(message);
+                    return;
+                }
+
                 alert.textContent = message;
                 alert.className = `alert ${type}`;
                 alert.classList.remove('hidden');
 
-                // Scroll to top to see alert
-                document.querySelector('.create-campaign-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Scroll to top to see alert - FIX: Check if element exists before scrolling
+                const createCampaignSection = document.querySelector('.create-campaign-section');
+                const createCampaignCard = document.querySelector('.create-campaign-card');
+                const campaignFormWrapper = document.querySelector('.campaign-form-wrapper');
 
+                // Try multiple selectors to find the right container
+                if (createCampaignSection) {
+                    createCampaignSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else if (createCampaignCard) {
+                    createCampaignCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else if (campaignFormWrapper) {
+                    campaignFormWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    // Fallback: scroll to top of page
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                // Auto-hide success messages
                 if (type === 'success') {
                     setTimeout(() => {
                         alert.classList.add('hidden');
@@ -2248,6 +3027,7 @@
             }
 
             // Form submission
+            // Form submission
             document.addEventListener('DOMContentLoaded', function () {
                 const form = document.getElementById('createCampaignForm');
                 if (form) {
@@ -2259,16 +3039,25 @@
 
                         alert.classList.add('hidden');
 
-                        // Get form values
+                        // Get form values - FIX: Get the correct values
                         const campaignName = document.getElementById('campaignName').value.trim();
                         const targetUrl = document.getElementById('targetUrl').value.trim();
-                        const campaignType = document.getElementById('campaignType').value;
-                        const targetAudience = document.getElementById('targetAudience').value;
+
+                        // FIX: Get selected ad format
+                        const adFormat = document.querySelector('input[name="adFormat"]:checked').value;
+
+                        // FIX: Get selected pricing model
+                        const pricingModel = document.querySelector('input[name="pricingModel"]:checked').value;
+
+                        // FIX: Get countries
+                        const selectedCountries = Array.from(document.querySelectorAll('.country-item input[type="checkbox"]:checked'))
+                            .map(cb => cb.value);
+
                         const dailyBudget = parseFloat(document.getElementById('dailyBudget').value);
                         const duration = parseInt(document.getElementById('campaignDuration').value);
                         const totalBudget = dailyBudget * duration;
 
-                        // Validation (keep your existing validation code)
+                        // Validation
                         if (!campaignName || campaignName.length < 3) {
                             showAlert('Campaign name must be at least 3 characters long');
                             return;
@@ -2279,7 +3068,12 @@
                             return;
                         }
 
-                        if (!campaignType || !targetAudience || !dailyBudget || !duration) {
+                        if (selectedCountries.length === 0) {
+                            showAlert('Please select at least one target country');
+                            return;
+                        }
+
+                        if (!dailyBudget || !duration) {
                             showAlert('Please fill in all required fields');
                             return;
                         }
@@ -2292,15 +3086,18 @@
                             return;
                         }
 
+                        // FIX: Create proper campaign data matching server expectations
                         const campaignData = {
                             campaignName,
                             targetUrl,
                             dailyBudget,
                             totalBudget,
-                            campaignType,
-                            targetAudience,
-                            description: `${campaignType.toUpperCase()} campaign - $${dailyBudget}/day for ${duration} days`
+                            campaignType: pricingModel, // 'cpc' or 'cpm'
+                            targetAudience: selectedCountries.join(','), // Join countries
+                            description: `${adFormat.toUpperCase()} campaign - ${pricingModel.toUpperCase()} - $${dailyBudget}/day for ${duration} days`
                         };
+
+                        console.log('Sending campaign data:', campaignData); // DEBUG
 
                         submitBtn.disabled = true;
                         submitBtn.classList.add('loading');
@@ -2316,6 +3113,7 @@
                             });
 
                             const data = await response.json();
+                            console.log('Server response:', data); // DEBUG
 
                             if (!response.ok) {
                                 throw new Error(data.message || 'Failed to create campaign');
@@ -2324,7 +3122,7 @@
                             // Success!
                             showAlert('🎉 Campaign created successfully! It will be activated in 1.5 hours.', 'success');
 
-                            // **CRITICAL FIX**: Refresh balance immediately
+                            // Refresh balance immediately
                             await refreshBalance();
 
                             // Reset form
@@ -2452,6 +3250,13 @@
                     }
                 });
 
+                // NEW: Display package tier
+                const packageDisplay = document.querySelector('.package-tier');
+                if (packageDisplay && data.user?.currentPackage) {
+                    packageDisplay.textContent = data.user.currentPackage.toUpperCase();
+                    packageDisplay.className = `package-tier package-${data.user.currentPackage}`;
+                }
+
                 // Store balance in localStorage
                 if (data.user?.balance !== undefined) {
                     localStorage.setItem('userBalance', data.user.balance);
@@ -2483,7 +3288,10 @@
                 console.log('Fetching campaigns from:', `${API_URL}/campaigns`);
 
                 const response = await fetch(`${API_URL}/campaigns`, {
-                    headers: getAuthHeaders()
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
                 });
 
                 console.log('Response status:', response.status);
@@ -2518,180 +3326,180 @@
             }
         }
         function calculateStatistics(campaigns) {
-    if (!campaigns || campaigns.length === 0) {
-        return null;
-    }
+            if (!campaigns || campaigns.length === 0) {
+                return null;
+            }
 
-    let totalBudget = 0;
-    let totalSpent = 0;
-    let totalImpressions = 0;
-    let totalClicks = 0;
-    let totalConversions = 0;
+            let totalBudget = 0;
+            let totalSpent = 0;
+            let totalImpressions = 0;
+            let totalClicks = 0;
+            let totalConversions = 0;
 
-    campaigns.forEach(campaign => {
-        const daysActive = campaign.status === 'active' ? 
-            Math.min(7, Math.floor((Date.now() - new Date(campaign.createdAt)) / (1000 * 60 * 60 * 24))) : 0;
-        
-        const campaignSpent = campaign.status === 'active' ? 
-            Math.min(campaign.dailyBudget * daysActive, campaign.totalBudget) : 0;
+            campaigns.forEach(campaign => {
+                const daysActive = campaign.status === 'active' ?
+                    Math.min(7, Math.floor((Date.now() - new Date(campaign.createdAt)) / (1000 * 60 * 60 * 24))) : 0;
 
-        totalBudget += campaign.totalBudget;
-        totalSpent += campaignSpent;
+                const campaignSpent = campaign.status === 'active' ?
+                    Math.min(campaign.dailyBudget * daysActive, campaign.totalBudget) : 0;
 
-        // Calculate impressions based on budget (CPM: $1 = 1000-1500 impressions)
-        const impressions = Math.floor(campaignSpent * (1000 + Math.random() * 500));
-        
-        // CTR between 1.5% - 3.5%
-        const ctr = 0.015 + Math.random() * 0.02;
-        const clicks = Math.floor(impressions * ctr);
-        
-        // Conversion rate between 2% - 5%
-        const conversionRate = 0.02 + Math.random() * 0.03;
-        const conversions = Math.floor(clicks * conversionRate);
+                totalBudget += campaign.totalBudget;
+                totalSpent += campaignSpent;
 
-        totalImpressions += impressions;
-        totalClicks += clicks;
-        totalConversions += conversions;
-    });
+                // Calculate impressions based on budget (CPM: $1 = 1000-1500 impressions)
+                const impressions = Math.floor(campaignSpent * (1000 + Math.random() * 500));
 
-    const avgCTR = totalImpressions > 0 ? (totalClicks / totalImpressions * 100).toFixed(2) : 0;
-    const avgCPC = totalClicks > 0 ? (totalSpent / totalClicks).toFixed(2) : 0;
-    const conversionRate = totalClicks > 0 ? (totalConversions / totalClicks * 100).toFixed(2) : 0;
-    const costPerConversion = totalConversions > 0 ? (totalSpent / totalConversions).toFixed(2) : 0;
+                // CTR between 1.5% - 3.5%
+                const ctr = 0.015 + Math.random() * 0.02;
+                const clicks = Math.floor(impressions * ctr);
 
-    return {
-        campaigns: campaigns.length,
-        activeCampaigns: campaigns.filter(c => c.status === 'active').length,
-        totalBudget,
-        totalSpent,
-        impressions: totalImpressions,
-        clicks: totalClicks,
-        conversions: totalConversions,
-        ctr: avgCTR,
-        cpc: avgCPC,
-        conversionRate,
-        costPerConversion,
-        roi: totalSpent > 0 ? ((totalConversions * 50 - totalSpent) / totalSpent * 100).toFixed(1) : 0
-    };
-}
+                // Conversion rate between 2% - 5%
+                const conversionRate = 0.02 + Math.random() * 0.03;
+                const conversions = Math.floor(clicks * conversionRate);
 
-// Format numbers with commas
-function formatNumber(num) {
-    return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+                totalImpressions += impressions;
+                totalClicks += clicks;
+                totalConversions += conversions;
+            });
 
-// Generate 7-day performance data
-function generate7DayData(stats) {
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const data = [];
-    const baseValue = stats.clicks / 7;
+            const avgCTR = totalImpressions > 0 ? (totalClicks / totalImpressions * 100).toFixed(2) : 0;
+            const avgCPC = totalClicks > 0 ? (totalSpent / totalClicks).toFixed(2) : 0;
+            const conversionRate = totalClicks > 0 ? (totalConversions / totalClicks * 100).toFixed(2) : 0;
+            const costPerConversion = totalConversions > 0 ? (totalSpent / totalConversions).toFixed(2) : 0;
 
-    for (let i = 0; i < 7; i++) {
-        const variance = 0.7 + Math.random() * 0.6;
-        data.push({
-            day: days[i],
-            value: Math.floor(baseValue * variance)
-        });
-    }
+            return {
+                campaigns: campaigns.length,
+                activeCampaigns: campaigns.filter(c => c.status === 'active').length,
+                totalBudget,
+                totalSpent,
+                impressions: totalImpressions,
+                clicks: totalClicks,
+                conversions: totalConversions,
+                ctr: avgCTR,
+                cpc: avgCPC,
+                conversionRate,
+                costPerConversion,
+                roi: totalSpent > 0 ? ((totalConversions * 50 - totalSpent) / totalSpent * 100).toFixed(1) : 0
+            };
+        }
 
-    return data;
-}
+        // Format numbers with commas
+        function formatNumber(num) {
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
-// Render bar chart
-function renderPerformanceChart(data) {
-    const maxValue = Math.max(...data.map(d => d.value));
-    const chartHeight = 240;
-    const chartWidth = 600;
-    const barWidth = 60;
-    const gap = 20;
-    
-    let svg = `<svg class="performance-chart" viewBox="0 0 ${chartWidth} ${chartHeight + 40}">`;
-    
-    // Grid lines
-    for (let i = 0; i <= 4; i++) {
-        const y = (chartHeight / 4) * i;
-        svg += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" class="chart-grid-line"/>`;
-    }
-    
-    // Bars
-    data.forEach((item, index) => {
-        const x = index * (barWidth + gap) + gap;
-        const barHeight = (item.value / maxValue) * chartHeight;
-        const y = chartHeight - barHeight;
-        
-        svg += `
+        // Generate 7-day performance data
+        function generate7DayData(stats) {
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const data = [];
+            const baseValue = stats.clicks / 7;
+
+            for (let i = 0; i < 7; i++) {
+                const variance = 0.7 + Math.random() * 0.6;
+                data.push({
+                    day: days[i],
+                    value: Math.floor(baseValue * variance)
+                });
+            }
+
+            return data;
+        }
+
+        // Render bar chart
+        function renderPerformanceChart(data) {
+            const maxValue = Math.max(...data.map(d => d.value));
+            const chartHeight = 240;
+            const chartWidth = 600;
+            const barWidth = 60;
+            const gap = 20;
+
+            let svg = `<svg class="performance-chart" viewBox="0 0 ${chartWidth} ${chartHeight + 40}">`;
+
+            // Grid lines
+            for (let i = 0; i <= 4; i++) {
+                const y = (chartHeight / 4) * i;
+                svg += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" class="chart-grid-line"/>`;
+            }
+
+            // Bars
+            data.forEach((item, index) => {
+                const x = index * (barWidth + gap) + gap;
+                const barHeight = (item.value / maxValue) * chartHeight;
+                const y = chartHeight - barHeight;
+
+                svg += `
             <rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" 
                   fill="#6d28d9" rx="4" class="chart-bar"/>
-            <text x="${x + barWidth/2}" y="${chartHeight + 20}" 
+            <text x="${x + barWidth / 2}" y="${chartHeight + 20}" 
                   text-anchor="middle" class="chart-label">${item.day}</text>
-            <text x="${x + barWidth/2}" y="${y - 5}" 
+            <text x="${x + barWidth / 2}" y="${y - 5}" 
                   text-anchor="middle" class="chart-value">${formatNumber(item.value)}</text>
         `;
-    });
-    
-    svg += '</svg>';
-    return svg;
-}
+            });
 
-// Render pie chart
-function renderBudgetPieChart(campaigns) {
-    const colors = ['#6d28d9', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
-    let totalBudget = 0;
-    const campaignBudgets = campaigns.map(c => {
-        totalBudget += c.totalBudget;
-        return { name: c.campaignName, budget: c.totalBudget };
-    }).slice(0, 5);
+            svg += '</svg>';
+            return svg;
+        }
 
-    let currentAngle = 0;
-    const radius = 80;
-    const centerX = 90;
-    const centerY = 90;
+        // Render pie chart
+        function renderBudgetPieChart(campaigns) {
+            const colors = ['#6d28d9', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
+            let totalBudget = 0;
+            const campaignBudgets = campaigns.map(c => {
+                totalBudget += c.totalBudget;
+                return { name: c.campaignName, budget: c.totalBudget };
+            }).slice(0, 5);
 
-    let svg = `<svg class="pie-svg" viewBox="0 0 180 180">`;
-    
-    campaignBudgets.forEach((campaign, index) => {
-        const percentage = (campaign.budget / totalBudget) * 100;
-        const angle = (percentage / 100) * 360;
-        const endAngle = currentAngle + angle;
-        
-        const x1 = centerX + radius * Math.cos((currentAngle - 90) * Math.PI / 180);
-        const y1 = centerY + radius * Math.sin((currentAngle - 90) * Math.PI / 180);
-        const x2 = centerX + radius * Math.cos((endAngle - 90) * Math.PI / 180);
-        const y2 = centerY + radius * Math.sin((endAngle - 90) * Math.PI / 180);
-        
-        const largeArc = angle > 180 ? 1 : 0;
-        
-        svg += `
+            let currentAngle = 0;
+            const radius = 80;
+            const centerX = 90;
+            const centerY = 90;
+
+            let svg = `<svg class="pie-svg" viewBox="0 0 180 180">`;
+
+            campaignBudgets.forEach((campaign, index) => {
+                const percentage = (campaign.budget / totalBudget) * 100;
+                const angle = (percentage / 100) * 360;
+                const endAngle = currentAngle + angle;
+
+                const x1 = centerX + radius * Math.cos((currentAngle - 90) * Math.PI / 180);
+                const y1 = centerY + radius * Math.sin((currentAngle - 90) * Math.PI / 180);
+                const x2 = centerX + radius * Math.cos((endAngle - 90) * Math.PI / 180);
+                const y2 = centerY + radius * Math.sin((endAngle - 90) * Math.PI / 180);
+
+                const largeArc = angle > 180 ? 1 : 0;
+
+                svg += `
             <path d="M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z"
                   fill="${colors[index]}" stroke="white" stroke-width="2"/>
         `;
-        
-        currentAngle = endAngle;
-    });
-    
-    svg += '</svg>';
 
-    let legend = '';
-    campaignBudgets.forEach((campaign, index) => {
-        const percentage = ((campaign.budget / totalBudget) * 100).toFixed(1);
-        legend += `
+                currentAngle = endAngle;
+            });
+
+            svg += '</svg>';
+
+            let legend = '';
+            campaignBudgets.forEach((campaign, index) => {
+                const percentage = ((campaign.budget / totalBudget) * 100).toFixed(1);
+                legend += `
             <div class="legend-item">
                 <div class="legend-color" style="background: ${colors[index]}"></div>
                 <span class="legend-label">${campaign.name.substring(0, 20)}...</span>
                 <span class="legend-value">${percentage}%</span>
             </div>
         `;
-    });
+            });
 
-    return { svg, legend };
-}
+            return { svg, legend };
+        }
 
-// Render statistics UI
-function renderStatistics(stats, campaigns) {
-    const container = document.getElementById('statsContent');
+        // Render statistics UI
+        function renderStatistics(stats, campaigns) {
+            const container = document.getElementById('statsContent');
 
-    if (!stats) {
-        container.innerHTML = `
+            if (!stats) {
+                container.innerHTML = `
             <div class="empty-stats">
                 <i class="fa-solid fa-chart-line"></i>
                 <h3>No Statistics Yet</h3>
@@ -2702,13 +3510,13 @@ function renderStatistics(stats, campaigns) {
                 </button>
             </div>
         `;
-        return;
-    }
+                return;
+            }
 
-    const chartData = generate7DayData(stats);
-    const pieChart = renderBudgetPieChart(campaigns);
+            const chartData = generate7DayData(stats);
+            const pieChart = renderBudgetPieChart(campaigns);
 
-    container.innerHTML = `
+            container.innerHTML = `
         <!-- Stats Cards -->
         <div class="stats-grid">
             <div class="stat-card">
@@ -2823,14 +3631,14 @@ function renderStatistics(stats, campaigns) {
                     </thead>
                     <tbody>
                         ${campaigns.map(campaign => {
-                            const daysActive = campaign.status === 'active' ? Math.min(7, Math.floor((Date.now() - new Date(campaign.createdAt)) / (1000 * 60 * 60 * 24))) : 0;
-                            const spent = campaign.status === 'active' ? Math.min(campaign.dailyBudget * daysActive, campaign.totalBudget) : 0;
-                            const impressions = Math.floor(spent * (1000 + Math.random() * 500));
-                            const ctr = 0.015 + Math.random() * 0.02;
-                            const clicks = Math.floor(impressions * ctr);
-                            const conversions = Math.floor(clicks * (0.02 + Math.random() * 0.03));
-                            
-                            return `
+                const daysActive = campaign.status === 'active' ? Math.min(7, Math.floor((Date.now() - new Date(campaign.createdAt)) / (1000 * 60 * 60 * 24))) : 0;
+                const spent = campaign.status === 'active' ? Math.min(campaign.dailyBudget * daysActive, campaign.totalBudget) : 0;
+                const impressions = Math.floor(spent * (1000 + Math.random() * 500));
+                const ctr = 0.015 + Math.random() * 0.02;
+                const clicks = Math.floor(impressions * ctr);
+                const conversions = Math.floor(clicks * (0.02 + Math.random() * 0.03));
+
+                return `
                                 <tr>
                                     <td>
                                         <div class="campaign-name">${campaign.campaignName}</div>
@@ -2848,48 +3656,195 @@ function renderStatistics(stats, campaigns) {
                                     <td class="metric-positive">${conversions}</td>
                                 </tr>
                             `;
-                        }).join('')}
+            }).join('')}
                     </tbody>
                 </table>
             </div>
         </div>
     `;
-}
+        }
 
-// Load and render statistics
-async function loadStatistics() {
+        // Load and render statistics
+        async function loadStatistics() {
+    console.log('📊 Loading statistics...');
+    
+    const tbody = document.getElementById('statsTableBody');
+    const tfoot = document.querySelector('.stats-table tfoot');
+    
+    // Show loading state
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="13" style="text-align: center; padding: 3rem;">
+                <div class="stats-loading">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Loading statistics...</p>
+                </div>
+            </td>
+        </tr>
+    `;
+
     try {
-        const response = await fetch(`${API_URL}/campaigns`, {
+        const response = await fetch(`${API_URL}/statistics`, {
             headers: getAuthHeaders()
         });
 
-        if (!response.ok) throw new Error('Failed to load campaigns');
+        console.log('Statistics response status:', response.status);
+
+        if (!response.ok) {
+            throw new Error('Failed to load statistics');
+        }
 
         const data = await response.json();
-        const stats = calculateStatistics(data.campaigns);
-        renderStatistics(stats, data.campaigns);
+        console.log('📊 Statistics data received:', data);
+
+        // Update package banner
+        updatePackageBanner(data.userPackage);
+
+        // Render statistics table
+        if (!data.statistics || data.statistics.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="13" style="text-align: center; padding: 3rem;">
+                        <div class="stats-empty-state">
+                            <i class="fa-solid fa-chart-line" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i>
+                            <h3 style="color: #111827; margin-bottom: 0.5rem;">No Statistics Yet</h3>
+                            <p style="color: #6b7280;">Statistics will appear once your campaigns become active and start generating data.</p>
+                            <p style="margin-top: 1rem; color: #6d28d9; font-weight: 600;">
+                                Current Package: ${data.userPackage.current.toUpperCase()}
+                            </p>
+                            ${data.userPackage.nextTier.amountNeeded > 0 ? 
+                                `<p style="color: #6b7280; font-size: 0.875rem; margin-top: 0.5rem;">${data.userPackage.nextTier.message}</p>` 
+                                : ''}
+                        </div>
+                    </td>
+                </tr>
+            `;
+            
+            // Clear totals
+            tfoot.innerHTML = `
+                <tr>
+                    <td colspan="2">Total</td>
+                    <td class="stats-number">0</td>
+                    <td class="stats-number highlight-col">0</td>
+                    <td class="stats-number highlight-col">0</td>
+                    <td class="stats-number highlight-col">0</td>
+                    <td class="stats-number highlight-col">0</td>
+                    <td class="stats-percentage">0%</td>
+                    <td class="stats-currency">$ 0.00</td>
+                    <td class="stats-currency">$ 0.00</td>
+                    <td class="stats-currency">$ 0.00</td>
+                    <td class="stats-currency">$ 0.00</td>
+                    <td class="stats-currency">$ 0.00</td>
+                </tr>
+            `;
+            return;
+        }
+
+        // Render table rows
+        tbody.innerHTML = data.statistics.map(stat => {
+            const date = new Date(stat.date).toLocaleDateString('en-US', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            return `
+                <tr>
+                    <td>${date}</td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stat.campaignName}</td>
+                    <td class="stats-number">${formatNumber(stat.clicks)}</td>
+                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.approved)}</td>
+                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.hold)}</td>
+                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.declined)}</td>
+                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.total)}</td>
+                    <td class="stats-percentage">${stat.ctr.toFixed(3)}%</td>
+                    <td class="stats-currency">$ ${stat.epc.toFixed(3)}</td>
+                    <td class="stats-currency">$ ${stat.payouts.approved.toFixed(2)}</td>
+                    <td class="stats-currency">$ ${stat.payouts.hold.toFixed(2)}</td>
+                    <td class="stats-currency">$ ${stat.payouts.declined.toFixed(2)}</td>
+                    <td class="stats-currency">$ ${stat.payouts.total.toFixed(2)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        // Render totals footer
+        const totals = data.totals;
+        tfoot.innerHTML = `
+            <tr>
+                <td colspan="2" style="font-weight: 700; color: #6d28d9;">Total</td>
+                <td class="stats-number">${formatNumber(totals.clicks)}</td>
+                <td class="stats-number highlight-col">${formatNumber(totals.conversions.approved)}</td>
+                <td class="stats-number highlight-col">${formatNumber(totals.conversions.hold)}</td>
+                <td class="stats-number highlight-col">${formatNumber(totals.conversions.declined)}</td>
+                <td class="stats-number highlight-col">${formatNumber(totals.conversions.total)}</td>
+                <td class="stats-percentage">${totals.avgCTR}%</td>
+                <td class="stats-currency">$ ${totals.avgEPC}</td>
+                <td class="stats-currency">$ ${totals.payouts.approved.toFixed(2)}</td>
+                <td class="stats-currency">$ ${totals.payouts.hold.toFixed(2)}</td>
+                <td class="stats-currency">$ ${totals.payouts.declined.toFixed(2)}</td>
+                <td class="stats-currency">$ ${totals.payouts.total.toFixed(2)}</td>
+            </tr>
+        `;
+
+        console.log('✅ Statistics rendered successfully');
 
     } catch (error) {
-        console.error('Load statistics error:', error);
-        document.getElementById('statsContent').innerHTML = `
-            <div class="empty-stats">
-                <i class="fa-solid fa-exclamation-triangle"></i>
-                <h3>Error Loading Statistics</h3>
-                <p>${error.message}</p>
-                <button class="btn-primary" onclick="loadStatistics()">
-                    <i class="fa-solid fa-refresh"></i> Try Again
-                </button>
-            </div>
+        console.error('❌ Load statistics error:', error);
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="13" style="text-align: center; padding: 3rem;">
+                    <div class="stats-empty-state">
+                        <i class="fa-solid fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #111827; margin-bottom: 0.5rem;">Error Loading Statistics</h3>
+                        <p style="color: #6b7280;">${error.message}</p>
+                        <button class="btn-primary" onclick="loadStatistics()" style="margin-top: 1rem;">
+                            <i class="fa-solid fa-refresh"></i> Try Again
+                        </button>
+                    </div>
+                </td>
+            </tr>
         `;
     }
 }
-function displayCampaigns(campaigns) {
-    const campaignsContainer = document.getElementById('campaignsContainer');
-    
-    if (!campaignsContainer) return;
-    
-    if (!campaigns || campaigns.length === 0) {
-        campaignsContainer.innerHTML = `
+
+// Update package banner display
+function updatePackageBanner(packageData) {
+    const currentPackageEl = document.getElementById('currentPackage');
+    const totalSpentEl = document.getElementById('totalSpent');
+    const nextTierInfoEl = document.getElementById('nextTierInfo');
+    const nextTierLabelEl = document.getElementById('nextTierLabel');
+
+    if (currentPackageEl) {
+        currentPackageEl.textContent = packageData.current.toUpperCase();
+    }
+
+    if (totalSpentEl) {
+        totalSpentEl.textContent = `$${packageData.totalSpent.toFixed(2)}`;
+    }
+
+    if (nextTierInfoEl && nextTierLabelEl) {
+        if (packageData.nextTier.amountNeeded > 0) {
+            nextTierLabelEl.textContent = `Next: ${packageData.nextTier.tier.toUpperCase()}`;
+            nextTierInfoEl.textContent = `$${packageData.nextTier.amountNeeded.toFixed(2)} away`;
+        } else {
+            nextTierLabelEl.textContent = 'Status:';
+            nextTierInfoEl.textContent = 'MAX TIER 🎉';
+        }
+    }
+}
+
+// Helper to format large numbers with commas
+function formatNumber(num) {
+    if (!num && num !== 0) return '0';
+    return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+        function displayCampaigns(campaigns) {
+            const campaignsContainer = document.getElementById('campaignsContainer');
+
+            if (!campaignsContainer) return;
+
+            if (!campaigns || campaigns.length === 0) {
+                campaignsContainer.innerHTML = `
             <div class="empty-campaigns">
                 <i class="fa-solid fa-bullhorn" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i>
                 <h3>No campaigns yet</h3>
@@ -2899,18 +3854,18 @@ function displayCampaigns(campaigns) {
                 </button>
             </div>
         `;
-        return;
-    }
-    
-    campaignsContainer.innerHTML = campaigns.map(campaign => {
-        const statusColors = {
-            'pending': 'pending',
-            'active': 'active',
-            'paused': 'pending',
-            'completed': 'active'
-        };
-        
-        return `
+                return;
+            }
+
+            campaignsContainer.innerHTML = campaigns.map(campaign => {
+                const statusColors = {
+                    'pending': 'pending',
+                    'active': 'active',
+                    'paused': 'pending',
+                    'completed': 'active'
+                };
+
+                return `
             <div class="campaign-card">
                 <div class="campaign-card-header">
                     <div>
@@ -2939,8 +3894,8 @@ function displayCampaigns(campaigns) {
                 </div>
             </div>
         `;
-    }).join('');
-}
+            }).join('');
+        }
 
         function updateCampaignStats(campaigns) {
             // Update any campaign statistics on the dashboard
@@ -3210,6 +4165,140 @@ function displayCampaigns(campaigns) {
 
             checkPaymentStatusFromServer();
         }
+        // Clear individual filter
+        function clearFilter(filterType) {
+            console.log('Clearing filter:', filterType);
+            // Add your filter clearing logic here
+            updateStatistics();
+        }
+
+        // Update statistics based on filters
+        function updateStatistics() {
+            const groupBy = document.getElementById('groupBySelect').value;
+            console.log('Updating statistics, grouped by:', groupBy);
+
+            // Show loading state
+            const tbody = document.getElementById('statsTableBody');
+            tbody.innerHTML = `
+        <tr>
+            <td colspan="12" style="text-align: center; padding: 3rem;">
+                <div class="stats-loading">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Loading statistics...</p>
+                </div>
+            </td>
+        </tr>
+    `;
+
+            // Fetch and display statistics
+            // This is where you'll load your actual data
+            setTimeout(() => {
+                loadStatisticsData();
+            }, 500);
+        }
+
+        // Load statistics data
+        async function loadStatisticsData() {
+            try {
+                const response = await fetch(`${API_URL}/statistics`, {
+                    headers: getAuthHeaders()
+                });
+
+                if (!response.ok) throw new Error('Failed to load statistics');
+
+                const data = await response.json();
+                console.log('Statistics loaded:', data);
+
+                renderStatisticsTable(data);
+
+            } catch (error) {
+                console.error('Load statistics error:', error);
+                const tbody = document.getElementById('statsTableBody');
+                tbody.innerHTML = `
+            <tr>
+                <td colspan="12" style="text-align: center; padding: 2rem; color: #ef4444;">
+                    Error loading statistics: ${error.message}
+                </td>
+            </tr>
+        `;
+            }
+        }
+
+        function renderStatisticsTable(data) {
+            const tbody = document.getElementById('statsTableBody');
+            const tfoot = document.querySelector('.stats-table tfoot');
+
+            if (!data.statistics || data.statistics.length === 0) {
+                tbody.innerHTML = `
+            <tr>
+                <td colspan="12" style="text-align: center; padding: 3rem;">
+                    <div class="stats-empty-state">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h3>No Statistics Yet</h3>
+                        <p>Statistics will appear once your campaigns become active</p>
+                        <p style="margin-top: 1rem; color: #6d28d9; font-weight: 600;">
+                            Current Package: ${data.userPackage.current.toUpperCase()}
+                        </p>
+                        ${data.userPackage.nextTier.amountNeeded > 0 ?
+                        `<p style="color: #6b7280; font-size: 0.875rem;">${data.userPackage.nextTier.message}</p>`
+                        : ''}
+                    </div>
+                </td>
+            </tr>
+        `;
+                return;
+            }
+
+            // Render table rows
+            tbody.innerHTML = data.statistics.map(stat => {
+                const date = new Date(stat.date).toLocaleDateString('en-US', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+                return `
+            <tr>
+                <td>${date}</td>
+                <td class="stats-number">${formatNumber(stat.clicks)}</td>
+                <td class="stats-number highlight-col">${formatNumber(stat.conversions.approved)}</td>
+                <td class="stats-number highlight-col">${formatNumber(stat.conversions.hold)}</td>
+                <td class="stats-number highlight-col">${formatNumber(stat.conversions.declined)}</td>
+                <td class="stats-number highlight-col">${formatNumber(stat.conversions.total)}</td>
+                <td class="stats-percentage">${stat.ctr.toFixed(3)}%</td>
+                <td class="stats-currency">$ ${stat.epc.toFixed(3)}</td>
+                <td class="stats-currency">$ ${stat.payouts.approved.toFixed(2)}</td>
+                <td class="stats-currency">$ ${stat.payouts.hold.toFixed(2)}</td>
+                <td class="stats-currency">$ ${stat.payouts.declined.toFixed(2)}</td>
+                <td class="stats-currency">$ ${stat.payouts.total.toFixed(2)}</td>
+            </tr>
+        `;
+            }).join('');
+
+            // Render totals footer
+            const totals = data.totals;
+            tfoot.innerHTML = `
+        <tr>
+            <td>Total</td>
+            <td class="stats-number">${formatNumber(totals.clicks)}</td>
+            <td class="stats-number highlight-col">${formatNumber(totals.conversions.approved)}</td>
+            <td class="stats-number highlight-col">${formatNumber(totals.conversions.hold)}</td>
+            <td class="stats-number highlight-col">${formatNumber(totals.conversions.declined)}</td>
+            <td class="stats-number highlight-col">${formatNumber(totals.conversions.total)}</td>
+            <td class="stats-percentage">${totals.avgCTR}%</td>
+            <td class="stats-currency">$ ${totals.avgEPC}</td>
+            <td class="stats-currency">$ ${totals.payouts.approved.toFixed(2)}</td>
+            <td class="stats-currency">$ ${totals.payouts.hold.toFixed(2)}</td>
+            <td class="stats-currency">$ ${totals.payouts.declined.toFixed(2)}</td>
+            <td class="stats-currency">$ ${totals.payouts.total.toFixed(2)}</td>
+        </tr>
+    `;
+        }
+
+        // Helper to format large numbers
+        function formatNumber(num) {
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
         async function checkPaymentStatusFromServer() {
             try {
@@ -3319,53 +4408,35 @@ function displayCampaigns(campaigns) {
                 }
             }, 10000);
         }
-        async function loadStatistics() {
-    try {
-        const response = await fetch(`${API_URL}/campaigns`, {
-            headers: getAuthHeaders()
-        });
+        
 
-        if (!response.ok) throw new Error('Failed to load campaigns');
+        // UPDATE YOUR EXISTING showSection FUNCTION
+        // Replace or update your existing showSection function with this:
+        function showSection(sectionId) {
+    console.log('📍 Showing section:', sectionId);
 
-        const data = await response.json();
-        const stats = calculateStatistics(data.campaigns);
-        renderStatistics(stats, data.campaigns);
-
-    } catch (error) {
-        console.error('Load statistics error:', error);
-        document.getElementById('statsContent').innerHTML = `
-            <div class="empty-stats">
-                <i class="fa-solid fa-exclamation-triangle"></i>
-                <h3>Error Loading Statistics</h3>
-                <p>${error.message}</p>
-                <button class="btn-primary" onclick="loadStatistics()">
-                    <i class="fa-solid fa-refresh"></i> Try Again
-                </button>
-            </div>
-        `;
-    }
-}
-
-// UPDATE YOUR EXISTING showSection FUNCTION
-// Replace or update your existing showSection function with this:
-function showSection(sectionId) {
-    console.log('Showing:', sectionId);
-    
     // Hide all sections
     ['emptyState', 'paymentForm', 'financesSection', 'statisticsSection', 'campaignsSection', 'createCampaignSection', 'verificationPage'].forEach(id => {
         const elem = document.getElementById(id);
         if (elem) elem.classList.add('hidden');
     });
-    
+
     // Show target section
     const target = document.getElementById(sectionId);
     if (target) target.classList.remove('hidden');
-    
+
     // Load statistics when showing statistics section
     if (sectionId === 'statisticsSection') {
+        console.log('📊 Statistics section shown, loading data...');
         loadStatistics();
     }
-    
+
+    // Load campaigns when showing campaigns section
+    if (sectionId === 'campaignsSection') {
+        console.log('📋 Campaigns section shown, loading data...');
+        loadCampaigns();
+    }
+
     // Update header title
     const titles = {
         'emptyState': 'Offers',
@@ -3377,7 +4448,7 @@ function showSection(sectionId) {
     };
     const header = document.querySelector('.top-nav h1');
     if (header) header.textContent = titles[sectionId] || 'Dashboard';
-    
+
     // Update active nav
     document.querySelectorAll('.nav-menu li').forEach(li => li.classList.remove('active'));
     const navMap = {
@@ -3472,6 +4543,75 @@ function showSection(sectionId) {
                 }
             }
         }
+        // Country Selector Functions
+        function toggleCountryDropdown() {
+            const dropdown = document.getElementById('countryDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function filterCountries(searchTerm) {
+            const items = document.querySelectorAll('.country-item');
+            searchTerm = searchTerm.toLowerCase();
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function updateCountrySelection() {
+            const checkboxes = document.querySelectorAll('.country-item input[type="checkbox"]:checked');
+            const selectedText = document.getElementById('selectedCountriesText');
+            const tagsContainer = document.getElementById('selectedCountriesTags');
+
+            if (checkboxes.length === 0) {
+                selectedText.textContent = 'Select countries...';
+                tagsContainer.innerHTML = '';
+                return;
+            }
+
+            selectedText.textContent = `${checkboxes.length} ${checkboxes.length === 1 ? 'country' : 'countries'} selected`;
+
+            // Create tags
+            tagsContainer.innerHTML = '';
+            checkboxes.forEach(checkbox => {
+                const countryItem = checkbox.closest('.country-item');
+                const flag = countryItem.querySelector('.country-flag').textContent;
+                const name = countryItem.querySelector('span:last-child').textContent;
+
+                const tag = document.createElement('div');
+                tag.className = 'country-tag';
+                tag.innerHTML = `
+            <span>${flag} ${name}</span>
+            <button type="button" onclick="removeCountry('${checkbox.value}')">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        `;
+                tagsContainer.appendChild(tag);
+            });
+        }
+
+        function removeCountry(value) {
+            const checkbox = document.querySelector(`.country-item input[value="${value}"]`);
+            if (checkbox) {
+                checkbox.checked = false;
+                updateCountrySelection();
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('countryDropdown');
+            const btn = document.querySelector('.country-selector-btn');
+
+            if (dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
 
         function hideVerificationPage() {
             document.getElementById('verificationPage').classList.add('hidden');
