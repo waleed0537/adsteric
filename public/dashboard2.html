@@ -50,66 +50,85 @@
         .alert.hidden {
             display: none;
         }
-/* Package Info Banner */
-.package-info-banner {
-    background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
-    margin: 1.5rem 2rem;
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
-}
 
-.package-info-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-}
+        /* Package Info Banner */
+        .package-info-banner {
+            background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+            margin: 1.5rem 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+        }
 
-.package-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
+        .package-info-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
 
-.package-badge i {
-    font-size: 2rem;
-    color: #fbbf24;
-}
+        .package-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
 
-.package-stats {
-    display: flex;
-    gap: 3rem;
-}
+        .package-badge i {
+            font-size: 2rem;
+            color: #fbbf24;
+        }
 
-.package-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
+        .package-stats {
+            display: flex;
+            gap: 3rem;
+        }
 
-.package-stat .stat-label {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.875rem;
-    font-weight: 500;
-}
+        .package-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
 
-.package-stat .stat-value {
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
+        .package-stat .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
 
-/* Package tier colors */
-.package-standard { color: #94a3b8; }
-.package-bronze { color: #cd7f32; }
-.package-silver { color: #c0c0c0; }
-.package-gold { color: #ffd700; }
-.package-platinum { color: #e5e4e2; }
-.package-diamond { color: #b9f2ff; }
+        .package-stat .stat-value {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        /* Package tier colors */
+        .package-standard {
+            color: #94a3b8;
+        }
+
+        .package-bronze {
+            color: #cd7f32;
+        }
+
+        .package-silver {
+            color: #c0c0c0;
+        }
+
+        .package-gold {
+            color: #ffd700;
+        }
+
+        .package-platinum {
+            color: #e5e4e2;
+        }
+
+        .package-diamond {
+            color: #b9f2ff;
+        }
+
         /* Statistics Header */
         .stats-page-header {
             background: white;
@@ -426,14 +445,16 @@
             justify-content: center;
             padding: 4rem 2rem;
         }
-.payment-status-label.success {
-    color: #10b981;
-    background-color: #d1fae5;
-    padding: 0.75rem;
-    border-radius: 0.375rem;
-    margin-top: 1rem;
-    font-weight: 500;
-}
+
+        .payment-status-label.success {
+            color: #10b981;
+            background-color: #d1fae5;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
         .stats-loading i {
             font-size: 2rem;
             color: #6d28d9;
@@ -1307,107 +1328,109 @@
         .nav-menu ul li {
             margin: 0.5rem 0;
         }
-/* === LOGOUT MODAL === */
-.logout-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
 
-.logout-modal.active {
-    opacity: 1;
-    visibility: visible;
-}
+        /* === LOGOUT MODAL === */
+        .logout-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
 
-.logout-modal-content {
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
+        .logout-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-.logout-modal.active .logout-modal-content {
-    transform: scale(1);
-}
+        .logout-modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
 
-.logout-modal-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
+        .logout-modal.active .logout-modal-content {
+            transform: scale(1);
+        }
 
-.logout-modal-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #fee2e2;
-    color: #ef4444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
+        .logout-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
 
-.logout-modal-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #111827;
-}
+        .logout-modal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
 
-.logout-modal-message {
-    color: #6b7280;
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-}
+        .logout-modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
 
-.logout-modal-actions {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: flex-end;
-}
+        .logout-modal-message {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
 
-.logout-modal-btn {
-    padding: 0.625rem 1.25rem;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-}
+        .logout-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
 
-.logout-modal-btn-cancel {
-    background: #f3f4f6;
-    color: #374151;
-}
+        .logout-modal-btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
 
-.logout-modal-btn-cancel:hover {
-    background: #e5e7eb;
-}
+        .logout-modal-btn-cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
 
-.logout-modal-btn-confirm {
-    background: #ef4444;
-    color: white;
-}
+        .logout-modal-btn-cancel:hover {
+            background: #e5e7eb;
+        }
 
-.logout-modal-btn-confirm:hover {
-    background: #dc2626;
-}
+        .logout-modal-btn-confirm {
+            background: #ef4444;
+            color: white;
+        }
+
+        .logout-modal-btn-confirm:hover {
+            background: #dc2626;
+        }
+
         .nav-menu ul li a {
             display: flex;
             align-items: center;
@@ -2288,7 +2311,7 @@
                 </button>
             </div>
 
-           <nav class="nav-menu">
+            <nav class="nav-menu">
                 <ul>
                     <li class="active">
                         <a href="#offers" onclick="showSection('emptyState'); return false;">
@@ -2862,88 +2885,85 @@
                     </div>
                 </div>
                 <div id="statisticsSection" class="statistics-section hidden">
-    <!-- Page Header -->
-    <div class="stats-page-header">
-        <h1>Statistics & Performance</h1>
-    </div>
+                    <!-- Page Header -->
+                    <div class="stats-page-header">
+                        <h1>Statistics & Performance</h1>
+                    </div>
 
-    <!-- Package Info Banner -->
-    <div class="package-info-banner" id="packageBanner">
-        <div class="package-info-content">
-            <div class="package-badge">
-                <i class="fa-solid fa-crown"></i>
-                <span id="currentPackage">STANDARD</span>
-            </div>
-            <div class="package-stats">
-                <div class="package-stat">
-                    <span class="stat-label">Total Spent:</span>
-                    <span class="stat-value" id="totalSpent">$0.00</span>
-                </div>
-                <div class="package-stat">
-                    <span class="stat-label" id="nextTierLabel">Next Tier:</span>
-                    <span class="stat-value" id="nextTierInfo">-</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Statistics Table -->
-    <div class="stats-table-wrapper">
-        <div class="table-scroll-container">
-            <table class="stats-table">
-                <thead>
-                    <tr>
-                        <th>DATE</th>
-                        <th>CAMPAIGN</th>
-                        <th>CLICKS</th>
-                        <th class="col-divider highlight-col">APPROVED</th>
-                        <th class="highlight-col">HOLD</th>
-                        <th class="highlight-col">DECLINED</th>
-                        <th class="highlight-col">TOTAL</th>
-                        <th class="col-divider">CTR</th>
-                        <th>EPC</th>
-                        <th class="col-divider">APPROVED</th>
-                        <th>HOLD</th>
-                        <th>DECLINED</th>
-                        <th>TOTAL</th>
-                    </tr>
-                    <tr class="header-group">
-                        <th colspan="3"></th>
-                        <th colspan="4" class="col-divider">CONVERSIONS</th>
-                        <th colspan="2"></th>
-                        <th colspan="4" class="col-divider">PAYOUTS</th>
-                    </tr>
-                </thead>
-                <tbody id="statsTableBody">
-                    <tr>
-                        <td colspan="13" style="text-align: center; padding: 3rem;">
-                            <div class="stats-loading">
-                                <i class="fa-solid fa-spinner fa-spin"></i>
-                                <p>Loading statistics...</p>
+                    <!-- Package Info Banner -->
+                    <div class="package-info-banner" id="packageBanner">
+                        <div class="package-info-content">
+                            <div class="package-badge">
+                                <i class="fa-solid fa-crown"></i>
+                                <span id="currentPackage">STANDARD</span>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2">Total</td>
-                        <td class="stats-number">0</td>
-                        <td class="stats-number highlight-col">0</td>
-                        <td class="stats-number highlight-col">0</td>
-                        <td class="stats-number highlight-col">0</td>
-                        <td class="stats-number highlight-col">0</td>
-                        <td class="stats-percentage">0%</td>
-                        <td class="stats-currency">$ 0.00</td>
-                        <td class="stats-currency">$ 0.00</td>
-                        <td class="stats-currency">$ 0.00</td>
-                        <td class="stats-currency">$ 0.00</td>
-                        <td class="stats-currency">$ 0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
+                            <div class="package-stats">
+                                <div class="package-stat">
+                                    <span class="stat-label">Total Spent:</span>
+                                    <span class="stat-value" id="totalSpent">$0.00</span>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Table -->
+                    <div class="stats-table-wrapper">
+                        <div class="table-scroll-container">
+                            <table class="stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>CAMPAIGN</th>
+                                        <th>CLICKS</th>
+                                        <th class="col-divider highlight-col">APPROVED</th>
+                                        <th class="highlight-col">HOLD</th>
+                                        <th class="highlight-col">DECLINED</th>
+                                        <th class="highlight-col">TOTAL</th>
+                                        <th class="col-divider">CTR</th>
+                                        <th>EPC</th>
+                                        <th class="col-divider">APPROVED</th>
+                                        <th>HOLD</th>
+                                        <th>DECLINED</th>
+                                        <th>TOTAL</th>
+                                    </tr>
+                                    <tr class="header-group">
+                                        <th colspan="3"></th>
+                                        <th colspan="4" class="col-divider">CONVERSIONS</th>
+                                        <th colspan="2"></th>
+                                        <th colspan="4" class="col-divider">PAYOUTS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="statsTableBody">
+                                    <tr>
+                                        <td colspan="13" style="text-align: center; padding: 3rem;">
+                                            <div class="stats-loading">
+                                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                                <p>Loading statistics...</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2">Total</td>
+                                        <td class="stats-number">0</td>
+                                        <td class="stats-number highlight-col">0</td>
+                                        <td class="stats-number highlight-col">0</td>
+                                        <td class="stats-number highlight-col">0</td>
+                                        <td class="stats-number highlight-col">0</td>
+                                        <td class="stats-percentage">0%</td>
+                                        <td class="stats-currency">$ 0.00</td>
+                                        <td class="stats-currency">$ 0.00</td>
+                                        <td class="stats-currency">$ 0.00</td>
+                                        <td class="stats-currency">$ 0.00</td>
+                                        <td class="stats-currency">$ 0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div id="campaignsSection" class="campaigns-section hidden">
                     <div class="campaigns-header">
                         <h2>Your Campaigns</h2>
@@ -2962,28 +2982,28 @@
                         </div>
                     </div>
                 </div>
-<!-- Logout Confirmation Modal -->
-<div id="logoutModal" class="logout-modal">
-    <div class="logout-modal-content">
-        <div class="logout-modal-header">
-            <div class="logout-modal-icon">
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </div>
-            <h3 class="logout-modal-title">Confirm Logout</h3>
-        </div>
-        <p class="logout-modal-message">
-            Are you sure you want to logout? You'll need to sign in again to access your dashboard.
-        </p>
-        <div class="logout-modal-actions">
-            <button class="logout-modal-btn logout-modal-btn-cancel" onclick="closeLogoutModal()">
-                Cancel
-            </button>
-            <button class="logout-modal-btn logout-modal-btn-confirm" onclick="confirmLogout()">
-                Logout
-            </button>
-        </div>
-    </div>
-</div>
+                <!-- Logout Confirmation Modal -->
+                <div id="logoutModal" class="logout-modal">
+                    <div class="logout-modal-content">
+                        <div class="logout-modal-header">
+                            <div class="logout-modal-icon">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </div>
+                            <h3 class="logout-modal-title">Confirm Logout</h3>
+                        </div>
+                        <p class="logout-modal-message">
+                            Are you sure you want to logout? You'll need to sign in again to access your dashboard.
+                        </p>
+                        <div class="logout-modal-actions">
+                            <button class="logout-modal-btn logout-modal-btn-cancel" onclick="closeLogoutModal()">
+                                Cancel
+                            </button>
+                            <button class="logout-modal-btn logout-modal-btn-confirm" onclick="confirmLogout()">
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
         </main>
     </div>
 
@@ -3025,27 +3045,27 @@
         }
 
         function logout() {
-    showLogoutModal();
-}
+            showLogoutModal();
+        }
 
-function showLogoutModal() {
-    const modal = document.getElementById('logoutModal');
-    if (modal) {
-        modal.classList.add('active');
-    }
-}
+        function showLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
 
-function closeLogoutModal() {
-    const modal = document.getElementById('logoutModal');
-    if (modal) {
-        modal.classList.remove('active');
-    }
-}
+        function closeLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
 
-function confirmLogout() {
-    localStorage.removeItem('authToken');
-    window.location.href = '/login.html';
-}
+        function confirmLogout() {
+            localStorage.removeItem('authToken');
+            window.location.href = '/login.html';
+        }
         (function () {
             const API_URL = window.config?.API_URL || '';
             let userBalanceAmount = 0;
@@ -3809,11 +3829,11 @@ function confirmLogout() {
         }
 
         // Load and render statistics
-        async function loadStatistics() {
+      async function loadStatistics() {
     console.log('📊 Loading statistics...');
     
     const tbody = document.getElementById('statsTableBody');
-    const tfoot = document.querySelector('.stats-table tfoot');
+    const packageBanner = document.querySelector('.package-info-banner');
     
     // Show loading state
     tbody.innerHTML = `
@@ -3835,153 +3855,125 @@ function confirmLogout() {
         console.log('Statistics response status:', response.status);
 
         if (!response.ok) {
-            throw new Error('Failed to load statistics');
+            throw new Error(`Failed to load statistics: ${response.statusText}`);
         }
 
         const data = await response.json();
         console.log('📊 Statistics data received:', data);
 
-        // Update package banner
-        updatePackageBanner(data.userPackage);
+        // UPDATE PACKAGE BANNER
+        if (data.userPackage && packageBanner) {
+            const pkg = data.userPackage;
+            
+            // Set background color based on package
+            const packageColors = {
+                'STANDARD': 'linear-gradient(135deg, #64748b 0%, #475569 100%)',
+                'BRONZE': 'linear-gradient(135deg, #cd7f32 0%, #b8691f 100%)',
+                'SILVER': 'linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%)',
+                'GOLD': 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+                'PLATINUM': 'linear-gradient(135deg, #e5e4e2 0%, #d1d0ce 100%)',
+                'DIAMOND': 'linear-gradient(135deg, #b9f2ff 0%, #7dd3fc 100%)'
+            };
+
+            packageBanner.style.background = packageColors[pkg.current] || packageColors.STANDARD;
+            
+            packageBanner.innerHTML = `
+                <div class="package-info-content">
+                    <div class="package-badge">
+                        <i class="fa-solid fa-crown"></i>
+                        <span>${pkg.current}</span>
+                    </div>
+                    <div class="package-stats">
+                        <div class="package-stat">
+                            <div class="stat-label">Total Spent:</div>
+                            <div class="stat-value">$${pkg.totalSpent.toFixed(2)}</div>
+                        </div>
+                        
+                        ${pkg.amountToNextTier > 0 ? `
+                        <div class="package-stat">
+                            <div class="stat-label">Amount Needed:</div>
+                            <div class="stat-value">$${pkg.amountToNextTier.toFixed(2)}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
 
         // Render statistics table
-        if (!data.statistics || data.statistics.length === 0) {
+        if (data.statistics && data.statistics.length > 0) {
+            renderStatisticsTable(data);
+        } else {
             tbody.innerHTML = `
                 <tr>
                     <td colspan="13" style="text-align: center; padding: 3rem;">
-                        <div class="stats-empty-state">
-                            <i class="fa-solid fa-chart-line" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i>
-                            <h3 style="color: #111827; margin-bottom: 0.5rem;">No Statistics Yet</h3>
-                            <p style="color: #6b7280;">Statistics will appear once your campaigns become active and start generating data.</p>
-                            <p style="margin-top: 1rem; color: #6d28d9; font-weight: 600;">
-                                Current Package: ${data.userPackage.current.toUpperCase()}
-                            </p>
-                            ${data.userPackage.nextTier.amountNeeded > 0 ? 
-                                `<p style="color: #6b7280; font-size: 0.875rem; margin-top: 0.5rem;">${data.userPackage.nextTier.message}</p>` 
-                                : ''}
-                        </div>
+                        <i class="fa-solid fa-chart-line" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #6b7280;">No Statistics Available</h3>
+                        <p style="color: #9ca3af;">Statistics will appear once your campaigns start generating data</p>
                     </td>
                 </tr>
             `;
-            
-            // Clear totals
-            tfoot.innerHTML = `
-                <tr>
-                    <td colspan="2">Total</td>
-                    <td class="stats-number">0</td>
-                    <td class="stats-number highlight-col">0</td>
-                    <td class="stats-number highlight-col">0</td>
-                    <td class="stats-number highlight-col">0</td>
-                    <td class="stats-number highlight-col">0</td>
-                    <td class="stats-percentage">0%</td>
-                    <td class="stats-currency">$ 0.00</td>
-                    <td class="stats-currency">$ 0.00</td>
-                    <td class="stats-currency">$ 0.00</td>
-                    <td class="stats-currency">$ 0.00</td>
-                    <td class="stats-currency">$ 0.00</td>
-                </tr>
-            `;
-            return;
         }
-
-        // Render table rows
-        tbody.innerHTML = data.statistics.map(stat => {
-            const date = new Date(stat.date).toLocaleDateString('en-US', {
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric'
-            });
-
-            return `
-                <tr>
-                    <td>${date}</td>
-                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${stat.campaignName}</td>
-                    <td class="stats-number">${formatNumber(stat.clicks)}</td>
-                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.approved)}</td>
-                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.hold)}</td>
-                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.declined)}</td>
-                    <td class="stats-number highlight-col">${formatNumber(stat.conversions.total)}</td>
-                    <td class="stats-percentage">${stat.ctr.toFixed(3)}%</td>
-                    <td class="stats-currency">$ ${stat.epc.toFixed(3)}</td>
-                    <td class="stats-currency">$ ${stat.payouts.approved.toFixed(2)}</td>
-                    <td class="stats-currency">$ ${stat.payouts.hold.toFixed(2)}</td>
-                    <td class="stats-currency">$ ${stat.payouts.declined.toFixed(2)}</td>
-                    <td class="stats-currency">$ ${stat.payouts.total.toFixed(2)}</td>
-                </tr>
-            `;
-        }).join('');
-
-        // Render totals footer
-        const totals = data.totals;
-        tfoot.innerHTML = `
-            <tr>
-                <td colspan="2" style="font-weight: 700; color: #6d28d9;">Total</td>
-                <td class="stats-number">${formatNumber(totals.clicks)}</td>
-                <td class="stats-number highlight-col">${formatNumber(totals.conversions.approved)}</td>
-                <td class="stats-number highlight-col">${formatNumber(totals.conversions.hold)}</td>
-                <td class="stats-number highlight-col">${formatNumber(totals.conversions.declined)}</td>
-                <td class="stats-number highlight-col">${formatNumber(totals.conversions.total)}</td>
-                <td class="stats-percentage">${totals.avgCTR}%</td>
-                <td class="stats-currency">$ ${totals.avgEPC}</td>
-                <td class="stats-currency">$ ${totals.payouts.approved.toFixed(2)}</td>
-                <td class="stats-currency">$ ${totals.payouts.hold.toFixed(2)}</td>
-                <td class="stats-currency">$ ${totals.payouts.declined.toFixed(2)}</td>
-                <td class="stats-currency">$ ${totals.payouts.total.toFixed(2)}</td>
-            </tr>
-        `;
-
-        console.log('✅ Statistics rendered successfully');
 
     } catch (error) {
         console.error('❌ Load statistics error:', error);
         tbody.innerHTML = `
             <tr>
-                <td colspan="13" style="text-align: center; padding: 3rem;">
-                    <div class="stats-empty-state">
-                        <i class="fa-solid fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;"></i>
-                        <h3 style="color: #111827; margin-bottom: 0.5rem;">Error Loading Statistics</h3>
-                        <p style="color: #6b7280;">${error.message}</p>
-                        <button class="btn-primary" onclick="loadStatistics()" style="margin-top: 1rem;">
-                            <i class="fa-solid fa-refresh"></i> Try Again
-                        </button>
-                    </div>
+                <td colspan="13" style="text-align: center; padding: 3rem; color: #ef4444;">
+                    <i class="fa-solid fa-exclamation-triangle" style="font-size: 2rem;"></i>
+                    <p style="margin-top: 1rem;">Error loading statistics</p>
+                    <p style="color: #6b7280; font-size: 0.875rem;">${error.message}</p>
+                    <button onclick="loadStatistics()" class="btn-primary" style="margin-top: 1rem;">
+                        <i class="fa-solid fa-refresh"></i> Retry
+                    </button>
                 </td>
             </tr>
         `;
     }
 }
+function showAlert(message, type = 'info') {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;';
+    alertDiv.innerHTML = `
+        <i class="fa-solid fa-${type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => alertDiv.remove(), 5000);
+}
+        // Update package banner display
+        function updatePackageBanner(packageData) {
+            const currentPackageEl = document.getElementById('currentPackage');
+            const totalSpentEl = document.getElementById('totalSpent');
+            const nextTierInfoEl = document.getElementById('nextTierInfo');
+            const nextTierLabelEl = document.getElementById('nextTierLabel');
 
-// Update package banner display
-function updatePackageBanner(packageData) {
-    const currentPackageEl = document.getElementById('currentPackage');
-    const totalSpentEl = document.getElementById('totalSpent');
-    const nextTierInfoEl = document.getElementById('nextTierInfo');
-    const nextTierLabelEl = document.getElementById('nextTierLabel');
+            if (currentPackageEl) {
+                currentPackageEl.textContent = packageData.current.toUpperCase();
+            }
 
-    if (currentPackageEl) {
-        currentPackageEl.textContent = packageData.current.toUpperCase();
-    }
+            if (totalSpentEl) {
+                totalSpentEl.textContent = `$${packageData.totalSpent.toFixed(2)}`;
+            }
 
-    if (totalSpentEl) {
-        totalSpentEl.textContent = `$${packageData.totalSpent.toFixed(2)}`;
-    }
-
-    if (nextTierInfoEl && nextTierLabelEl) {
-        if (packageData.nextTier.amountNeeded > 0) {
-            nextTierLabelEl.textContent = `Next: ${packageData.nextTier.tier.toUpperCase()}`;
-            nextTierInfoEl.textContent = `$${packageData.nextTier.amountNeeded.toFixed(2)} away`;
-        } else {
-            nextTierLabelEl.textContent = 'Status:';
-            nextTierInfoEl.textContent = 'MAX TIER 🎉';
+            if (nextTierInfoEl && nextTierLabelEl) {
+                if (packageData.nextTier.amountNeeded > 0) {
+                    nextTierLabelEl.textContent = `Next: ${packageData.nextTier.tier.toUpperCase()}`;
+                    nextTierInfoEl.textContent = `$${packageData.nextTier.amountNeeded.toFixed(2)} away`;
+                } else {
+                    nextTierLabelEl.textContent = 'Status:';
+                    nextTierInfoEl.textContent = 'MAX TIER 🎉';
+                }
+            }
         }
-    }
-}
 
-// Helper to format large numbers with commas
-function formatNumber(num) {
-    if (!num && num !== 0) return '0';
-    return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+        // Helper to format large numbers with commas
+        function formatNumber(num) {
+            if (!num && num !== 0) return '0';
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
         function displayCampaigns(campaigns) {
             const campaignsContainer = document.getElementById('campaignsContainer');
 
@@ -4224,79 +4216,79 @@ function formatNumber(num) {
             }
 
             if (paymentForm) {
-    paymentForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
+                paymentForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
 
-        if (!validateForm()) {
-            return;
-        }
+                    if (!validateForm()) {
+                        return;
+                    }
 
-        submitButton.classList.add('loading');
-        submitButton.disabled = true;
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
 
-        const currentPaymentMethod = document.querySelector('.payment-method.active').dataset.method;
-        let formData = {
-            paymentMethod: currentPaymentMethod,
-            amount: document.getElementById('amount').value
-        };
+                    const currentPaymentMethod = document.querySelector('.payment-method.active').dataset.method;
+                    let formData = {
+                        paymentMethod: currentPaymentMethod,
+                        amount: document.getElementById('amount').value
+                    };
 
-        if (currentPaymentMethod === 'stripe') {
-            formData.cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-            formData.expiryDate = document.getElementById('expiryDate').value;
-            formData.cvc = document.getElementById('cvc').value;
-        } else {
-            formData.paypalEmail = document.getElementById('paypalEmail').value;
-        }
+                    if (currentPaymentMethod === 'stripe') {
+                        formData.cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                        formData.expiryDate = document.getElementById('expiryDate').value;
+                        formData.cvc = document.getElementById('cvc').value;
+                    } else {
+                        formData.paypalEmail = document.getElementById('paypalEmail').value;
+                    }
 
-        try {
-            const token = localStorage.getItem('authToken');
-            if (!token) {
-                window.location.href = '/login.html';
-                return;
+                    try {
+                        const token = localStorage.getItem('authToken');
+                        if (!token) {
+                            window.location.href = '/login.html';
+                            return;
+                        }
+
+                        const response = await fetch('/api/payment', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            // Show success alert
+                            alert(`Your payment of ${formData.amount} is under review. Please wait for admin approval.`);
+
+                            // Reset form
+                            paymentForm.reset();
+                            selectPaymentMethod('stripe');
+
+                            // Store payment info
+                            localStorage.setItem('pendingPaymentId', data.paymentId);
+                            localStorage.setItem('pendingPaymentAmount', formData.amount);
+
+                            // Show verification page
+                            document.getElementById('verificationPage').classList.remove('hidden');
+                            document.getElementById('paymentForm').classList.add('hidden');
+
+                            // Start status checking
+                            startPaymentStatusCheck(data.paymentId);
+
+                        } else {
+                            alert(data.error || 'Payment submission failed. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Payment error:', error);
+                        alert('An error occurred. Please try again.');
+                    } finally {
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                    }
+                });
             }
-
-            const response = await fetch('/api/payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Show success alert
-                alert(`Your payment of ${formData.amount} is under review. Please wait for admin approval.`);
-                
-                // Reset form
-                paymentForm.reset();
-                selectPaymentMethod('stripe');
-
-                // Store payment info
-                localStorage.setItem('pendingPaymentId', data.paymentId);
-                localStorage.setItem('pendingPaymentAmount', formData.amount);
-
-                // Show verification page
-                document.getElementById('verificationPage').classList.remove('hidden');
-                document.getElementById('paymentForm').classList.add('hidden');
-                
-                // Start status checking
-                startPaymentStatusCheck(data.paymentId);
-
-            } else {
-                alert(data.error || 'Payment submission failed. Please try again.');
-            }
-        } catch (error) {
-            console.error('Payment error:', error);
-            alert('An error occurred. Please try again.');
-        } finally {
-            submitButton.classList.remove('loading');
-            submitButton.disabled = false;
-        }
-    });
-}
         }
 
         // ========== PAYMENT STATUS ==========
@@ -4376,75 +4368,60 @@ function formatNumber(num) {
         }
 
         function renderStatisticsTable(data) {
-            const tbody = document.getElementById('statsTableBody');
-            const tfoot = document.querySelector('.stats-table tfoot');
-
-            if (!data.statistics || data.statistics.length === 0) {
-                tbody.innerHTML = `
+    const tbody = document.getElementById('statsTableBody');
+    const tfoot = document.querySelector('.stats-table tfoot');
+    
+    if (!data.statistics || data.statistics.length === 0) {
+        tbody.innerHTML = `
             <tr>
-                <td colspan="12" style="text-align: center; padding: 3rem;">
-                    <div class="stats-empty-state">
-                        <i class="fa-solid fa-chart-line"></i>
-                        <h3>No Statistics Yet</h3>
-                        <p>Statistics will appear once your campaigns become active</p>
-                        <p style="margin-top: 1rem; color: #6d28d9; font-weight: 600;">
-                            Current Package: ${data.userPackage.current.toUpperCase()}
-                        </p>
-                        ${data.userPackage.nextTier.amountNeeded > 0 ?
-                        `<p style="color: #6b7280; font-size: 0.875rem;">${data.userPackage.nextTier.message}</p>`
-                        : ''}
-                    </div>
+                <td colspan="13" style="text-align: center; padding: 2rem; color: #6b7280;">
+                    No statistics data available
                 </td>
             </tr>
         `;
-                return;
-            }
+        return;
+    }
 
-            // Render table rows
-            tbody.innerHTML = data.statistics.map(stat => {
-                const date = new Date(stat.date).toLocaleDateString('en-US', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric'
-                });
+    // Render each row
+    tbody.innerHTML = data.statistics.map(stat => `
+        <tr>
+            <td>${new Date(stat.date).toLocaleDateString()}</td>
+            <td>${stat.campaignName}</td>
+            <td>${stat.clicks.toLocaleString()}</td>
+            <td>${stat.conversions.approved}</td>
+            <td>${stat.conversions.hold}</td>
+            <td>${stat.conversions.declined}</td>
+            <td><strong>${stat.conversions.approved + stat.conversions.hold + stat.conversions.declined}</strong></td>
+            <td>${stat.ctr.toFixed(3)}%</td>
+            <td>$${stat.epc.toFixed(3)}</td>
+            <td>$${stat.payouts.approved.toFixed(2)}</td>
+            <td>$${stat.payouts.hold.toFixed(2)}</td>
+            <td>$${stat.payouts.declined.toFixed(2)}</td>
+            <td><strong>$${stat.payouts.total.toFixed(2)}</strong></td>
+        </tr>
+    `).join('');
 
-                return `
+    // Update totals footer
+    if (tfoot && data.totals) {
+        const totals = data.totals;
+        tfoot.innerHTML = `
             <tr>
-                <td>${date}</td>
-                <td class="stats-number">${formatNumber(stat.clicks)}</td>
-                <td class="stats-number highlight-col">${formatNumber(stat.conversions.approved)}</td>
-                <td class="stats-number highlight-col">${formatNumber(stat.conversions.hold)}</td>
-                <td class="stats-number highlight-col">${formatNumber(stat.conversions.declined)}</td>
-                <td class="stats-number highlight-col">${formatNumber(stat.conversions.total)}</td>
-                <td class="stats-percentage">${stat.ctr.toFixed(3)}%</td>
-                <td class="stats-currency">$ ${stat.epc.toFixed(3)}</td>
-                <td class="stats-currency">$ ${stat.payouts.approved.toFixed(2)}</td>
-                <td class="stats-currency">$ ${stat.payouts.hold.toFixed(2)}</td>
-                <td class="stats-currency">$ ${stat.payouts.declined.toFixed(2)}</td>
-                <td class="stats-currency">$ ${stat.payouts.total.toFixed(2)}</td>
+                <td colspan="2"><strong>Total</strong></td>
+                <td><strong>${totals.clicks.toLocaleString()}</strong></td>
+                <td><strong>${totals.conversions.approved}</strong></td>
+                <td><strong>${totals.conversions.hold}</strong></td>
+                <td><strong>${totals.conversions.declined}</strong></td>
+                <td><strong>${totals.conversions.total}</strong></td>
+                <td><strong>${totals.avgCTR.toFixed(3)}%</strong></td>
+                <td><strong>$${totals.avgEPC.toFixed(3)}</strong></td>
+                <td><strong>$${totals.payouts.approved.toFixed(2)}</strong></td>
+                <td><strong>$${totals.payouts.hold.toFixed(2)}</strong></td>
+                <td><strong>$${totals.payouts.declined.toFixed(2)}</strong></td>
+                <td><strong>$${totals.payouts.total.toFixed(2)}</strong></td>
             </tr>
         `;
-            }).join('');
-
-            // Render totals footer
-            const totals = data.totals;
-            tfoot.innerHTML = `
-        <tr>
-            <td>Total</td>
-            <td class="stats-number">${formatNumber(totals.clicks)}</td>
-            <td class="stats-number highlight-col">${formatNumber(totals.conversions.approved)}</td>
-            <td class="stats-number highlight-col">${formatNumber(totals.conversions.hold)}</td>
-            <td class="stats-number highlight-col">${formatNumber(totals.conversions.declined)}</td>
-            <td class="stats-number highlight-col">${formatNumber(totals.conversions.total)}</td>
-            <td class="stats-percentage">${totals.avgCTR}%</td>
-            <td class="stats-currency">$ ${totals.avgEPC}</td>
-            <td class="stats-currency">$ ${totals.payouts.approved.toFixed(2)}</td>
-            <td class="stats-currency">$ ${totals.payouts.hold.toFixed(2)}</td>
-            <td class="stats-currency">$ ${totals.payouts.declined.toFixed(2)}</td>
-            <td class="stats-currency">$ ${totals.payouts.total.toFixed(2)}</td>
-        </tr>
-    `;
-        }
+    }
+}
 
         // Helper to format large numbers
         function formatNumber(num) {
@@ -4559,63 +4536,63 @@ function formatNumber(num) {
                 }
             }, 10000);
         }
-        
+
 
         // UPDATE YOUR EXISTING showSection FUNCTION
         // Replace or update your existing showSection function with this:
         function showSection(sectionId) {
-    console.log('📍 Showing section:', sectionId);
+            console.log('📍 Showing section:', sectionId);
 
-    // Hide all sections
-    ['emptyState', 'paymentForm', 'financesSection', 'statisticsSection', 'campaignsSection', 'createCampaignSection', 'verificationPage'].forEach(id => {
-        const elem = document.getElementById(id);
-        if (elem) elem.classList.add('hidden');
-    });
+            // Hide all sections
+            ['emptyState', 'paymentForm', 'financesSection', 'statisticsSection', 'campaignsSection', 'createCampaignSection', 'verificationPage'].forEach(id => {
+                const elem = document.getElementById(id);
+                if (elem) elem.classList.add('hidden');
+            });
 
-    // Show target section
-    const target = document.getElementById(sectionId);
-    if (target) target.classList.remove('hidden');
+            // Show target section
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.remove('hidden');
 
-    // Load statistics when showing statistics section
-    if (sectionId === 'statisticsSection') {
-        console.log('📊 Statistics section shown, loading data...');
-        loadStatistics();
-    }
+            // Load statistics when showing statistics section
+            if (sectionId === 'statisticsSection') {
+                console.log('📊 Statistics section shown, loading data...');
+                loadStatistics();
+            }
 
-    // Load campaigns when showing campaigns section
-    if (sectionId === 'campaignsSection') {
-        console.log('📋 Campaigns section shown, loading data...');
-        loadCampaigns();
-    }
+            // Load campaigns when showing campaigns section
+            if (sectionId === 'campaignsSection') {
+                console.log('📋 Campaigns section shown, loading data...');
+                loadCampaigns();
+            }
 
-    // Update header title
-    const titles = {
-        'emptyState': 'Offers',
-        'campaignsSection': 'Campaigns',
-        'createCampaignSection': 'Create Campaign',
-        'statisticsSection': 'Statistics',
-        'financesSection': 'Finances',
-        'paymentForm': 'Add Funds'
-    };
-    const header = document.querySelector('.top-nav h1');
-    if (header) header.textContent = titles[sectionId] || 'Dashboard';
+            // Update header title
+            const titles = {
+                'emptyState': 'Offers',
+                'campaignsSection': 'Campaigns',
+                'createCampaignSection': 'Create Campaign',
+                'statisticsSection': 'Statistics',
+                'financesSection': 'Finances',
+                'paymentForm': 'Add Funds'
+            };
+            const header = document.querySelector('.top-nav h1');
+            if (header) header.textContent = titles[sectionId] || 'Dashboard';
 
-    // Update active nav
-    document.querySelectorAll('.nav-menu li').forEach(li => li.classList.remove('active'));
-    const navMap = {
-        'emptyState': '#offers',
-        'campaignsSection': '#campaigns',
-        'createCampaignSection': '#create-campaign',
-        'statisticsSection': '#statistics',
-        'financesSection': '#finances',
-        'paymentForm': '#add-funds'
-    };
-    const href = navMap[sectionId];
-    if (href) {
-        const link = document.querySelector(`.nav-menu a[href="${href}"]`);
-        if (link) link.closest('li').classList.add('active');
-    }
-}
+            // Update active nav
+            document.querySelectorAll('.nav-menu li').forEach(li => li.classList.remove('active'));
+            const navMap = {
+                'emptyState': '#offers',
+                'campaignsSection': '#campaigns',
+                'createCampaignSection': '#create-campaign',
+                'statisticsSection': '#statistics',
+                'financesSection': '#finances',
+                'paymentForm': '#add-funds'
+            };
+            const href = navMap[sectionId];
+            if (href) {
+                const link = document.querySelector(`.nav-menu a[href="${href}"]`);
+                if (link) link.closest('li').classList.add('active');
+            }
+        }
 
 
         function showPaymentNotification(status, amount) {

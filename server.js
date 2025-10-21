@@ -1063,11 +1063,11 @@ const PACKAGE_TIERS = {
 
 // Calculate user's package tier based on total spent
 function calculatePackageTier(totalSpent) {
-  for (const [tier, config] of Object.entries(PACKAGE_TIERS)) {
-    if (totalSpent >= config.range.min && totalSpent <= config.range.max) {
-      return tier;
-    }
-  }
+  if (totalSpent >= PACKAGE_TIERS.diamond.range.min) return 'diamond';
+  if (totalSpent >= PACKAGE_TIERS.platinum.range.min) return 'platinum';
+  if (totalSpent >= PACKAGE_TIERS.gold.range.min) return 'gold';
+  if (totalSpent >= PACKAGE_TIERS.silver.range.min) return 'silver';
+  if (totalSpent >= PACKAGE_TIERS.bronze.range.min) return 'bronze';
   return 'standard';
 }
 
@@ -1576,7 +1576,11 @@ function getNextTierInfo(totalSpent) {
   const currentIndex = tiers.indexOf(currentTier);
   
   if (currentIndex === tiers.length - 1) {
-    return { tier: 'diamond', amountNeeded: 0, message: 'Maximum tier reached!' };
+    return { 
+      tier: null, 
+      amountNeeded: 0, 
+      message: 'Maximum tier reached!' 
+    };
   }
   
   const nextTier = tiers[currentIndex + 1];
@@ -1586,7 +1590,9 @@ function getNextTierInfo(totalSpent) {
   return {
     tier: nextTier,
     amountNeeded: Math.max(0, amountNeeded),
-    message: `Spend $${amountNeeded.toFixed(2)} more to reach ${nextTier.toUpperCase()} tier`
+    message: amountNeeded > 0 
+      ? `Spend $${amountNeeded.toFixed(2)} more to reach ${nextTier.toUpperCase()} tier`
+      : `You've reached ${nextTier.toUpperCase()} tier!`
   };
 }
 // Schedule daily stats generation for all active campaigns
@@ -2076,7 +2082,53 @@ app.get('/api/admin/campaigns', authenticateAdmin, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+app.post('/api/admin/generate-missing-stats', authenticateToken, async (req, res) => {
+  try {
+    // Get all active campaigns for the user
+    const activeCampaigns = await Campaign.find({ 
+      userId: req.user.userId,
+      status: 'active' 
+    });
 
+    console.log(`Found ${activeCampaigns.length} active campaigns for user ${req.user.userId}`);
+
+    const results = [];
+    
+    for (const campaign of activeCampaigns) {
+      // Check if stats exist for this campaign
+      const existingStats = await DailyStatistics.findOne({
+        campaignId: campaign._id,
+        userId: req.user.userId
+      });
+
+      if (!existingStats) {
+        // Generate stats for this campaign
+        await generateAndSaveDailyStats(campaign._id);
+        results.push({
+          campaignId: campaign._id,
+          campaignName: campaign.campaignName,
+          status: 'Generated'
+        });
+      } else {
+        results.push({
+          campaignId: campaign._id,
+          campaignName: campaign.campaignName,
+          status: 'Already exists'
+        });
+      }
+    }
+
+    res.json({
+      message: 'Stats generation completed',
+      activeCampaigns: activeCampaigns.length,
+      results
+    });
+
+  } catch (error) {
+    console.error('Generate missing stats error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // Update Campaign Status (Admin)
 app.patch('/api/admin/campaigns/:id/status', authenticateAdmin, async (req, res) => {
   try {
