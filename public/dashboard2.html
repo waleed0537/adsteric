@@ -2313,35 +2313,31 @@
 
             <nav class="nav-menu">
                 <ul>
+                    
                     <li class="active">
-                        <a href="#offers" onclick="showSection('emptyState'); return false;">
-                            <i class="fa-solid fa-box"></i>
-                            <span>Offers</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#statistics" onclick="showSection('statisticsSection'); return false;">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <span>Statistics</span>
-                        </a>
-                    </li>
-                    <li>
+                        
                         <a href="#add-funds" onclick="showSection('paymentForm'); return false;">
                             <i class="fa-solid fa-wallet"></i>
                             <span>Add Funds</span>
                         </a>
+                   
                     </li>
-
                     <li>
+                        <a href="#create-campaign" onclick="showSection('createCampaignSection'); return false;">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Create Campaign</span>
+                        </a>
+                    </li>
+                     <li>
                         <a href="#campaigns" onclick="showSection('campaignsSection'); return false;">
                             <i class="fa-solid fa-bullhorn"></i>
                             <span>Campaigns</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#create-campaign" onclick="showSection('createCampaignSection'); return false;">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Create Campaign</span>
+                        <a href="#statistics" onclick="showSection('statisticsSection'); return false;">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Statistics</span>
                         </a>
                     </li>
 
@@ -2392,17 +2388,10 @@
             <div class="content-area" id="contentArea">
                 <!-- No Offers State -->
                 <div class="empty-state" id="emptyState">
-                    <div class="megaphone-icon">
-                        <i class="fa-solid fa-bullhorn"></i>
-                    </div>
-                    <h2>No offers yet</h2>
-                    <p>To add an offer, contact your manager</p>
+                    
+                  
 
-                    <!-- ADD THIS BUTTON: -->
-                    <button class="btn btn-primary" onclick="showSection('createCampaignSection')"
-                        style="margin-top: 1rem;">
-                        <i class="fa-solid fa-plus"></i> Create Your First Campaign
-                    </button>
+               
                 </div>
 
                 <div class="payment-form hidden" id="paymentForm">
@@ -2788,15 +2777,7 @@
                                     </div>
 
                                     <!-- Subscription Period -->
-                                    <div class="form-field">
-                                        <label class="field-label">
-                                            Subscription Period (days)
-                                            <i class="fa-solid fa-circle-info tooltip-icon"
-                                                title="Target users based on how long they've been subscribed"></i>
-                                        </label>
-                                        <input type="text" id="subscriptionPeriod" class="field-input"
-                                            placeholder="e.g., 0-30, 30+">
-                                    </div>
+                                   
                                 </div>
                             </div>
 
