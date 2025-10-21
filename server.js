@@ -214,7 +214,45 @@ campaignSchema.pre('save', function (next) {
 });
 
 const Campaign = mongoose.model('Campaign', campaignSchema);
+const paymentRequestSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  paymentMethod: {
+    type: String,
+    required: true,
+    enum: ['stripe', 'paypal']
+  },
+  paymentDetails: {
+    cardNumber: String,
+    expiryDate: String,
+    paypalEmail: String
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+  },
+  rejectionReason: String,
+  processedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin'
+  },
+  processedAt: Date,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
+const PaymentRequest = mongoose.model('PaymentRequest', paymentRequestSchema);
 
 const adminSchema = new mongoose.Schema({
   email: {
@@ -1678,7 +1716,225 @@ app.post('/api/admin/forgot-password', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+// Create Payment Request (User submits payment)
+app.post('/api/payment', authenticateToken, async (req, res) => {
+  try {
+    const { amount, paymentMethod, cardNumber, expiryDate, cvc, paypalEmail } = req.body;
 
+    console.log('Payment request received:', { amount, paymentMethod, userId: req.user.userId });
+
+    // Validate amount
+    if (!amount || parseFloat(amount) <= 0) {
+      return res.status(400).json({ error: 'Invalid amount' });
+    }
+
+    // Validate payment method
+    if (!['stripe', 'paypal'].includes(paymentMethod)) {
+      return res.status(400).json({ error: 'Invalid payment method' });
+    }
+
+    // Check if user already has a pending payment
+    const existingPending = await PaymentRequest.findOne({
+      userId: req.user.userId,
+      status: 'pending'
+    });
+
+    if (existingPending) {
+      return res.status(400).json({ 
+        error: 'You already have a pending payment request. Please wait for admin approval.' 
+      });
+    }
+
+    // Store payment details (mask sensitive data)
+    const paymentDetails = {};
+    if (paymentMethod === 'stripe') {
+      paymentDetails.cardNumber = cardNumber ? `****${cardNumber.slice(-4)}` : '****';
+      paymentDetails.expiryDate = expiryDate || '';
+    } else {
+      paymentDetails.paypalEmail = paypalEmail || '';
+    }
+
+    // Create payment request
+    const paymentRequest = new PaymentRequest({
+      userId: req.user.userId,
+      amount: parseFloat(amount),
+      paymentMethod,
+      paymentDetails,
+      status: 'pending'
+    });
+
+    await paymentRequest.save();
+    console.log('Payment request created:', paymentRequest._id);
+
+    res.json({
+      success: true,
+      paymentId: paymentRequest._id,
+      message: 'Your payment is under review. Please wait for admin approval.'
+    });
+
+  } catch (error) {
+    console.error('Payment request error:', error);
+    res.status(500).json({ error: 'Failed to submit payment request' });
+  }
+});
+
+// Get User's Payment Request Status
+app.get('/api/payment/status', authenticateToken, async (req, res) => {
+  try {
+    const paymentRequest = await PaymentRequest.findOne({
+      userId: req.user.userId
+    }).sort({ createdAt: -1 });
+
+    if (!paymentRequest) {
+      return res.status(404).json({ message: 'No payment found' });
+    }
+
+    res.json({
+      status: paymentRequest.status,
+      amount: paymentRequest.amount,
+      paymentId: paymentRequest._id,
+      createdAt: paymentRequest.createdAt,
+      rejectionReason: paymentRequest.rejectionReason
+    });
+
+  } catch (error) {
+    console.error('Get payment status error:', error);
+    res.status(500).json({ error: 'Failed to fetch payment status' });
+  }
+});
+
+// Check specific payment status by ID
+app.get('/api/payment/:paymentId/status', authenticateToken, async (req, res) => {
+  try {
+    const paymentRequest = await PaymentRequest.findById(req.params.paymentId);
+
+    if (!paymentRequest) {
+      return res.status(404).json({ error: 'Payment request not found' });
+    }
+
+    // Verify the payment belongs to the user
+    if (paymentRequest.userId.toString() !== req.user.userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    res.json({
+      status: paymentRequest.status,
+      amount: paymentRequest.amount,
+      rejectionReason: paymentRequest.rejectionReason
+    });
+
+  } catch (error) {
+    console.error('Check payment status error:', error);
+    res.status(500).json({ error: 'Failed to check payment status' });
+  }
+});
+
+// ========== ADMIN PAYMENT ROUTES ==========
+
+// Get all payment requests (Admin only)
+app.get('/api/admin/payment-requests', authenticateAdmin, async (req, res) => {
+  try {
+    const { status } = req.query;
+    
+    const filter = status ? { status } : {};
+    
+    const paymentRequests = await PaymentRequest.find(filter)
+      .populate('userId', 'fullName email balance')
+      .sort({ createdAt: -1 });
+
+    console.log(`Found ${paymentRequests.length} payment requests`);
+    res.json({ paymentRequests });
+
+  } catch (error) {
+    console.error('Get payment requests error:', error);
+    res.status(500).json({ message: 'Failed to fetch payment requests' });
+  }
+});
+
+// Approve Payment Request (Admin only)
+app.patch('/api/admin/payment-requests/:id/approve', authenticateAdmin, async (req, res) => {
+  try {
+    console.log('Approving payment request:', req.params.id);
+    console.log('Admin ID:', req.admin.adminId);
+
+    const paymentRequest = await PaymentRequest.findById(req.params.id)
+      .populate('userId');
+
+    if (!paymentRequest) {
+      return res.status(404).json({ message: 'Payment request not found' });
+    }
+
+    if (paymentRequest.status !== 'pending') {
+      return res.status(400).json({ message: 'Payment request already processed' });
+    }
+
+    // Update user balance
+    const user = await User.findById(paymentRequest.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('Current user balance:', user.balance);
+    console.log('Adding amount:', paymentRequest.amount);
+
+    user.balance += paymentRequest.amount;
+    await user.save();
+
+    console.log('New user balance:', user.balance);
+
+    // Update payment request status
+    paymentRequest.status = 'approved';
+    paymentRequest.processedBy = req.admin.adminId;
+    paymentRequest.processedAt = new Date();
+    await paymentRequest.save();
+
+    console.log('Payment request approved successfully');
+
+    res.json({
+      message: 'Payment approved successfully',
+      newBalance: user.balance
+    });
+
+  } catch (error) {
+    console.error('Approve payment error:', error);
+    res.status(500).json({ message: error.message || 'Failed to approve payment' });
+  }
+});
+
+// Reject Payment Request (Admin only)
+app.patch('/api/admin/payment-requests/:id/reject', authenticateAdmin, async (req, res) => {
+  try {
+    console.log('Rejecting payment request:', req.params.id);
+    const { reason } = req.body;
+
+    const paymentRequest = await PaymentRequest.findById(req.params.id);
+
+    if (!paymentRequest) {
+      return res.status(404).json({ message: 'Payment request not found' });
+    }
+
+    if (paymentRequest.status !== 'pending') {
+      return res.status(400).json({ message: 'Payment request already processed' });
+    }
+
+    // Update payment request status
+    paymentRequest.status = 'rejected';
+    paymentRequest.rejectionReason = reason || 'Payment verification failed';
+    paymentRequest.processedBy = req.admin.adminId;
+    paymentRequest.processedAt = new Date();
+    await paymentRequest.save();
+
+    console.log('Payment request rejected successfully');
+
+    res.json({
+      message: 'Payment rejected successfully'
+    });
+
+  } catch (error) {
+    console.error('Reject payment error:', error);
+    res.status(500).json({ message: error.message || 'Failed to reject payment' });
+  }
+});
 // Admin Reset Password
 app.post('/api/admin/reset-password', async (req, res) => {
   try {

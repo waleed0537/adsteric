@@ -22,6 +22,50 @@
             display: flex;
             min-height: 100vh;
         }
+        .btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    margin-right: 0.25rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
 
         .sidebar {
             width: 260px;
@@ -419,6 +463,10 @@
                     <i class="bi bi-megaphone"></i>
                     <span>Campaigns</span>
                 </li>
+                <li onclick="showSection('paymentRequests')">
+    <i class="bi bi-credit-card"></i>
+    Payment Requests
+</li>
             </ul>
             <button class="logout-btn" onclick="logout()">
                 <i class="bi bi-box-arrow-right"></i>
@@ -483,6 +531,89 @@
                     </div>
                 </div>
             </div>
+            <!-- Payment Requests Section -->
+<div id="paymentRequestsSection" class="content-section" style="display: none;">
+    <div class="section-header">
+        <h2 class="section-title">Payment Requests</h2>
+        <div class="filter-group">
+            <select class="form-select" onchange="loadPaymentRequests(this.value)">
+                <option value="">All Statuses</option>
+                <option value="pending" selected>Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="stats-grid" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+            <div class="stat-label">Pending Requests</div>
+            <div class="stat-value" id="pendingCount">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Pending Amount</div>
+            <div class="stat-value" id="pendingAmount">$0.00</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Approved Today</div>
+            <div class="stat-value" id="approvedToday">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Rejected Today</div>
+            <div class="stat-value" id="rejectedToday">0</div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="paymentRequestsTableBody">
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 40px;">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Reject Payment Modal -->
+<div id="rejectPaymentModal" class="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Reject Payment Request</h2>
+            <button class="modal-close" onclick="closeModal('rejectPayment')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="rejectPaymentRequest(event)">
+                <input type="hidden" id="rejectPaymentId">
+                <div class="form-group">
+                    <label class="form-label">User</label>
+                    <input type="text" class="form-input" id="rejectUserName" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amount</label>
+                    <input type="text" class="form-input" id="rejectAmount" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Rejection Reason</label>
+                    <textarea class="form-input" id="rejectionReason" rows="4" 
+                              placeholder="Enter reason for rejection..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger" style="width: 100%;">Reject Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
 
             <!-- Users Page -->
             <div id="users" class="page">
@@ -846,7 +977,177 @@
                 showNotification(error.message, 'error');
             }
         }
+// Load Payment Requests
+async function loadPaymentRequests(status = 'pending') {
+    try {
+        const response = await fetch(`${API_URL}/admin/payment-requests?status=${status}`, {
+            headers: getAuthHeaders()
+        });
 
+        const data = await response.json();
+        const tbody = document.getElementById('paymentRequestsTableBody');
+
+        if (data.paymentRequests.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No payment requests found</td></tr>';
+            updatePaymentStats([], status);
+            return;
+        }
+
+        tbody.innerHTML = data.paymentRequests.map(request => {
+            const statusBadge = getStatusBadge(request.status);
+            const paymentDetails = request.paymentMethod === 'stripe' 
+                ? `Card: ${request.paymentDetails.cardNumber}`
+                : `PayPal: ${request.paymentDetails.paypalEmail}`;
+            
+            return `
+                <tr>
+                    <td>
+                        <div style="font-weight: 600;">${request.userId?.fullName || 'N/A'}</div>
+                        <div style="font-size: 12px; color: #718096;">${request.userId?.email || ''}</div>
+                    </td>
+                    <td style="font-weight: 600; color: #3dd5c3;">${request.amount.toFixed(2)}</td>
+                    <td>
+                        <span class="badge ${request.paymentMethod === 'stripe' ? 'badge-info' : 'badge-warning'}">
+                            ${request.paymentMethod.toUpperCase()}
+                        </span>
+                    </td>
+                    <td style="font-size: 12px;">${paymentDetails}</td>
+                    <td>${statusBadge}</td>
+                    <td>${new Date(request.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        ${request.status === 'pending' ? `
+                            <button class="btn btn-success btn-sm" onclick="approvePaymentRequest('${request._id}', '${request.userId?._id}', ${request.amount})" title="Approve">
+                                <i class="bi bi-check-circle"></i> Approve
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="openRejectModal('${request._id}', '${request.userId?.fullName}', ${request.amount})" title="Reject">
+                                <i class="bi bi-x-circle"></i> Reject
+                            </button>
+                        ` : `
+                            <span style="color: #718096; font-size: 12px;">
+                                ${request.status === 'approved' ? 'Approved' : 'Rejected'}
+                                ${request.processedAt ? `on ${new Date(request.processedAt).toLocaleDateString()}` : ''}
+                            </span>
+                        `}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        updatePaymentStats(data.paymentRequests, status);
+
+    } catch (error) {
+        console.error('Load payment requests error:', error);
+    }
+}
+
+// Update Payment Statistics
+function updatePaymentStats(requests, currentFilter) {
+    const today = new Date().setHours(0, 0, 0, 0);
+    
+    const pending = requests.filter(r => r.status === 'pending');
+    const pendingAmount = pending.reduce((sum, r) => sum + r.amount, 0);
+    const approvedToday = requests.filter(r => 
+        r.status === 'approved' && new Date(r.processedAt).setHours(0, 0, 0, 0) === today
+    ).length;
+    const rejectedToday = requests.filter(r => 
+        r.status === 'rejected' && new Date(r.processedAt).setHours(0, 0, 0, 0) === today
+    ).length;
+
+    document.getElementById('pendingCount').textContent = pending.length;
+    document.getElementById('pendingAmount').textContent = `${pendingAmount.toFixed(2)}`;
+    document.getElementById('approvedToday').textContent = approvedToday;
+    document.getElementById('rejectedToday').textContent = rejectedToday;
+}
+
+// Approve Payment Request
+async function approvePaymentRequest(requestId, userId, amount) {
+    if (!confirm(`Approve payment of ${amount.toFixed(2)}? This will add funds to the user's balance.`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/admin/payment-requests/${requestId}/approve`, {
+            method: 'PATCH',
+            headers: getAuthHeaders()
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
+
+        showNotification('Payment approved successfully!', 'success');
+        loadPaymentRequests('pending');
+        loadUsers();
+
+    } catch (error) {
+        showNotification(error.message, 'error');
+    }
+}
+function showSection(section) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
+    
+    // Show selected section
+    document.getElementById(`${section}Section`).style.display = 'block';
+    
+    // Load data based on section
+    if (section === 'users') {
+        loadUsers();
+    } else if (section === 'campaigns') {
+        loadCampaigns();
+    } else if (section === 'paymentRequests') {
+        loadPaymentRequests('pending');
+    }
+}   
+// Open Reject Modal
+function openRejectModal(requestId, userName, amount) {
+    document.getElementById('rejectPaymentId').value = requestId;
+    document.getElementById('rejectUserName').value = userName;
+    document.getElementById('rejectAmount').value = `${amount.toFixed(2)}`;
+    document.getElementById('rejectionReason').value = '';
+    document.getElementById('rejectPaymentModal').classList.add('active');
+}
+
+// Reject Payment Request
+async function rejectPaymentRequest(event) {
+    event.preventDefault();
+    
+    const requestId = document.getElementById('rejectPaymentId').value;
+    const reason = document.getElementById('rejectionReason').value;
+
+    try {
+        const response = await fetch(`${API_URL}/admin/payment-requests/${requestId}/reject`, {
+            method: 'PATCH',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ reason })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
+
+        showNotification('Payment rejected successfully', 'success');
+        closeModal('rejectPayment');
+        loadPaymentRequests('pending');
+
+    } catch (error) {
+        showNotification(error.message, 'error');
+    }
+}
+
+// Get status badge
+function getStatusBadge(status) {
+    const badges = {
+        pending: '<span class="badge badge-warning">Pending</span>',
+        approved: '<span class="badge badge-success">Approved</span>',
+        rejected: '<span class="badge badge-danger">Rejected</span>'
+    };
+    return badges[status] || status;
+}
         // Notification
         function showNotification(message, type) {
             const notification = document.createElement('div');
