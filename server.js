@@ -403,7 +403,7 @@ app.post('/api/auth/signup', async (req, res) => {
       fullName,
       email,
       password,
-      balance: 100.00  // Ã¢â€ Â ADD THIS LINE
+      balance: 100.00  // ÃƒÂ¢Ã¢â‚¬Â Ã‚Â ADD THIS LINE
     });
 
     await user.save();
@@ -460,7 +460,7 @@ app.post('/api/auth/signup', async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-        balance: user.balance  // Ã¢â€ Â ADD THIS LINE
+        balance: user.balance  // ÃƒÂ¢Ã¢â‚¬Â Ã‚Â ADD THIS LINE
 
       }
     });
@@ -710,7 +710,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       description 
     } = req.body;
 
-    console.log('Ã°Å¸â€œÂ Campaign creation request:', req.body);
+    console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â Campaign creation request:', req.body);
 
     // Validation
     if (!campaignName || !targetUrl || !dailyBudget || !totalBudget || !campaignType || !targetAudience) {
@@ -751,25 +751,20 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('Ã°Å¸â€™Â° User balance:', user.balance, 'Required:', total);
+    console.log('User balance:', user.balance, 'Required daily budget:', daily);
 
-    // Check sufficient balance
-    if (user.balance < total) {
+    // Check sufficient balance for at least one day
+    if (user.balance < daily) {
       return res.status(400).json({ 
-        message: `Insuffiecient balance.
+        message: `Insufficient balance. 
 
 Funds are deducted daily.
-So when daily budget is set it will continue invoicing until it is paused.` 
+Your campaign will run as long as you have sufficient balance.` 
       });
     }
 
-    // Deduct balance
-    user.balance -= total;
-        user.totalSpent += total;  // NEW: Track total spending
-    user.currentPackage = calculatePackageTier(user.totalSpent);  // NEW
-
-    await user.save();
-    console.log('Ã¢Å“â€¦ Balance deducted. New balance:', user.balance);
+    // No balance deduction at creation - it will be deducted daily
+    console.log('Campaign approved. Balance check passed. Daily deductions will begin when campaign activates.');
 
     // Create campaign
     const campaign = new Campaign({
@@ -785,7 +780,7 @@ So when daily budget is set it will continue invoicing until it is paused.`
     });
 
     await campaign.save();
-    console.log('Ã¢Å“â€¦ Campaign created:', campaign._id);
+    console.log(' Campaign created:', campaign._id);
 
     // Send creation email
     try {
@@ -802,7 +797,7 @@ So when daily budget is set it will continue invoicing until it is paused.`
               <h2 style="color: #1a202c;">Campaign Created!</h2>
               <p style="color: #4a5568;">Your campaign "${campaign.campaignName}" has been created.</p>
               <div style="background: #fef3c7; padding: 16px; margin: 20px 0; border-radius: 8px;">
-                <p style="margin: 0; color: #92400e;"><strong>Ã¢ÂÂ±Ã¯Â¸Â Auto-Activation:</strong> Your campaign will be activated in 1.5 hours.</p>
+                <p style="margin: 0; color: #92400e;"><strong>ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â Auto-Activation:</strong> Your campaign will be activated in 1.5 hours.</p>
               </div>
             </div>
           </div>
@@ -821,7 +816,7 @@ setTimeout(async () => {
       campaignToActivate.status = 'active';
       campaignToActivate.startDate = new Date();
       await campaignToActivate.save();
-      console.log(`Ã¢Å“â€¦ Campaign ${campaign._id} auto-activated`);
+      console.log(`Campaign ${campaign._id} auto-activated`);
 
       // Generate first day's statistics
       await generateAndSaveDailyStats(campaign._id);  // NEW
@@ -847,7 +842,7 @@ setTimeout(async () => {
     });
 
   } catch (error) {
-    console.error('Ã¢ÂÅ’ Create campaign error:', error);
+    console.error('ÃƒÂ¢Ã‚ÂÃ…â€™ Create campaign error:', error);
     res.status(500).json({ message: 'Server error: ' + error.message });
   }
 });
@@ -1469,7 +1464,7 @@ async function generateAndSaveDailyStats(campaignId) {
     campaign.statistics.spent += stats.spent;
     await campaign.save();
 
-    console.log(`âœ… Generated daily stats for campaign ${campaignId}:`, {
+    console.log(`Ã¢Å“â€¦ Generated daily stats for campaign ${campaignId}:`, {
       package: user.currentPackage,
       impressions: stats.impressions,
       clicks: stats.clicks,
@@ -1486,7 +1481,7 @@ async function generateAndSaveDailyStats(campaignId) {
 // Get Statistics for User
 app.get('/api/statistics', authenticateToken, async (req, res) => {
   try {
-    console.log('Ã°Å¸â€œÅ  Statistics request from user:', req.user.userId);
+    console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Statistics request from user:', req.user.userId);
     
     const { startDate, endDate, campaignId, groupBy = 'date' } = req.query;
 
@@ -1508,19 +1503,19 @@ app.get('/api/statistics', authenticateToken, async (req, res) => {
       query.date = { $gte: thirtyDaysAgo };
     }
 
-    console.log('Ã°Å¸â€œÅ  Query:', JSON.stringify(query));
+    console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Query:', JSON.stringify(query));
 
     // Fetch statistics
     const statistics = await DailyStatistics.find(query)
       .populate('campaignId', 'campaignName')
       .sort({ date: -1 });
 
-    console.log(`Ã°Å¸â€œÅ  Found ${statistics.length} statistics records`);
+    console.log(`ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Found ${statistics.length} statistics records`);
 
     // Get user info for package display
     const user = await User.findById(req.user.userId).select('currentPackage totalSpent');
 
-    console.log('Ã°Å¸â€œÅ  User package:', user.currentPackage, 'Total spent:', user.totalSpent);
+    console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  User package:', user.currentPackage, 'Total spent:', user.totalSpent);
 
     // Calculate totals
     const totals = statistics.reduce((acc, stat) => {
@@ -1578,11 +1573,11 @@ app.get('/api/statistics', authenticateToken, async (req, res) => {
       }
     };
 
-    console.log('Ã°Å¸â€œÅ  Sending response with', statistics.length, 'records');
+    console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Sending response with', statistics.length, 'records');
     res.json(response);
 
   } catch (error) {
-    console.error('Ã¢ÂÅ’ Get statistics error:', error);
+    console.error('ÃƒÂ¢Ã‚ÂÃ…â€™ Get statistics error:', error);
     res.status(500).json({ message: 'Server error while fetching statistics' });
   }
 });
@@ -1622,9 +1617,99 @@ async function generateDailyStatsForAllCampaigns() {
       await generateAndSaveDailyStats(campaign._id);
     }
 
-    console.log('Ã¢Å“â€¦ Daily stats generation completed');
+    console.log('Daily stats generation completed');
   } catch (error) {
     console.error('Error in daily stats generation:', error);
+  }
+}
+
+
+// Deduct daily budget from all active campaigns
+async function deductDailyBudgets() {
+  try {
+    const activeCampaigns = await Campaign.find({ status: 'active' });
+    console.log(`Processing daily budget deductions for ${activeCampaigns.length} active campaigns...`);
+
+    for (const campaign of activeCampaigns) {
+      try {
+        const user = await User.findById(campaign.userId);
+        if (!user) {
+          console.log(`User not found for campaign ${campaign._id}`);
+          continue;
+        }
+
+        // Check if campaign has already reached total budget
+        const currentSpent = campaign.statistics?.spent || 0;
+        if (currentSpent >= campaign.totalBudget) {
+          campaign.status = 'completed';
+          await campaign.save();
+          console.log(`Campaign ${campaign.campaignName} already completed - total budget reached`);
+          continue;
+        }
+
+        // Check if user has sufficient balance for daily budget
+        if (user.balance >= campaign.dailyBudget) {
+          // Deduct daily budget
+          user.balance -= campaign.dailyBudget;
+          user.totalSpent = (user.totalSpent || 0) + campaign.dailyBudget;
+          user.currentPackage = calculatePackageTier(user.totalSpent);
+          await user.save();
+
+          // Track actual spending on campaign
+          campaign.statistics = campaign.statistics || {};
+          campaign.statistics.spent = (campaign.statistics.spent || 0) + campaign.dailyBudget;
+          
+          console.log(`Deducted $${campaign.dailyBudget} from user ${user.email} for campaign ${campaign.campaignName}. Campaign spent: $${campaign.statistics.spent}/${campaign.totalBudget}`);
+
+          // Check if total budget reached after this deduction
+          if (campaign.statistics.spent >= campaign.totalBudget) {
+            campaign.status = 'completed';
+            await campaign.save();
+            console.log(`Campaign ${campaign.campaignName} completed - total budget of $${campaign.totalBudget} reached`);
+          } else {
+            await campaign.save();
+          }
+        } else {
+          // Insufficient balance - pause campaign
+          campaign.status = 'paused';
+          await campaign.save();
+          console.log(`Campaign ${campaign.campaignName} paused - insufficient balance. Required: $${campaign.dailyBudget}, Available: $${user.balance}`);
+
+          // Send email notification
+          try {
+            await transporter.sendMail({
+              from: '"Adsteric" <adshark00@gmail.com>',
+              to: user.email,
+              subject: 'Campaign Paused - Insufficient Balance',
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <div style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); padding: 30px; text-align: center;">
+                    <h1 style="color: white; margin: 0;">ADSTERIC</h1>
+                  </div>
+                  <div style="padding: 30px; background: #f5f7fa;">
+                    <h2 style="color: #1a202c;">Campaign Paused</h2>
+                    <p style="color: #4a5568;">Your campaign "${campaign.campaignName}" has been paused due to insufficient balance.</p>
+                    <div style="background: #fee2e2; padding: 16px; margin: 20px 0; border-radius: 8px;">
+                      <p style="margin: 0; color: #991b1b;"><strong>Required:</strong> $${campaign.dailyBudget} daily budget</p>
+                      <p style="margin: 5px 0 0 0; color: #991b1b;"><strong>Available:</strong> $${user.balance.toFixed(2)}</p>
+                    </div>
+                    <p style="color: #4a5568;">Please add funds to your account to resume this campaign.</p>
+                  </div>
+                </div>
+              `
+            });
+          } catch (emailError) {
+            console.error('Error sending insufficient balance email:', emailError);
+          }
+        }
+      } catch (campaignError) {
+        console.error(`Error processing campaign ${campaign._id}:`, campaignError);
+      }
+    }
+
+    console.log('Daily budget deductions completed');
+  } catch (error) {
+    console.error('Error in daily budget deduction:', error);
   }
 }
 
@@ -1639,13 +1724,18 @@ function scheduleDailyStatsGeneration() {
 
   // First run at midnight
   setTimeout(() => {
+    // Run both daily budget deductions and stats generation
+    deductDailyBudgets();
     generateDailyStatsForAllCampaigns();
     
     // Then run every 24 hours
-    setInterval(generateDailyStatsForAllCampaigns, 24 * 60 * 60 * 1000);
+    setInterval(() => {
+      deductDailyBudgets();
+      generateDailyStatsForAllCampaigns();
+    }, 24 * 60 * 60 * 1000);
   }, timeUntilMidnight);
 
-  console.log(`Ã°Å¸â€œâ€¦ Daily stats will generate in ${(timeUntilMidnight / 1000 / 60).toFixed(0)} minutes`);
+  console.log(`Daily tasks (budget deductions & stats) will run in ${(timeUntilMidnight / 1000 / 60).toFixed(0)} minutes`);
 }
 app.post('/api/admin/signin', async (req, res) => {
   try {
@@ -2150,7 +2240,7 @@ app.post('/api/admin/generate-missing-stats', authenticateToken, async (req, res
 // Clean up and correct existing stats (remove duplicates and invalid date stats)
 app.post('/api/admin/cleanup-stats', authenticateAdmin, async (req, res) => {
   try {
-    console.log('ðŸ§¹ Starting stats cleanup...');
+    console.log('Ã°Å¸Â§Â¹ Starting stats cleanup...');
     
     const report = {
       duplicatesRemoved: 0,
@@ -2224,7 +2314,7 @@ app.post('/api/admin/cleanup-stats', authenticateAdmin, async (req, res) => {
       }
     }
 
-    console.log('âœ… Stats cleanup completed:', report);
+    console.log('Ã¢Å“â€¦ Stats cleanup completed:', report);
 
     res.json({
       message: 'Stats cleanup completed successfully',
@@ -2240,7 +2330,7 @@ app.post('/api/admin/cleanup-stats', authenticateAdmin, async (req, res) => {
 // Clean up stats for a specific user
 app.post('/api/cleanup-my-stats', authenticateToken, async (req, res) => {
   try {
-    console.log(`ðŸ§¹ Starting stats cleanup for user ${req.user.userId}...`);
+    console.log(`Ã°Å¸Â§Â¹ Starting stats cleanup for user ${req.user.userId}...`);
     
     const report = {
       duplicatesRemoved: 0,
@@ -2316,7 +2406,7 @@ app.post('/api/cleanup-my-stats', authenticateToken, async (req, res) => {
       }
     }
 
-    console.log('âœ… Stats cleanup completed for user:', report);
+    console.log('Ã¢Å“â€¦ Stats cleanup completed for user:', report);
 
     res.json({
       message: 'Your stats have been cleaned up successfully',

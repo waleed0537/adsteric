@@ -2178,7 +2178,7 @@
         }
 
         .questions-box li::before {
-            content: "Ã¢â‚¬Â¢";
+            content: "ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢";
             color: #6d28d9;
             font-weight: bold;
             margin-right: 0.5rem;
@@ -2698,19 +2698,19 @@
                                                     <label class="country-item">
                                                         <input type="checkbox" value="ES"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">Ã°Å¸â€¡ÂªÃ°Å¸â€¡Â¸</span>
+                                                        <span class="country-flag">ÃƒÂ°Ã…Â¸Ã¢â‚¬Â¡Ã‚ÂªÃƒÂ°Ã…Â¸Ã¢â‚¬Â¡Ã‚Â¸</span>
                                                         <span>Spain</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="JP"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">Ã°Å¸â€¡Â¯Ã°Å¸â€¡Âµ</span>
+                                                        <span class="country-flag">ÃƒÂ°Ã…Â¸Ã¢â‚¬Â¡Ã‚Â¯ÃƒÂ°Ã…Â¸Ã¢â‚¬Â¡Ã‚Âµ</span>
                                                         <span>Japan</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="IN"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">Ã°Å¸â€¡Â®Ã°Å¸â€¡Â³</span>
+                                                        <span class="country-flag">ÃƒÂ°Ã…Â¸Ã¢â‚¬Â¡Ã‚Â®ÃƒÂ°Ã…Â¸Ã¢â‚¬Â¡Ã‚Â³</span>
                                                         <span>India</span>
                                                     </label>
                                                 </div>
@@ -3241,11 +3241,11 @@
                             return;
                         }
 
-                        // Check balance
+                        // Check balance - only need enough for daily budget
                         const availableBalance = getAvailableBalance();
 
-                        if (totalBudget > availableBalance) {
-                            showAlert(`Insuffiecient balance.
+                        if (dailyBudget > availableBalance) {
+                            showAlert(`Insuffiecient balance
 
 Funds are deducted daily.
 So when daily budget is set it will continue invoicing until it is paused.`);
@@ -3286,7 +3286,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
                             }
 
                             // Success!
-                            showAlert('Ã°Å¸Å½â€° Campaign created successfully! It will be activated in 1.5 hours.', 'success');
+                            showAlert('ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Â° Campaign created successfully! It will be activated in 1.5 hours.', 'success');
 
                             // Refresh balance immediately
                             await refreshBalance();
@@ -3832,7 +3832,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
 
         // Load and render statistics
       async function loadStatistics() {
-    console.log('Ã°Å¸â€œÅ  Loading statistics...');
+    console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Loading statistics...');
     
     const tbody = document.getElementById('statsTableBody');
     const packageBanner = document.querySelector('.package-info-banner');
@@ -3861,7 +3861,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
         }
 
         const data = await response.json();
-        console.log('Ã°Å¸â€œÅ  Statistics data received:', data);
+        console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Statistics data received:', data);
 
         // UPDATE PACKAGE BANNER
         if (data.userPackage && packageBanner) {
@@ -3918,7 +3918,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
         }
 
     } catch (error) {
-        console.error('Ã¢ÂÅ’ Load statistics error:', error);
+        console.error('ÃƒÂ¢Ã‚ÂÃ…â€™ Load statistics error:', error);
         tbody.innerHTML = `
             <tr>
                 <td colspan="13" style="text-align: center; padding: 3rem; color: #ef4444;">
@@ -3966,7 +3966,7 @@ function showAlert(message, type = 'info') {
                     nextTierInfoEl.textContent = `$${packageData.nextTier.amountNeeded.toFixed(2)} away`;
                 } else {
                     nextTierLabelEl.textContent = 'Status:';
-                    nextTierInfoEl.textContent = 'MAX TIER Ã°Å¸Å½â€°';
+                    nextTierInfoEl.textContent = 'MAX TIER ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Â°';
                 }
             }
         }
@@ -4566,7 +4566,7 @@ function showAlert(message, type = 'info') {
         // UPDATE YOUR EXISTING showSection FUNCTION
         // Replace or update your existing showSection function with this:
         function showSection(sectionId) {
-            console.log('Ã°Å¸â€œÂ Showing section:', sectionId);
+            console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â Showing section:', sectionId);
 
             // Hide all sections
             ['emptyState', 'paymentForm', 'financesSection', 'statisticsSection', 'campaignsSection', 'createCampaignSection', 'verificationPage'].forEach(id => {
@@ -4580,13 +4580,13 @@ function showAlert(message, type = 'info') {
 
             // Load statistics when showing statistics section
             if (sectionId === 'statisticsSection') {
-                console.log('Ã°Å¸â€œÅ  Statistics section shown, loading data...');
+                console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã…Â  Statistics section shown, loading data...');
                 loadStatistics();
             }
 
             // Load campaigns when showing campaigns section
             if (sectionId === 'campaignsSection') {
-                console.log('Ã°Å¸â€œâ€¹ Campaigns section shown, loading data...');
+                console.log('ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã¢â‚¬Â¹ Campaigns section shown, loading data...');
                 loadCampaigns();
             }
 
