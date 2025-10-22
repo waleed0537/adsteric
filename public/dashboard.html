@@ -2048,7 +2048,10 @@ function closeModal(modalType) {
             if (response.status === 400 && data.currentBalance !== undefined) {
                 const shortage = data.requiredAmount - data.currentBalance;
                 showNotification(
-                    `Insufficient balance! You need $${shortage.toFixed(2)} more. Current balance: $${data.currentBalance.toFixed(2)}`,
+                    `Insuffiecient balance.
+
+Funds are deducted daily.
+So when daily budget is set it will continue invoicing until it is paused.`,
                     'error'
                 );
             } else {

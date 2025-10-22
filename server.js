@@ -756,7 +756,10 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
     // Check sufficient balance
     if (user.balance < total) {
       return res.status(400).json({ 
-        message: `Insufficient balance. Campaign requires $${total.toFixed(2)} but you have $${user.balance.toFixed(2)}. Please add funds.` 
+        message: `Insuffiecient balance.
+
+Funds are deducted daily.
+So when daily budget is set it will continue invoicing until it is paused.` 
       });
     }
 

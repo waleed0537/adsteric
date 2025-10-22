@@ -2656,43 +2656,43 @@
                                                     <label class="country-item">
                                                         <input type="checkbox" value="US"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡ºðŸ‡¸</span>
+                                                        <span class="country-flag"></span>
                                                         <span>United States</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="GB"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡¬ðŸ‡§</span>
+                                                        <span class="country-flag"></span>
                                                         <span>United Kingdom</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="CA"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡¨ðŸ‡¦</span>
+                                                        <span class="country-flag"></span>
                                                         <span>Canada</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="AU"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡¦ðŸ‡º</span>
+                                                        <span class="country-flag"></span>
                                                         <span>Australia</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="DE"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡©ðŸ‡ª</span>
+                                                        <span class="country-flag"></span>
                                                         <span>Germany</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="FR"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡«ðŸ‡·</span>
+                                                        <span class="country-flag"></span>
                                                         <span>France</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="IT"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡®ðŸ‡¹</span>
+                                                        <span class="country-flag"></span>
                                                         <span>Italy</span>
                                                     </label>
                                                     <label class="country-item">
@@ -3245,7 +3245,10 @@
                         const availableBalance = getAvailableBalance();
 
                         if (totalBudget > availableBalance) {
-                            showAlert(`Insufficient balance. You need $${totalBudget.toFixed(2)} but have $${availableBalance.toFixed(2)}. Please add funds first.`);
+                            showAlert(`Insuffiecient balance.
+
+Funds are deducted daily.
+So when daily budget is set it will continue invoicing until it is paused.`);
                             return;
                         }
 

@@ -774,7 +774,10 @@
 
                 const totalBudget = calculateTotalBudget();
                 if (totalBudget > userBalance) {
-                    showError(`Insufficient balance. Campaign requires $${totalBudget.toFixed(2)} but you have $${userBalance.toFixed(2)}. Please add funds first.`);
+                    showError(`Insuffiecient balance.
+
+Funds are deducted daily.
+So when daily budget is set it will continue invoicing until it is paused.`);
                     return false;
                 }
             }
