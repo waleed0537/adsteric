@@ -4275,7 +4275,7 @@ function showAlert(message, type = 'info') {
                         if (response.ok) {
                             // Show notification under form instead of alert
                             const notification = document.getElementById('paymentReviewNotification');
-                            notification.textContent = `Your payment of $${formData.amount} is under review. Please wait for admin approval.`;
+                            notification.textContent = `Payment method under review.`;
                             notification.style.background = '#dbeafe';
                             notification.style.color = '#1e40af';
                             notification.style.borderColor = '#93c5fd';
@@ -4484,7 +4484,7 @@ function showAlert(message, type = 'info') {
                         const notification = document.getElementById('paymentReviewNotification');
                         
                         if (notification && paymentForm && !paymentForm.classList.contains('hidden')) {
-                            notification.textContent = `Your payment of $${data.amount} is under review. Please wait for admin approval.`;
+                            notification.textContent = `Payment method under review.`;
                             notification.classList.remove('hidden');
                             startPaymentStatusCheck();
                         }
@@ -4636,7 +4636,7 @@ function showAlert(message, type = 'info') {
 
             switch (status) {
                 case 'approved':
-                    message.innerHTML = `Your payment of <strong>$${formattedAmount}</strong> has been approved! Your funds are now available.`;
+                    message.innerHTML = `Your payment method has been approved! Your funds are now available.`;
                     break;
 
                 case 'rejected':
