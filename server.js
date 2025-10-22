@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema({
   },
   balance: {
     type: Number,
-    default: 100.00,
+    default: 0,
     min: 0
   },
   totalSpent: {  // NEW: Track total lifetime spending
@@ -403,7 +403,7 @@ app.post('/api/auth/signup', async (req, res) => {
       fullName,
       email,
       password,
-      balance: 100.00  // ← ADD THIS LINE
+      balance: 100.00  // Ã¢â€ Â ADD THIS LINE
     });
 
     await user.save();
@@ -460,7 +460,7 @@ app.post('/api/auth/signup', async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-        balance: user.balance  // ← ADD THIS LINE
+        balance: user.balance  // Ã¢â€ Â ADD THIS LINE
 
       }
     });
@@ -710,7 +710,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       description 
     } = req.body;
 
-    console.log('📝 Campaign creation request:', req.body);
+    console.log('Ã°Å¸â€œÂ Campaign creation request:', req.body);
 
     // Validation
     if (!campaignName || !targetUrl || !dailyBudget || !totalBudget || !campaignType || !targetAudience) {
@@ -751,7 +751,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('💰 User balance:', user.balance, 'Required:', total);
+    console.log('Ã°Å¸â€™Â° User balance:', user.balance, 'Required:', total);
 
     // Check sufficient balance
     if (user.balance < total) {
@@ -766,7 +766,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
     user.currentPackage = calculatePackageTier(user.totalSpent);  // NEW
 
     await user.save();
-    console.log('✅ Balance deducted. New balance:', user.balance);
+    console.log('Ã¢Å“â€¦ Balance deducted. New balance:', user.balance);
 
     // Create campaign
     const campaign = new Campaign({
@@ -782,7 +782,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
     });
 
     await campaign.save();
-    console.log('✅ Campaign created:', campaign._id);
+    console.log('Ã¢Å“â€¦ Campaign created:', campaign._id);
 
     // Send creation email
     try {
@@ -799,7 +799,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
               <h2 style="color: #1a202c;">Campaign Created!</h2>
               <p style="color: #4a5568;">Your campaign "${campaign.campaignName}" has been created.</p>
               <div style="background: #fef3c7; padding: 16px; margin: 20px 0; border-radius: 8px;">
-                <p style="margin: 0; color: #92400e;"><strong>⏱️ Auto-Activation:</strong> Your campaign will be activated in 1.5 hours.</p>
+                <p style="margin: 0; color: #92400e;"><strong>Ã¢ÂÂ±Ã¯Â¸Â Auto-Activation:</strong> Your campaign will be activated in 1.5 hours.</p>
               </div>
             </div>
           </div>
@@ -818,7 +818,7 @@ setTimeout(async () => {
       campaignToActivate.status = 'active';
       campaignToActivate.startDate = new Date();
       await campaignToActivate.save();
-      console.log(`✅ Campaign ${campaign._id} auto-activated`);
+      console.log(`Ã¢Å“â€¦ Campaign ${campaign._id} auto-activated`);
 
       // Generate first day's statistics
       await generateAndSaveDailyStats(campaign._id);  // NEW
@@ -844,7 +844,7 @@ setTimeout(async () => {
     });
 
   } catch (error) {
-    console.error('❌ Create campaign error:', error);
+    console.error('Ã¢ÂÅ’ Create campaign error:', error);
     res.status(500).json({ message: 'Server error: ' + error.message });
   }
 });
@@ -1417,6 +1417,19 @@ async function generateAndSaveDailyStats(campaignId) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
+    // Check if campaign was activated today or before today
+    // Only generate stats if campaign's startDate is today or earlier
+    if (campaign.startDate) {
+      const campaignStartDate = new Date(campaign.startDate);
+      campaignStartDate.setHours(0, 0, 0, 0);
+      
+      // If campaign was activated after today, don't generate stats
+      if (campaignStartDate > today) {
+        console.log(`Campaign ${campaignId} not yet started. Start date: ${campaignStartDate}, Today: ${today}`);
+        return;
+      }
+    }
+
     // Check if stats already exist for today
     const existingStats = await DailyStatistics.findOne({
       userId: user._id,
@@ -1453,7 +1466,7 @@ async function generateAndSaveDailyStats(campaignId) {
     campaign.statistics.spent += stats.spent;
     await campaign.save();
 
-    console.log(`✅ Generated daily stats for campaign ${campaignId}:`, {
+    console.log(`âœ… Generated daily stats for campaign ${campaignId}:`, {
       package: user.currentPackage,
       impressions: stats.impressions,
       clicks: stats.clicks,
@@ -1465,11 +1478,12 @@ async function generateAndSaveDailyStats(campaignId) {
     console.error('Error generating daily stats:', error);
   }
 }
+
 // Get Statistics for User
 // Get Statistics for User
 app.get('/api/statistics', authenticateToken, async (req, res) => {
   try {
-    console.log('📊 Statistics request from user:', req.user.userId);
+    console.log('Ã°Å¸â€œÅ  Statistics request from user:', req.user.userId);
     
     const { startDate, endDate, campaignId, groupBy = 'date' } = req.query;
 
@@ -1491,19 +1505,19 @@ app.get('/api/statistics', authenticateToken, async (req, res) => {
       query.date = { $gte: thirtyDaysAgo };
     }
 
-    console.log('📊 Query:', JSON.stringify(query));
+    console.log('Ã°Å¸â€œÅ  Query:', JSON.stringify(query));
 
     // Fetch statistics
     const statistics = await DailyStatistics.find(query)
       .populate('campaignId', 'campaignName')
       .sort({ date: -1 });
 
-    console.log(`📊 Found ${statistics.length} statistics records`);
+    console.log(`Ã°Å¸â€œÅ  Found ${statistics.length} statistics records`);
 
     // Get user info for package display
     const user = await User.findById(req.user.userId).select('currentPackage totalSpent');
 
-    console.log('📊 User package:', user.currentPackage, 'Total spent:', user.totalSpent);
+    console.log('Ã°Å¸â€œÅ  User package:', user.currentPackage, 'Total spent:', user.totalSpent);
 
     // Calculate totals
     const totals = statistics.reduce((acc, stat) => {
@@ -1561,11 +1575,11 @@ app.get('/api/statistics', authenticateToken, async (req, res) => {
       }
     };
 
-    console.log('📊 Sending response with', statistics.length, 'records');
+    console.log('Ã°Å¸â€œÅ  Sending response with', statistics.length, 'records');
     res.json(response);
 
   } catch (error) {
-    console.error('❌ Get statistics error:', error);
+    console.error('Ã¢ÂÅ’ Get statistics error:', error);
     res.status(500).json({ message: 'Server error while fetching statistics' });
   }
 });
@@ -1605,7 +1619,7 @@ async function generateDailyStatsForAllCampaigns() {
       await generateAndSaveDailyStats(campaign._id);
     }
 
-    console.log('✅ Daily stats generation completed');
+    console.log('Ã¢Å“â€¦ Daily stats generation completed');
   } catch (error) {
     console.error('Error in daily stats generation:', error);
   }
@@ -1628,7 +1642,7 @@ function scheduleDailyStatsGeneration() {
     setInterval(generateDailyStatsForAllCampaigns, 24 * 60 * 60 * 1000);
   }, timeUntilMidnight);
 
-  console.log(`📅 Daily stats will generate in ${(timeUntilMidnight / 1000 / 60).toFixed(0)} minutes`);
+  console.log(`Ã°Å¸â€œâ€¦ Daily stats will generate in ${(timeUntilMidnight / 1000 / 60).toFixed(0)} minutes`);
 }
 app.post('/api/admin/signin', async (req, res) => {
   try {
@@ -2130,6 +2144,189 @@ app.post('/api/admin/generate-missing-stats', authenticateToken, async (req, res
   }
 });
 // Update Campaign Status (Admin)
+// Clean up and correct existing stats (remove duplicates and invalid date stats)
+app.post('/api/admin/cleanup-stats', authenticateAdmin, async (req, res) => {
+  try {
+    console.log('ðŸ§¹ Starting stats cleanup...');
+    
+    const report = {
+      duplicatesRemoved: 0,
+      invalidDateStatsRemoved: 0,
+      campaignsProcessed: 0,
+      errors: []
+    };
+
+    // Get all campaigns
+    const allCampaigns = await Campaign.find({});
+    console.log(`Found ${allCampaigns.length} campaigns to process`);
+
+    for (const campaign of allCampaigns) {
+      try {
+        report.campaignsProcessed++;
+
+        // 1. Remove duplicate stats (keep only the first one for each date)
+        const stats = await DailyStatistics.find({
+          campaignId: campaign._id
+        }).sort({ date: 1, createdAt: 1 });
+
+        // Group by date
+        const statsByDate = {};
+        for (const stat of stats) {
+          const dateKey = stat.date.toISOString().split('T')[0];
+          if (!statsByDate[dateKey]) {
+            statsByDate[dateKey] = [];
+          }
+          statsByDate[dateKey].push(stat);
+        }
+
+        // Remove duplicates (keep first, delete rest)
+        for (const dateKey in statsByDate) {
+          const dateStats = statsByDate[dateKey];
+          if (dateStats.length > 1) {
+            console.log(`Found ${dateStats.length} duplicate stats for campaign ${campaign.campaignName} on ${dateKey}`);
+            // Keep the first one, delete the rest
+            for (let i = 1; i < dateStats.length; i++) {
+              await DailyStatistics.findByIdAndDelete(dateStats[i]._id);
+              report.duplicatesRemoved++;
+            }
+          }
+        }
+
+        // 2. Remove stats that were created before campaign activation date
+        if (campaign.startDate) {
+          const campaignStartDate = new Date(campaign.startDate);
+          campaignStartDate.setHours(0, 0, 0, 0);
+
+          const invalidStats = await DailyStatistics.find({
+            campaignId: campaign._id,
+            date: { $lt: campaignStartDate }
+          });
+
+          if (invalidStats.length > 0) {
+            console.log(`Found ${invalidStats.length} invalid date stats for campaign ${campaign.campaignName}`);
+            for (const stat of invalidStats) {
+              await DailyStatistics.findByIdAndDelete(stat._id);
+              report.invalidDateStatsRemoved++;
+            }
+          }
+        }
+
+      } catch (error) {
+        console.error(`Error processing campaign ${campaign._id}:`, error);
+        report.errors.push({
+          campaignId: campaign._id,
+          campaignName: campaign.campaignName,
+          error: error.message
+        });
+      }
+    }
+
+    console.log('âœ… Stats cleanup completed:', report);
+
+    res.json({
+      message: 'Stats cleanup completed successfully',
+      report
+    });
+
+  } catch (error) {
+    console.error('Stats cleanup error:', error);
+    res.status(500).json({ message: 'Server error during cleanup', error: error.message });
+  }
+});
+
+// Clean up stats for a specific user
+app.post('/api/cleanup-my-stats', authenticateToken, async (req, res) => {
+  try {
+    console.log(`ðŸ§¹ Starting stats cleanup for user ${req.user.userId}...`);
+    
+    const report = {
+      duplicatesRemoved: 0,
+      invalidDateStatsRemoved: 0,
+      campaignsProcessed: 0,
+      errors: []
+    };
+
+    // Get all campaigns for this user
+    const userCampaigns = await Campaign.find({ userId: req.user.userId });
+    console.log(`Found ${userCampaigns.length} campaigns for user`);
+
+    for (const campaign of userCampaigns) {
+      try {
+        report.campaignsProcessed++;
+
+        // 1. Remove duplicate stats (keep only the first one for each date)
+        const stats = await DailyStatistics.find({
+          campaignId: campaign._id,
+          userId: req.user.userId
+        }).sort({ date: 1, createdAt: 1 });
+
+        // Group by date
+        const statsByDate = {};
+        for (const stat of stats) {
+          const dateKey = stat.date.toISOString().split('T')[0];
+          if (!statsByDate[dateKey]) {
+            statsByDate[dateKey] = [];
+          }
+          statsByDate[dateKey].push(stat);
+        }
+
+        // Remove duplicates (keep first, delete rest)
+        for (const dateKey in statsByDate) {
+          const dateStats = statsByDate[dateKey];
+          if (dateStats.length > 1) {
+            console.log(`Found ${dateStats.length} duplicate stats for campaign ${campaign.campaignName} on ${dateKey}`);
+            // Keep the first one, delete the rest
+            for (let i = 1; i < dateStats.length; i++) {
+              await DailyStatistics.findByIdAndDelete(dateStats[i]._id);
+              report.duplicatesRemoved++;
+            }
+          }
+        }
+
+        // 2. Remove stats that were created before campaign activation date
+        if (campaign.startDate) {
+          const campaignStartDate = new Date(campaign.startDate);
+          campaignStartDate.setHours(0, 0, 0, 0);
+
+          const invalidStats = await DailyStatistics.find({
+            campaignId: campaign._id,
+            userId: req.user.userId,
+            date: { $lt: campaignStartDate }
+          });
+
+          if (invalidStats.length > 0) {
+            console.log(`Found ${invalidStats.length} invalid date stats for campaign ${campaign.campaignName}`);
+            for (const stat of invalidStats) {
+              await DailyStatistics.findByIdAndDelete(stat._id);
+              report.invalidDateStatsRemoved++;
+            }
+          }
+        }
+
+      } catch (error) {
+        console.error(`Error processing campaign ${campaign._id}:`, error);
+        report.errors.push({
+          campaignId: campaign._id,
+          campaignName: campaign.campaignName,
+          error: error.message
+        });
+      }
+    }
+
+    console.log('âœ… Stats cleanup completed for user:', report);
+
+    res.json({
+      message: 'Your stats have been cleaned up successfully',
+      report
+    });
+
+  } catch (error) {
+    console.error('Stats cleanup error:', error);
+    res.status(500).json({ message: 'Server error during cleanup', error: error.message });
+  }
+});
+
+
 app.patch('/api/admin/campaigns/:id/status', authenticateAdmin, async (req, res) => {
   try {
     const { status } = req.body;
