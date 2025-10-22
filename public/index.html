@@ -91,6 +91,159 @@
         .main-w {
             display: none
         }
+        .main-f {
+    background-image: linear-gradient(176.23deg, #f5f7ff -28.87%, #ebedfd 107.13%);
+    color: #1a202c;
+    padding: 60px 20px 30px;
+}
+
+.main-f .centring {
+    flex-direction: column;
+    max-width: 1200px;
+    align-items: flex-start;
+}
+
+.main-f__nav {
+    display: flex;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.main-f__nav-i {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 0 0 auto;
+}
+
+.main-f__nav-i-a {
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+    font-weight: 400;
+}
+
+.main-f__nav-i-a:first-child {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: #1a202c;
+    text-transform: capitalize;
+    letter-spacing: 0;
+}
+
+.main-f__nav-i-a:hover {
+    color: #01b69b;
+}
+
+/* Address Section */
+.main-f__address-section {
+    margin-left: auto;
+}
+
+.main-f__address {
+    color: #4a5568;
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.main-f__address strong {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+.main-f__help {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main-f__help-a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a5568;
+    text-decoration: none;
+    padding: 10px 16px;
+    background: #fff;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 13px;
+    font-weight: 500;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.main-f__help-a:hover {
+    background: #fff;
+    border-color: rgba(1, 182, 155, 0.3);
+    transform: translateY(-2px);
+    color: #01b69b;
+    box-shadow: 0 4px 12px rgba(1, 182, 155, 0.15);
+}
+
+.main-f__help-a-ic {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.main-f__help-a-tx {
+    font-size: 13px;
+}
+
+.main-f__copy {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    padding-top: 30px;
+    margin-top: 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    width: 100%;
+}
+
+.main-f__copy p {
+    margin: 0;
+}
+
+/* Remove social media sections */
+.main-f__lks,
+.main-f__soc {
+    display: none;
+}
+
+/* Responsive Footer */
+@media (max-width: 1024px) {
+    .main-f__nav {
+        gap: 40px;
+    }
+    
+    .main-f__address-section {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-f__nav {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .main-f__nav-i {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .main-f {
+        padding: 40px 20px 20px;
+    }
+}
     </style>
     <meta name="description"
         content="Explore Adsteric Traffic Group: advanced ad network, innovative mobile app development, search arbitrage, and media buying academy. Empower your business with our all-in-one solutions. Join today!">
@@ -778,25 +931,156 @@
                     <path d="M0,371.8c0,0,124.3,170.9,235.3,337.7V0C163.6,110.5,0,371.8,0,371.8z" />
                 </svg>
            
-                
+                <article class="payment">
+                    <div class="centring">
+                        <h3 class="payment__t follow-block">Payment methods supported</h3>
+                        <div class="payment__slider glide follow-block">
+                            <div class="glide__track" data-glide-el="track">
+                                <div class="glide__slides">
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/visaMasterCard.png"
+                                            alt="Visa and MasterCard - payment method" height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/bankWire.png"
+                                            alt="Bank wire transfer - payment method" height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/paypal.png" alt="PayPal - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/google_pay.png" alt="Google Pay - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/paxum.png" alt="Paxum - payment method" height="100"
+                                            width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/payoneer.png" alt="Payoneer - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/skrill.png" alt="Skrill - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/neteller.png" alt="Neteller - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/capitalist.png" alt="Capitalist - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/alipay.png" alt="Alipay - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/unionpay.png" alt="UnionPay - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/bitpay.png" alt="BitPay - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/usdt_trc20_cap.png" alt="TRC20 - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/paysafecard.png" alt="Paysafecard - payment method"
+                                            height="100" width="365">
+                                    </div>
+                                    <div class="payment__i glide__slide">
+                                        <img class="payment__i-img lazy-load" src="data:,"
+                                            data-src="/img/payments/boleto_bancario.png"
+                                            alt="Boleto bancario - payment method" height="100" width="365">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="glide__bullets"></div>
+                            <button class="glide__arrow glide__arrow--left reset" data-go-to="<" title="Move left">
+                                <svg class="glide__arrow-ic" height="32" width="32">
+                                    <use href="#arrow-right" />
+                                </svg>
+                            </button>
+                            <button class="glide__arrow glide__arrow--right reset" data-go-to=">" title="Move right">
+                                <svg class="glide__arrow-ic" height="32" width="32">
+                                    <use href="#arrow-right" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
             </div>
         </main>
 
         <footer class="main-f">
-            <div class="centring">
-                <nav class="main-f__nav">
-                    <div class="main-f__nav-i">
-                        <span class="main-f__nav-i-a">Projects</span>
-                        <a class="main-f__nav-i-a" href="/about-us.html" title="About Us">About Us</a>
-                        <a class="main-f__nav-i-a" href="./advertiser2.html" title="Advertisers">Advertisers</a>
-                        <a class="main-f__nav-i-a" href="./pricing-models.html" title="Pricing Models">Pricing Models</a>
-                        <a class="main-f__nav-i-a" href="/contact-us.html" title="Contact Us">Contact Us</a>
-                    </div>
-                   
-                </nav>
-              
+    <div class="centring">
+        <nav class="main-f__nav">
+            <div class="main-f__nav-i">
+                <span class="main-f__nav-i-a">Projects</span>
+                <a class="main-f__nav-i-a" href="/about-us.html" title="About Us">About Us</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="Ad Network">Ad Network</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="Search">Search</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="Mobile">Mobile</a>
             </div>
-        </footer>
+            <div class="main-f__nav-i">
+                <span class="main-f__nav-i-a">Ad Formats</span>
+                <a class="main-f__nav-i-a" href="./advertiser2.html" title="Advertisers">Advertisers</a>
+                
+                <a class="main-f__nav-i-a" href="./login.html" title="Push">Push</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="Popunder">Popunder</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="In-Page">In-Page</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="Native">Native</a>
+                <a class="main-f__nav-i-a" href="./login.html" title="Programmatic Integration">Programmatic Integration</a>
+            </div>
+            <div class="main-f__nav-i">
+                <span class="main-f__nav-i-a">Resources</span>
+               
+                <a class="main-f__nav-i-a" href="./contact-us.html" title="FAQ">FAQ</a>
+                <a class="main-f__nav-i-a" href="./contact-us.html" title="Help Center">Help Center</a>
+                <a class="main-f__nav-i-a" href="./contact-us.html" title="Contact Us">Contact Us</a>
+                <a class="main-f__nav-i-a" href="./contact-us.html" title="Support">Support</a>
+                <a class="main-f__nav-i-a" href="./contact-us.html" title="API">API</a>
+            </div>
+            <div class="main-f__nav-i">
+                <span class="main-f__nav-i-a">Policies</span>
+                <a class="main-f__nav-i-a" href="#" title="Privacy Policy">Privacy Policy</a>
+                <a class="main-f__nav-i-a" href="#" title="Terms">Terms</a>
+                <a class="main-f__nav-i-a" href="#" title="Cookies Policy">Cookies Policy</a>
+                <a class="main-f__nav-i-a" href="#" title="Prohibited Materials Rules">Prohibited Materials Rules</a>
+            </div>
+            <div class="main-f__nav-i main-f__address-section">
+                <p class="main-f__address">
+                    <strong>Agias Faneromenis, 143-145</strong><br>
+                    PATSIAS COURT, Flat/Office 201<br>
+                    6031, Larnaca, Cyprus
+                </p>
+            
+            </div>
+        </nav>
+        <div class="main-f__copy">
+            <p>© 2025 Adsteric Traffic Group. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
     </div>
     <template id="template-popup">
         <div class="my-popup">
