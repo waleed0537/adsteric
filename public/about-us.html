@@ -53,8 +53,10 @@
         }
 
         .main-h__logo img {
-            height: 50px;
+            height: 80px;
             width: auto;
+            transform: scale(1.4);
+            transform-origin: left center;
         }
 
         .main-h__nav {
@@ -1596,14 +1598,23 @@
 </footer>
     <script src="config.js"></script>
     <script>
-        // Mobile Menu Toggle
         const menuButton = document.querySelector('.main-h__btn-menu');
-        const navMenu = document.querySelector('.main-h__nav');
+    const nav = document.querySelector('.main-h__nav');
+    const buttons = document.querySelector('.main-h__w-btn');
 
-        menuButton.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuButton.classList.toggle('active');
-        });
+    menuButton.addEventListener('click', function() {
+        // Toggle menu visibility
+        if (nav.style.display === 'flex') {
+            nav.style.display = 'none';
+            buttons.style.display = 'none';
+        } else {
+            nav.style.display = 'flex';
+            buttons.style.display = 'flex';
+        }
+        
+        // Animate hamburger icon
+        this.classList.toggle('active');
+    });
     </script>
 
 </body>
