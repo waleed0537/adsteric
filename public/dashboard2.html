@@ -51,6 +51,23 @@
             display: none;
         }
 
+        /* Payment Review Notification */
+        .payment-review-notification {
+            margin-top: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .payment-review-notification.hidden {
+            display: none;
+        }
+
         /* Package Info Banner */
         .package-info-banner {
             background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
@@ -2161,7 +2178,7 @@
         }
 
         .questions-box li::before {
-            content: "•";
+            content: "â€¢";
             color: #6d28d9;
             font-weight: bold;
             margin-right: 0.5rem;
@@ -2452,6 +2469,7 @@
                             </div>
                         </button>
                         <div class="payment-status-label"></div>
+                        <div id="paymentReviewNotification" class="payment-review-notification hidden"></div>
                     </form>
                 </div>
                 <div id="verificationPage" class="verification-container hidden">
@@ -2638,61 +2656,61 @@
                                                     <label class="country-item">
                                                         <input type="checkbox" value="US"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇺🇸</span>
+                                                        <span class="country-flag">ðŸ‡ºðŸ‡¸</span>
                                                         <span>United States</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="GB"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇬🇧</span>
+                                                        <span class="country-flag">ðŸ‡¬ðŸ‡§</span>
                                                         <span>United Kingdom</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="CA"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇨🇦</span>
+                                                        <span class="country-flag">ðŸ‡¨ðŸ‡¦</span>
                                                         <span>Canada</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="AU"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇦🇺</span>
+                                                        <span class="country-flag">ðŸ‡¦ðŸ‡º</span>
                                                         <span>Australia</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="DE"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇩🇪</span>
+                                                        <span class="country-flag">ðŸ‡©ðŸ‡ª</span>
                                                         <span>Germany</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="FR"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇫🇷</span>
+                                                        <span class="country-flag">ðŸ‡«ðŸ‡·</span>
                                                         <span>France</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="IT"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇮🇹</span>
+                                                        <span class="country-flag">ðŸ‡®ðŸ‡¹</span>
                                                         <span>Italy</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="ES"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇪🇸</span>
+                                                        <span class="country-flag">ðŸ‡ªðŸ‡¸</span>
                                                         <span>Spain</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="JP"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇯🇵</span>
+                                                        <span class="country-flag">ðŸ‡¯ðŸ‡µ</span>
                                                         <span>Japan</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="IN"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">🇮🇳</span>
+                                                        <span class="country-flag">ðŸ‡®ðŸ‡³</span>
                                                         <span>India</span>
                                                     </label>
                                                 </div>
@@ -3265,7 +3283,7 @@
                             }
 
                             // Success!
-                            showAlert('🎉 Campaign created successfully! It will be activated in 1.5 hours.', 'success');
+                            showAlert('ðŸŽ‰ Campaign created successfully! It will be activated in 1.5 hours.', 'success');
 
                             // Refresh balance immediately
                             await refreshBalance();
@@ -3811,7 +3829,7 @@
 
         // Load and render statistics
       async function loadStatistics() {
-    console.log('📊 Loading statistics...');
+    console.log('ðŸ“Š Loading statistics...');
     
     const tbody = document.getElementById('statsTableBody');
     const packageBanner = document.querySelector('.package-info-banner');
@@ -3840,7 +3858,7 @@
         }
 
         const data = await response.json();
-        console.log('📊 Statistics data received:', data);
+        console.log('ðŸ“Š Statistics data received:', data);
 
         // UPDATE PACKAGE BANNER
         if (data.userPackage && packageBanner) {
@@ -3897,7 +3915,7 @@
         }
 
     } catch (error) {
-        console.error('❌ Load statistics error:', error);
+        console.error('âŒ Load statistics error:', error);
         tbody.innerHTML = `
             <tr>
                 <td colspan="13" style="text-align: center; padding: 3rem; color: #ef4444;">
@@ -3945,7 +3963,7 @@ function showAlert(message, type = 'info') {
                     nextTierInfoEl.textContent = `$${packageData.nextTier.amountNeeded.toFixed(2)} away`;
                 } else {
                     nextTierLabelEl.textContent = 'Status:';
-                    nextTierInfoEl.textContent = 'MAX TIER 🎉';
+                    nextTierInfoEl.textContent = 'MAX TIER ðŸŽ‰';
                 }
             }
         }
@@ -4072,6 +4090,18 @@ function showAlert(message, type = 'info') {
 
         function togglePaymentForm() {
             showSection('paymentForm');
+            
+            // Clear any existing notification when opening the form
+            const notification = document.getElementById('paymentReviewNotification');
+            if (notification) {
+                notification.classList.add('hidden');
+                notification.textContent = '';
+                // Reset to default info style
+                notification.style.background = '#dbeafe';
+                notification.style.color = '#1e40af';
+                notification.style.borderColor = '#93c5fd';
+            }
+            
             if (window.innerWidth <= 768) {
                 toggleSidebar();
             }
@@ -4240,8 +4270,13 @@ function showAlert(message, type = 'info') {
                         const data = await response.json();
 
                         if (response.ok) {
-                            // Show success alert
-                            alert(`Your payment of ${formData.amount} is under review. Please wait for admin approval.`);
+                            // Show notification under form instead of alert
+                            const notification = document.getElementById('paymentReviewNotification');
+                            notification.textContent = `Your payment of $${formData.amount} is under review. Please wait for admin approval.`;
+                            notification.style.background = '#dbeafe';
+                            notification.style.color = '#1e40af';
+                            notification.style.borderColor = '#93c5fd';
+                            notification.classList.remove('hidden');
 
                             // Reset form
                             paymentForm.reset();
@@ -4251,19 +4286,25 @@ function showAlert(message, type = 'info') {
                             localStorage.setItem('pendingPaymentId', data.paymentId);
                             localStorage.setItem('pendingPaymentAmount', formData.amount);
 
-                            // Show verification page
-                            document.getElementById('verificationPage').classList.remove('hidden');
-                            document.getElementById('paymentForm').classList.add('hidden');
-
-                            // Start status checking
+                            // Start status checking (but stay on payment form page)
                             startPaymentStatusCheck(data.paymentId);
 
                         } else {
-                            alert(data.error || 'Payment submission failed. Please try again.');
+                            const notification = document.getElementById('paymentReviewNotification');
+                            notification.textContent = data.error || 'Payment submission failed. Please try again.';
+                            notification.style.background = '#fee2e2';
+                            notification.style.color = '#991b1b';
+                            notification.style.borderColor = '#fecaca';
+                            notification.classList.remove('hidden');
                         }
                     } catch (error) {
                         console.error('Payment error:', error);
-                        alert('An error occurred. Please try again.');
+                        const notification = document.getElementById('paymentReviewNotification');
+                        notification.textContent = 'An error occurred. Please try again.';
+                        notification.style.background = '#fee2e2';
+                        notification.style.color = '#991b1b';
+                        notification.style.borderColor = '#fecaca';
+                        notification.classList.remove('hidden');
                     } finally {
                         submitButton.classList.remove('loading');
                         submitButton.disabled = false;
@@ -4435,13 +4476,13 @@ function showAlert(message, type = 'info') {
 
                 if (data.status && data.amount) {
                     if (data.status === 'pending') {
-                        const verificationPage = document.getElementById('verificationPage');
-                        if (verificationPage && !verificationPage.classList.contains('hidden')) {
-                            startPaymentStatusCheck();
-                        } else if (localStorage.getItem('pendingPaymentId')) {
-                            document.getElementById('verificationPage').classList.remove('hidden');
-                            document.getElementById('emptyState').classList.add('hidden');
-                            document.getElementById('paymentForm').classList.add('hidden');
+                        // Show notification under payment form instead of verification page
+                        const paymentForm = document.getElementById('paymentForm');
+                        const notification = document.getElementById('paymentReviewNotification');
+                        
+                        if (notification && paymentForm && !paymentForm.classList.contains('hidden')) {
+                            notification.textContent = `Your payment of $${data.amount} is under review. Please wait for admin approval.`;
+                            notification.classList.remove('hidden');
                             startPaymentStatusCheck();
                         }
                     } else if (data.status === 'approved' || data.status === 'rejected') {
@@ -4522,7 +4563,7 @@ function showAlert(message, type = 'info') {
         // UPDATE YOUR EXISTING showSection FUNCTION
         // Replace or update your existing showSection function with this:
         function showSection(sectionId) {
-            console.log('📍 Showing section:', sectionId);
+            console.log('ðŸ“ Showing section:', sectionId);
 
             // Hide all sections
             ['emptyState', 'paymentForm', 'financesSection', 'statisticsSection', 'campaignsSection', 'createCampaignSection', 'verificationPage'].forEach(id => {
@@ -4536,13 +4577,13 @@ function showAlert(message, type = 'info') {
 
             // Load statistics when showing statistics section
             if (sectionId === 'statisticsSection') {
-                console.log('📊 Statistics section shown, loading data...');
+                console.log('ðŸ“Š Statistics section shown, loading data...');
                 loadStatistics();
             }
 
             // Load campaigns when showing campaigns section
             if (sectionId === 'campaignsSection') {
-                console.log('📋 Campaigns section shown, loading data...');
+                console.log('ðŸ“‹ Campaigns section shown, loading data...');
                 loadCampaigns();
             }
 
