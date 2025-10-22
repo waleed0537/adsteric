@@ -657,7 +657,7 @@
         }
 
         .radio-card input[type="radio"]:checked~.radio-content::after {
-            content: '✓';
+            content: 'âœ“';
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
@@ -2178,7 +2178,7 @@
         }
 
         .questions-box li::before {
-            content: "â€¢";
+            content: "Ã¢â‚¬Â¢";
             color: #6d28d9;
             font-weight: bold;
             margin-right: 0.5rem;
@@ -2698,19 +2698,19 @@
                                                     <label class="country-item">
                                                         <input type="checkbox" value="ES"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡ªðŸ‡¸</span>
+                                                        <span class="country-flag">Ã°Å¸â€¡ÂªÃ°Å¸â€¡Â¸</span>
                                                         <span>Spain</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="JP"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡¯ðŸ‡µ</span>
+                                                        <span class="country-flag">Ã°Å¸â€¡Â¯Ã°Å¸â€¡Âµ</span>
                                                         <span>Japan</span>
                                                     </label>
                                                     <label class="country-item">
                                                         <input type="checkbox" value="IN"
                                                             onchange="updateCountrySelection()">
-                                                        <span class="country-flag">ðŸ‡®ðŸ‡³</span>
+                                                        <span class="country-flag">Ã°Å¸â€¡Â®Ã°Å¸â€¡Â³</span>
                                                         <span>India</span>
                                                     </label>
                                                 </div>
@@ -3286,7 +3286,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
                             }
 
                             // Success!
-                            showAlert('ðŸŽ‰ Campaign created successfully! It will be activated in 1.5 hours.', 'success');
+                            showAlert('Ã°Å¸Å½â€° Campaign created successfully! It will be activated in 1.5 hours.', 'success');
 
                             // Refresh balance immediately
                             await refreshBalance();
@@ -3832,7 +3832,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
 
         // Load and render statistics
       async function loadStatistics() {
-    console.log('ðŸ“Š Loading statistics...');
+    console.log('Ã°Å¸â€œÅ  Loading statistics...');
     
     const tbody = document.getElementById('statsTableBody');
     const packageBanner = document.querySelector('.package-info-banner');
@@ -3861,7 +3861,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
         }
 
         const data = await response.json();
-        console.log('ðŸ“Š Statistics data received:', data);
+        console.log('Ã°Å¸â€œÅ  Statistics data received:', data);
 
         // UPDATE PACKAGE BANNER
         if (data.userPackage && packageBanner) {
@@ -3918,7 +3918,7 @@ So when daily budget is set it will continue invoicing until it is paused.`);
         }
 
     } catch (error) {
-        console.error('âŒ Load statistics error:', error);
+        console.error('Ã¢ÂÅ’ Load statistics error:', error);
         tbody.innerHTML = `
             <tr>
                 <td colspan="13" style="text-align: center; padding: 3rem; color: #ef4444;">
@@ -3966,7 +3966,7 @@ function showAlert(message, type = 'info') {
                     nextTierInfoEl.textContent = `$${packageData.nextTier.amountNeeded.toFixed(2)} away`;
                 } else {
                     nextTierLabelEl.textContent = 'Status:';
-                    nextTierInfoEl.textContent = 'MAX TIER ðŸŽ‰';
+                    nextTierInfoEl.textContent = 'MAX TIER Ã°Å¸Å½â€°';
                 }
             }
         }
@@ -4566,7 +4566,7 @@ function showAlert(message, type = 'info') {
         // UPDATE YOUR EXISTING showSection FUNCTION
         // Replace or update your existing showSection function with this:
         function showSection(sectionId) {
-            console.log('ðŸ“ Showing section:', sectionId);
+            console.log('Ã°Å¸â€œÂ Showing section:', sectionId);
 
             // Hide all sections
             ['emptyState', 'paymentForm', 'financesSection', 'statisticsSection', 'campaignsSection', 'createCampaignSection', 'verificationPage'].forEach(id => {
@@ -4580,13 +4580,13 @@ function showAlert(message, type = 'info') {
 
             // Load statistics when showing statistics section
             if (sectionId === 'statisticsSection') {
-                console.log('ðŸ“Š Statistics section shown, loading data...');
+                console.log('Ã°Å¸â€œÅ  Statistics section shown, loading data...');
                 loadStatistics();
             }
 
             // Load campaigns when showing campaigns section
             if (sectionId === 'campaignsSection') {
-                console.log('ðŸ“‹ Campaigns section shown, loading data...');
+                console.log('Ã°Å¸â€œâ€¹ Campaigns section shown, loading data...');
                 loadCampaigns();
             }
 
@@ -4816,8 +4816,8 @@ function showAlert(message, type = 'info') {
         document.addEventListener('DOMContentLoaded', function () {
             console.log('Dashboard initialized');
 
-            // Initialize to default view
-            showSection('emptyState');
+            // Initialize to add funds section by default
+            showSection('paymentForm');
 
             // Load initial data
             if (typeof loadUserBalance === 'function') {
