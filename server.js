@@ -17,13 +17,18 @@ app.use(express.static('public'));
 
 // Environment variables
 const PORT = process.env.PORT || 5002;
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this';
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://adshark00:0KKX2YSBGY9Zrz21@cluster0.g7lpz.mongodb.net/adsteric?retryWrites=true&w=majority&appName=Cluster0';
+const JWT_SECRET = process.env.JWT_SECRET;
+const MONGODB_URI = process.env.MONGODB_URI;
 const isProduction = process.env.NODE_ENV === 'production';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5002';
 
+if (!JWT_SECRET || !MONGODB_URI) {
+  console.error('FATAL: JWT_SECRET and MONGODB_URI must be set in .env');
+  process.exit(1);
+}
+
 // Company notification email
-const COMPANY_EMAIL = 'adstericteam@gmail.com';
+const COMPANY_EMAIL = process.env.COMPANY_EMAIL || 'adstericteam@gmail.com';
 
 // MongoDB Connection
 mongoose.connect(MONGODB_URI, {
@@ -217,10 +222,10 @@ async function seedAdminUser() {
 // ==================== NODEMAILER (Gmail SMTP) ====================
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: 587,
   secure: false,
-  auth: { user: 'adstericteam@gmail.com', pass: 'wxok hane gaut boww' },
+  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
   tls: { rejectUnauthorized: false },
   connectionTimeout: 10000,
   greetingTimeout: 10000,
