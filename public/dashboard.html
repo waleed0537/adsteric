@@ -191,7 +191,8 @@
         .btn-submit:hover { box-shadow: 0 4px 12px rgba(109,40,217,0.3); }
 
         /* ===== PAYMENT / FINANCES ===== */
-        .payment-form { max-width: 700px; margin: 2rem auto; background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .payment-section-wrapper { max-width: 700px; margin: 2rem auto; display: flex; flex-direction: column; gap: 1.5rem; }
+        .payment-form { background: white; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; }
         .payment-form-header { padding: 1.5rem 2rem; border-bottom: 1px solid #e5e7eb; }
         .payment-form-header h2 { font-size: 1.5rem; font-weight: 600; color: #111827; }
         .payment-form-content { padding: 2rem; }
@@ -215,14 +216,14 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .payment-review-notification { margin-top: 1.5rem; padding: 1rem 1.25rem; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; border-radius: 8px; font-size: 0.95rem; font-weight: 500; }
         .payment-review-notification.hidden { display: none; }
-        .payment-history-section { margin-top: 2rem; }
-        .payment-history-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; table-layout: fixed; }
-        .payment-history-table th:nth-child(1), .payment-history-table td:nth-child(1) { width: 28%; }
-        .payment-history-table th:nth-child(2), .payment-history-table td:nth-child(2) { width: 25%; }
-        .payment-history-table th:nth-child(3), .payment-history-table td:nth-child(3) { width: 22%; }
-        .payment-history-table th:nth-child(4), .payment-history-table td:nth-child(4) { width: 25%; }
-        .payment-history-table th { padding: 0.75rem 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
-        .payment-history-table td { padding: 0.75rem 0.75rem; color: #374151; border-bottom: 1px solid #f3f4f6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .payment-history-card { background: white; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; overflow: hidden; }
+        .payment-history-card-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #e5e7eb; }
+        .payment-history-card-header h3 { font-size: 1rem; font-weight: 600; color: #111827; margin: 0; }
+        .payment-history-table-wrap { overflow-x: auto; }
+        .payment-history-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 420px; }
+        .payment-history-table th { padding: 0.75rem 1.25rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; background: #f9fafb; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+        .payment-history-table td { padding: 0.85rem 1.25rem; color: #374151; border-bottom: 1px solid #f3f4f6; white-space: nowrap; }
+        .payment-history-table tr:last-child td { border-bottom: none; }
         .payment-status-badge { display: inline-flex; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
         .payment-status-badge.approved { background: #d1fae5; color: #065f46; }
         .payment-status-badge.pending { background: #fef3c7; color: #92400e; }
@@ -475,7 +476,8 @@
                 </div>
 
                 <!-- ========== ADD FUNDS SECTION ========== -->
-                <div class="payment-form hidden" id="paymentForm">
+                <div class="payment-section-wrapper hidden" id="paymentForm">
+                <div class="payment-form">
                     <div class="payment-form-header"><h2>Add Funds</h2></div>
                     <form class="payment-form-content" id="paymentFormContent" autocomplete="off">
                         <div class="payment-methods">
@@ -522,12 +524,15 @@
                         </button>
                         <div id="paymentReviewNotification" class="payment-review-notification hidden"></div>
                     </form>
-                    <div class="payment-history-section" style="padding: 0 2rem 2rem;">
-                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin-bottom:1rem;">Payment History</h3>
+                </div>
+                <div class="payment-history-card">
+                    <div class="payment-history-card-header"><h3>Payment History</h3></div>
+                    <div class="payment-history-table-wrap">
                         <div id="paymentHistoryContainer">
-                            <p style="color:#9ca3af;text-align:center;padding:1rem;">Loading...</p>
+                            <p style="color:#9ca3af;text-align:center;padding:1.5rem;">Loading...</p>
                         </div>
                     </div>
+                </div>
                 </div>
 
                 <!-- ========== PROFILE SECTION ========== -->
