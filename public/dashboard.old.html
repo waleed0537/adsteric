@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adsteric Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #3dd5c3 0%, #4db8e8 100%);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            font-size: 28px;
+            font-weight: 700;
+            padding: 0 30px;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 14px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-left-color: white;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            margin: 30px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .card-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+            box-shadow: 0 4px 14px rgba(61, 213, 195, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(61, 213, 195, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #3dd5c3;
+            border: 2px solid #3dd5c3;
+        }
+
+        .btn-secondary:hover {
+            background: #f7fafc;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3dd5c3;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(61, 213, 195, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .card-input {
+            background: #f7fafc;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .card-brands {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+
+        /* Table */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f7fafc;
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-paused {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .status-pending {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(to bottom, #f7fafc 0%, white 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0aec0;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            padding: 40px 20px 20px;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, #3dd5c3, #4db8e8);
+            border-radius: 4px 4px 0 0;
+            animation: growUp 1s ease;
+            position: relative;
+        }
+
+        @keyframes growUp {
+            from {
+                height: 0;
+            }
+        }
+
+        .chart-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #718096;
+            white-space: nowrap;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f7fafc;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            font-size: 18px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 24px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 24px 20px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3dd5c3, #4db8e8);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .stat-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive {
+            color: #22543d;
+            background: #c6f6d5;
+        }
+
+        .stat-change.negative {
+            color: #742a2a;
+            background: #fed7d7;
+        }
+
+        /* Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #3dd5c3;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .metric-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .metric-comparison {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3dd5c3, #4db8e8);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Time Range Selector */
+        .time-range {
+            display: flex;
+            gap: 8px;
+            background: white;
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+            width: fit-content;
+        }
+
+        .time-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #718096;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .time-btn:hover {
+            background: #f7fafc;
+        }
+
+        .time-btn.active {
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+        }
+
+        /* Donut Chart */
+        .donut-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#3dd5c3 0deg 120deg,
+                    #4db8e8 120deg 240deg,
+                    #e2e8f0 240deg 360deg);
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .donut-chart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+        }
+
+        .donut-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .donut-label {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-text {
+            font-size: 14px;
+            color: #4a5568;
+            flex: 1;
+        }
+
+        .legend-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        /* Line Chart Effect */
+        .line-chart {
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .line-point {
+            width: 12px;
+            height: 12px;
+            background: #3dd5c3;
+            border: 3px solid white;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(61, 213, 195, 0.4);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .line-point:hover {
+            transform: scale(1.3);
+            box-shadow: 0 4px 12px rgba(61, 213, 195, 0.6);
+        }
+
+        .line-point::after {
+            content: attr(data-value);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3748;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .line-point:hover::after {
+            opacity: 1;
+        }
+
+        .line-segment {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #3dd5c3, #4db8e8);
+            transform-origin: left;
+        }
+
+        /* Top Performers Table */
+        .performers-table {
+            width: 100%;
+        }
+
+        .performer-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .performer-rank {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 16px;
+        }
+
+        .performer-info {
+            flex: 1;
+        }
+
+        .performer-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .performer-type {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .performer-stats {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .performer-stat {
+            text-align: right;
+        }
+
+        .performer-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .performer-stat-label {
+            font-size: 11px;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+            color: #3dd5c3;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            color: #718096;
+            margin-bottom: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 20px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 12px 8px;
+            }
+
+            .modal {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-bars {
+                padding: 30px 10px 20px;
+            }
+
+            .chart-bar {
+                width: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">ADSTERIC</div>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showPage('dashboard')">
+                    <i class="bi bi-speedometer2 nav-icon"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" onclick="showPage('campaigns')">
+                    <i class="bi bi-megaphone nav-icon"></i>
+                    <span>Campaigns</span>
+                </li>
+                <li class="nav-item" onclick="showPage('analytics')">
+                    <i class="bi bi-graph-up-arrow nav-icon"></i>
+                    <span>Analytics</span>
+                </li>
+                <li class="nav-item" onclick="showPage('faq')">
+                    <i class="bi bi-question-circle nav-icon"></i>
+                    <span>FAQ</span>
+                </li>
+                <li class="nav-item" onclick="showPage('support')">
+                    <i class="bi bi-chat-dots nav-icon"></i>
+                    <span>Support</span>
+                </li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <!-- Replace the entire Dashboard Page section (starting from line ~600) with this: -->
+
+<!-- Dashboard Page -->
+<div id="dashboard" class="page active">
+    <div class="page-header">
+        <h1 class="page-title">Add Funds to Your Account</h1>
+        <p class="page-subtitle">Securely add funds to start your advertising campaigns</p>
+    </div>
+
+    <!-- Account Balance Card -->
+    <div style="max-width: 800px; margin: 0 auto 40px auto;">
+        <div class="card" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); color: white; padding: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 16px; opacity: 0.9; margin-bottom: 8px;">Current Balance</div>
+                    <div style="font-size: 48px; font-weight: 700;">$0.00</div>
+                </div>
+                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-wallet2" style="font-size: 40px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Funds Form -->
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="card" style="padding: 40px;">
+            <h2 style="font-size: 24px; font-weight: 700; color: #1a202c; margin-bottom: 30px;">
+                <i class="bi bi-credit-card" style="color: #3dd5c3;"></i> Add Funds
+            </h2>
+            
+            <form onsubmit="processFunds(event)">
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-cash-coin"></i> Amount (USD)
+                    </label>
+                    <input 
+                        type="number" 
+                        class="form-input" 
+                        id="fundAmount" 
+                        placeholder="Enter amount" 
+                        min="10" 
+                        step="0.01" 
+                        style="padding: 18px 20px; font-size: 18px; font-weight: 600;"
+                        required
+                    >
+                    <p style="font-size: 14px; color: #718096; margin-top: 8px;">
+                        <i class="bi bi-info-circle"></i> Minimum deposit: $10.00
+                    </p>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-credit-card-2-front"></i> Payment Information
+                    </label>
+                    
+                    <div style="background: #f7fafc; padding: 24px; border: 2px solid #e2e8f0; border-radius: 12px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                            <i class="bi bi-credit-card-fill" style="font-size: 32px; color: #3dd5c3;"></i>
+                            <div>
+                                <div style="font-size: 15px; font-weight: 600; color: #2d3748; margin-bottom: 4px;">
+                                    Accepted Cards
+                                </div>
+                                <div style="font-size: 13px; color: #718096;">
+                                    Visa, Mastercard, American Express
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; padding: 4px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+                            <i class="bi bi-shield-check" style="color: #22543d;"></i>
+                            <span style="font-size: 13px; font-weight: 600; color: #22543d;">Secure Payment via Stripe</span>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label class="form-label" style="font-size: 15px;">Card Number</label>
+                            <input 
+                                type="text" 
+                                class="form-input" 
+                                placeholder="1234 5678 9012 3456" 
+                                maxlength="19"
+                                style="padding: 16px; font-size: 16px;"
+                                required
+                            >
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label class="form-label" style="font-size: 15px;">Expiry Date</label>
+                                <input 
+                                    type="text" 
+                                    class="form-input" 
+                                    placeholder="MM/YY" 
+                                    maxlength="5"
+                                    style="padding: 16px; font-size: 16px;"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-size: 15px;">CVC</label>
+                                <input 
+                                    type="text" 
+                                    class="form-input" 
+                                    placeholder="123" 
+                                    maxlength="4"
+                                    style="padding: 16px; font-size: 16px;"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="font-size: 15px;">Cardholder Name</label>
+                            <input 
+                                type="text" 
+                                class="form-input" 
+                                placeholder="Name on card"
+                                style="padding: 16px; font-size: 16px;"
+                                required
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #e6fffa; border: 2px solid #3dd5c3; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+                    <div style="display: flex; gap: 12px;">
+                        <i class="bi bi-info-circle-fill" style="color: #3dd5c3; font-size: 24px;"></i>
+                        <div>
+                            <div style="font-size: 14px; font-weight: 600; color: #1a202c; margin-bottom: 4px;">
+                                Secure Transaction
+                            </div>
+                            <div style="font-size: 13px; color: #4a5568; line-height: 1.6;">
+                                Your payment information is encrypted and secure. Funds will be added to your account instantly upon successful payment.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button 
+                    type="submit" 
+                    class="btn btn-primary" 
+                    style="width: 100%; padding: 20px; font-size: 18px; font-weight: 700;"
+                >
+                    <i class="bi bi-lock-fill"></i> Process Secure Payment
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+            <!-- Campaigns Page -->
+            <div id="campaigns" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Campaigns</h1>
+                    <p class="page-subtitle">Manage your advertising campaigns</p>
+                </div>
+
+                <button class="btn btn-primary" style="margin-bottom: 24px;" onclick="openModal('createCampaign')">
+                    <i class="bi bi-plus-circle"></i> Create Campaign
+                </button>
+
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="bi bi-megaphone-fill"></i>
+                    </div>
+                    <h3 class="empty-title">No campaigns yet</h3>
+                    <p class="empty-text">Create your first campaign to start driving traffic</p>
+                    <button class="btn btn-primary" onclick="openModal('createCampaign')">
+                        <i class="bi bi-plus-circle"></i> Create Campaign
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Page -->
+            <!-- Replace the entire Analytics Page section (around line 1100) with this simplified version: -->
+
+<!-- Analytics Page -->
+<div id="analytics" class="page">
+    <div class="page-header">
+        <h1 class="page-title">Analytics Overview</h1>
+        <p class="page-subtitle">Track your campaign performance at a glance</p>
+    </div>
+
+    <!-- Key Metrics Summary -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px;">
+        <div class="card" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); color: white; padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div>
+                    <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Total Revenue</div>
+                    <div style="font-size: 42px; font-weight: 700; margin-bottom: 8px;">$3,642</div>
+                    <div style="font-size: 13px; opacity: 0.8;">
+                        <i class="bi bi-arrow-up"></i> +15.3% from last month
+                    </div>
+                </div>
+                <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-currency-dollar" style="font-size: 28px;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div>
+                    <div style="font-size: 14px; color: #718096; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Total Clicks</div>
+                    <div style="font-size: 42px; font-weight: 700; color: #1a202c; margin-bottom: 8px;">847</div>
+                    <div style="font-size: 13px; color: #22543d; background: #c6f6d5; padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
+                        <i class="bi bi-arrow-up"></i> +8.3%
+                    </div>
+                </div>
+                <div style="width: 60px; height: 60px; background: #fef5e7; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-cursor-fill" style="font-size: 28px; color: #f39c12;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div>
+                    <div style="font-size: 14px; color: #718096; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Conversions</div>
+                    <div style="font-size: 42px; font-weight: 700; color: #1a202c; margin-bottom: 8px;">142</div>
+                    <div style="font-size: 13px; color: #22543d; background: #c6f6d5; padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
+                        <i class="bi bi-arrow-up"></i> +18.9%
+                    </div>
+                </div>
+                <div style="width: 60px; height: 60px; background: #fce4ec; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-check-circle-fill" style="font-size: 28px; color: #e91e63;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div>
+                    <div style="font-size: 14px; color: #718096; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Conversion Rate</div>
+                    <div style="font-size: 42px; font-weight: 700; color: #1a202c; margin-bottom: 8px;">16.77%</div>
+                    <div style="font-size: 13px; color: #718096;">
+                        Industry avg: 5.2%
+                    </div>
+                </div>
+                <div style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-graph-up-arrow" style="font-size: 28px; color: #4caf50;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Chart -->
+    <div class="chart-container" style="margin-bottom: 40px;">
+        <div class="chart-header">
+            <h3 class="chart-title">Weekly Performance</h3>
+            <div style="display: flex; gap: 16px; font-size: 13px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <div style="width: 12px; height: 12px; background: #3dd5c3; border-radius: 3px;"></div>
+                    <span style="color: #718096;">Clicks</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <div style="width: 12px; height: 12px; background: #4db8e8; border-radius: 3px;"></div>
+                    <span style="color: #718096;">Conversions</span>
+                </div>
+            </div>
+        </div>
+        <div style="height: 280px; padding: 20px; position: relative;">
+            <!-- Grid lines -->
+            <div style="position: absolute; width: calc(100% - 40px); height: calc(100% - 60px); top: 20px; left: 20px;">
+                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 0;"></div>
+                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 25%;"></div>
+                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 50%;"></div>
+                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 75%;"></div>
+                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; bottom: 0;"></div>
+            </div>
+            
+            <!-- Bars -->
+            <div style="display: flex; align-items: flex-end; justify-content: space-around; height: calc(100% - 40px); position: relative; z-index: 2;">
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 140px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 80px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Mon</span>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 180px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 100px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Tue</span>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 110px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 65px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Wed</span>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 200px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 120px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Thu</span>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 165px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 95px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Fri</span>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 125px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 75px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Sat</span>
+                </div>
+
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
+                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
+                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 95px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
+                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 60px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
+                    </div>
+                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Sun</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <h3 style="font-size: 20px; font-weight: 700; color: #1a202c; margin-bottom: 16px;">
+        <i class="bi bi-speedometer2" style="color: #3dd5c3;"></i> Quick Stats
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+        <div class="card" style="padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 50px; height: 50px; background: #e6fffa; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-eye-fill" style="font-size: 24px; color: #3dd5c3;"></i>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">Impressions</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">12,543</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 50px; height: 50px; background: #e8f5e9; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-percent" style="font-size: 24px; color: #4caf50;"></i>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">Click Rate</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">6.75%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 50px; height: 50px; background: #f3e5f5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-cash-stack" style="font-size: 24px; color: #9c27b0;"></i>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">Avg. CPC</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">$0.43</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 50px; height: 50px; background: #fff3e0; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-trophy-fill" style="font-size: 24px; color: #ff9800;"></i>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">ROI</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">900%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+            <!-- FAQ Page -->
+            <div id="faq" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Frequently Asked Questions</h1>
+                    <p class="page-subtitle">Find answers to common questions</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span><i class="bi bi-rocket-takeoff" style="margin-right: 10px; color: #3dd5c3;"></i>How do I
+                            create a campaign?</span>
+                        <i class="bi bi-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        To create a campaign, click on the "Create Campaign" button from the dashboard or campaigns
+                        page. Fill in the required details including campaign name, budget, target URL, and targeting
+                        options. Once submitted, your campaign will be reviewed and activated.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span><i class="bi bi-credit-card" style="margin-right: 10px; color: #3dd5c3;"></i>What payment
+                            methods do you accept?</span>
+                        <i class="bi bi-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We accept all major credit cards (Visa, Mastercard, American Express) through our secure Stripe
+                        payment gateway. All transactions are encrypted and secure.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span><i class="bi bi-cash-stack" style="margin-right: 10px; color: #3dd5c3;"></i>How is my
+                            budget used?</span>
+                        <i class="bi bi-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Your campaign budget is used to pay for clicks or impressions based on your bidding strategy.
+                        You can set daily or total budgets, and campaigns will automatically pause when budgets are
+                        reached.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span><i class="bi bi-pause-circle" style="margin-right: 10px; color: #3dd5c3;"></i>Can I pause
+                            or edit my campaigns?</span>
+                        <i class="bi bi-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! You can pause, resume, or edit your campaigns at any time from the Campaigns page. Changes
+                        to targeting and budgets take effect immediately.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span><i class="bi bi-arrow-counterclockwise"
+                                style="margin-right: 10px; color: #3dd5c3;"></i>How do I get a refund?</span>
+                        <i class="bi bi-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Unused funds in your account balance can be refunded at any time. Please contact our support
+                        team with your refund request, and we'll process it within 5-7 business days.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span><i class="bi bi-headset" style="margin-right: 10px; color: #3dd5c3;"></i>What kind of
+                            support do you offer?</span>
+                        <i class="bi bi-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We offer 24/7 email support and live chat during business hours. Our team typically responds
+                        within 2-4 hours. For urgent issues, please use the priority support option.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Page -->
+            <div id="support" class="page">
+                <div class="page-header">
+                    <h1 class="page-title">Support</h1>
+                    <p class="page-subtitle">Get help from our team</p>
+                </div>
+
+                <div class="card" style="max-width: 600px;">
+                    <form onsubmit="submitSupport(event)">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-envelope"></i> Subject
+                            </label>
+                            <input type="text" class="form-input" placeholder="Brief description of your issue"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-flag"></i> Priority
+                            </label>
+                            <select class="form-select" required>
+                                <option value="">Select priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-folder"></i> Category
+                            </label>
+                            <select class="form-select" required>
+                                <option value="">Select category</option>
+                                <option value="billing">Billing</option>
+                                <option value="technical">Technical Issue</option>
+                                <option value="campaign">Campaign Help</option>
+                                <option value="account">Account</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-chat-left-text"></i> Message
+                            </label>
+                            <textarea class="form-textarea" placeholder="Describe your issue in detail..."
+                                required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> Submit Ticket
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- Create Campaign Modal -->
+    <!-- Replace the Create Campaign Modal section (around line 1800-1850) with this: -->
+
+    <!-- Create Campaign Modal -->
+    <!-- Replace the Create Campaign Modal section (around line 1800-1850) with this: -->
+
+<!-- Create Campaign Modal -->
+<div id="createCampaignModal" class="modal-overlay">
+    <div class="modal" style="max-width: 700px; max-height: 95vh;">
+        <div class="modal-header" style="padding: 30px;">
+            <h2 class="modal-title" style="font-size: 28px;">Create New Campaign</h2>
+            <button class="modal-close" onclick="closeModal('createCampaign')">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <div class="modal-body" style="padding: 30px 40px 40px 40px;">
+            <form onsubmit="createCampaign(event)">
+                <div class="form-group" style="margin-bottom: 28px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-tag"></i> Campaign Name
+                    </label>
+                    <input type="text" class="form-input" name="campaignName" placeholder="Enter campaign name" style="padding: 16px 20px; font-size: 16px;" required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 28px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-link-45deg"></i> Target URL
+                    </label>
+                    <input type="url" class="form-input" name="targetUrl" placeholder="https://your-website.com" style="padding: 16px 20px; font-size: 16px;" required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 28px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-calendar-day"></i> Budget Per Day
+                    </label>
+                    <select class="form-select" name="dailyBudget" style="padding: 16px 20px; font-size: 16px; height: auto;" required>
+                        <option value="">Select daily budget</option>
+                        <option value="60">$60 per day</option>
+                        <option value="120">$120 per day</option>
+                        <option value="200">$200 per day</option>
+                        <option value="320">$320 per day</option>
+                        <option value="540">$540 per day</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 28px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-diagram-3"></i> Campaign Type
+                    </label>
+                    <select class="form-select" name="campaignType" style="padding: 16px 20px; font-size: 16px; height: auto;" required>
+                        <option value="">Select type</option>
+                        <option value="cpc">Cost Per Click (CPC)</option>
+                        <option value="cpm">Cost Per Mille (CPM)</option>
+                        <option value="cpa">Cost Per Action (CPA)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 32px;">
+                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
+                        <i class="bi bi-globe"></i> Target Audience
+                    </label>
+                    <select class="form-select" name="targetAudience" style="padding: 16px 20px; font-size: 16px; height: auto;" required>
+                        <option value="">Select audience</option>
+                        <option value="global">Global</option>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="eu">European Union</option>
+                        <option value="asia">Asia Pacific</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 18px 24px; font-size: 17px; font-weight: 700;">
+                    <i class="bi bi-plus-circle"></i> Create Campaign
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+    <script src="config.js"></script>
+
+    <script>
+        // Navigation
+        function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    
+    document.getElementById(pageId).classList.add('active');
+    event.target.closest('.nav-item').classList.add('active');
+    
+    // Load campaigns only when the campaigns page is shown
+    if (pageId === 'campaigns') {
+        loadCampaigns();
+    }
+    
+    if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('active');
+    }
+}
+
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Modal Controls
+            // function openModal(modalType) {
+            //     const modalId = modalType === 'addFunds' ? 'addFundsModal' : 'createCampaignModal';
+            //     document.getElementById(modalId).classList.add('active');
+            // }
+
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+
+        // Form Submissions
+        // Update the processFunds function - remove the closeModal call:
+
+function processFunds(event) {
+    event.preventDefault();
+    const amount = document.getElementById('fundAmount').value;
+    
+    showNotification(`Processing payment of $${amount}...`, 'info');
+    
+    setTimeout(() => {
+        showNotification(`Successfully added $${amount} to your account! This will be connected to Stripe in the backend.`, 'success');
+        loadUserBalance();
+        event.target.reset();
+    }, 1500);
+}
+async function displayBalanceInModal() {
+    try {
+        const response = await fetch(`${API_URL}/auth/me`, {
+            headers: getAuthHeaders()
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const balance = data.user?.balance || 0;
+            
+            // Add balance display to modal if it doesn't exist
+            const modalBody = document.querySelector('#createCampaignModal .modal-body');
+            let balanceDisplay = modalBody.querySelector('.balance-display');
+            
+            if (!balanceDisplay) {
+                balanceDisplay = document.createElement('div');
+                balanceDisplay.className = 'balance-display';
+                balanceDisplay.style.cssText = `
+                    background: linear-gradient(135deg, #3dd5c3, #4db8e8);
+                    color: white;
+                    padding: 16px 20px;
+                    border-radius: 8px;
+                    margin-bottom: 28px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                `;
+                
+                // Insert at the beginning of the form
+                const form = modalBody.querySelector('form');
+                form.insertBefore(balanceDisplay, form.firstChild);
+            }
+            
+            balanceDisplay.innerHTML = `
+                <div>
+                    <div style="font-size: 13px; opacity: 0.9; margin-bottom: 4px;">Available Balance</div>
+                    <div style="font-size: 24px; font-weight: 700;">$${balance.toFixed(2)}</div>
+                </div>
+                <i class="bi bi-wallet2" style="font-size: 32px;"></i>
+            `;
+        }
+    } catch (error) {
+        console.error('Error loading balance for modal:', error);
+    }
+}
+
+// Remove or comment out the openModal function for 'addFunds' since it's no longer needed
+
+        function createCampaign(event) {
+            event.preventDefault();
+            alert('Campaign created successfully! This will be saved to MongoDB.');
+            closeModal('createCampaign');
+        }
+
+        function submitSupport(event) {
+            event.preventDefault();
+            alert('Support ticket submitted successfully! Our team will respond within 24 hours.');
+            event.target.reset();
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logging out...');
+                // Redirect to login page
+            }
+        }
+
+        // Card number formatting
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardInput = document.querySelector('input[placeholder="1234 5678 9012 3456"]');
+            if (cardInput) {
+                cardInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\s/g, '');
+                    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                    e.target.value = formattedValue;
+                });
+            }
+
+            const expiryInput = document.querySelector('input[placeholder="MM/YY"]');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+        });
+        // API Configuration
+        const API_URL = config.API_URL;
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Dashboard loaded'); // DEBUG
+
+            checkAuth();
+            loadUserBalance();  // ADD THIS LINE
+
+
+        });
+
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+        }
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            };
+        }
+
+        // Load campaigns
+       async function loadCampaigns() {
+    try {
+        const response = await fetch(`${API_URL}/campaigns`, {
+            headers: getAuthHeaders()
+        });
+
+        if (response.status === 401) {
+            localStorage.removeItem('authToken');
+            window.location.href = '/login.html';
+            return;
+        }
+
+        if (!response.ok) throw new Error('Failed to load campaigns');
+
+        const data = await response.json();
+        displayCampaigns(data.campaigns);
+        // REMOVED: updateCampaignStats(data.campaigns);
+
+    } catch (error) {
+        console.error('Load campaigns error:', error);
+        showNotification('Failed to load campaigns', 'error');
+    }
+}
+function openModal(modalType) {
+    const modalId = 'createCampaignModal';
+    const modal = document.getElementById(modalId);
+    modal.classList.add('active');
+    
+    // Show current balance in modal
+    displayBalanceInModal();
+}
+function closeModal(modalType) {
+    const modalId = 'createCampaignModal';
+    document.getElementById(modalId).classList.remove('active');
+}
+
+
+
+        // Display campaigns in the table
+        // Replace the displayCampaigns function (around line 2000) with this updated version:
+
+        // Replace the displayCampaigns function (around line 2000) with this updated version:
+
+        function displayCampaigns(campaigns) {
+    const campaignsPage = document.getElementById('campaigns');
+    const emptyState = campaignsPage.querySelector('.empty-state');
+
+    if (campaigns.length === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+
+    const tableHTML = `
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campaign Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Daily Budget</th>
+                        <th>Spent</th>
+                        <th>Clicks</th>
+                        <th>Conversions</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${campaigns.map(campaign => `
+                        <tr>
+                            <td>
+                                <div style="font-weight: 600; color: #2d3748;">${campaign.campaignName}</div>
+                                <div style="font-size: 12px; color: #718096;">${campaign.targetUrl}</div>
+                            </td>
+                            <td style="text-transform: uppercase; font-weight: 600; color: #3dd5c3;">${campaign.campaignType}</td>
+                            <td>
+                                <span class="status-badge ${getStatusClass(campaign.status)}">
+                                    ${campaign.status}
+                                </span>
+                            </td>
+                            <td style="font-weight: 600;">$${campaign.dailyBudget.toFixed(2)}/day</td>
+                            <td style="font-weight: 600;">$${campaign.statistics.spent.toFixed(2)}</td>
+                            <td>${campaign.statistics.clicks}</td>
+                            <td>${campaign.statistics.conversions}</td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    ${campaign.status === 'active' ? 
+                                        `<button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="pauseCampaign('${campaign._id}')">
+                                            <i class="bi bi-pause"></i>
+                                        </button>` :
+                                        campaign.status === 'paused' ?
+                                        `<button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;" onclick="activateCampaign('${campaign._id}')">
+                                            <i class="bi bi-play"></i>
+                                        </button>` : ''
+                                    }
+                                    ${campaign.status !== 'active' ?
+                                        `<button class="btn" style="padding: 6px 12px; font-size: 13px; background: #fed7d7; color: #742a2a; border: none;" onclick="deleteCampaign('${campaign._id}')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>` : ''
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    const existingTable = campaignsPage.querySelector('.table-container');
+    if (existingTable) {
+        existingTable.remove();
+    }
+
+    const createButton = campaignsPage.querySelector('.btn-primary');
+    createButton.insertAdjacentHTML('afterend', tableHTML);
+}
+        function getStatusClass(status) {
+            const classes = {
+                'active': 'status-active',
+                'paused': 'status-paused',
+                'pending': 'status-pending',
+                'completed': 'status-active',
+                'rejected': 'status-paused'
+            };
+            return classes[status] || 'status-pending';
+        }
+
+        // Update campaign statistics on dashboard
+      
+
+        // Load dashboard stats
+        async function loadDashboardStats() {
+               console.log('Dashboard stats loading skipped');
+
+        }
+
+        // Create campaign - Updated
+        // Replace the createCampaign function (around line 2100) with this:
+
+       async function createCampaign(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const dailyBudget = parseFloat(form.dailyBudget.value);
+    
+    const formData = {
+        campaignName: form.campaignName.value.trim(),
+        targetUrl: form.targetUrl.value.trim(),
+        dailyBudget: dailyBudget,
+        totalBudget: dailyBudget * 30,
+        campaignType: form.campaignType.value,
+        targetAudience: form.targetAudience.value,
+        description: `Campaign for ${form.campaignName.value.trim()}`
+    };
+
+    // Show loading state
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+    submitButton.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating Campaign...';
+    submitButton.disabled = true;
+
+    try {
+        const response = await fetch(`${API_URL}/campaigns`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // Handle insufficient balance error specially
+            if (response.status === 400 && data.currentBalance !== undefined) {
+                const shortage = data.requiredAmount - data.currentBalance;
+                showNotification(
+                    `Insuffiecient balance.
+
+Funds are deducted daily.
+So when daily budget is set it will continue invoicing until it is paused.`,
+                    'error'
+                );
+            } else {
+                throw new Error(data.message || 'Failed to create campaign');
+            }
+            
+            // Re-enable button
+            submitButton.innerHTML = originalButtonText;
+            submitButton.disabled = false;
+            return;
+        }
+
+        // Success! Show detailed message
+        showNotification(
+            `Campaign created successfully! $${formData.totalBudget.toFixed(2)} deducted from your balance. Campaign will go live in 1.5 hours.`,
+            'success'
+        );
+        
+        closeModal('createCampaign');
+        form.reset();
+        
+        // Reload balance to show updated amount
+        loadUserBalance();
+        
+        // If on campaigns page, reload campaigns
+        if (document.getElementById('campaigns').classList.contains('active')) {
+            loadCampaigns();
+        }
+
+    } catch (error) {
+        console.error('Create campaign error:', error);
+        showNotification(error.message, 'error');
+        
+        // Re-enable button
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+    }
+}
+
+        // Pause campaign
+        async function pauseCampaign(campaignId) {
+    if (!confirm('Are you sure you want to pause this campaign?')) return;
+
+    try {
+        const response = await fetch(`${API_URL}/campaigns/${campaignId}/status`, {
+            method: 'PATCH',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ status: 'paused' })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to pause campaign');
+        }
+
+        showNotification('Campaign paused successfully', 'success');
+        loadCampaigns();
+
+    } catch (error) {
+        console.error('Pause campaign error:', error);
+        showNotification(error.message, 'error');
+    }
+}
+
+
+        // Activate campaign
+        async function activateCampaign(campaignId) {
+    if (!confirm('Are you sure you want to activate this campaign?')) return;
+
+    try {
+        const response = await fetch(`${API_URL}/campaigns/${campaignId}/status`, {
+            method: 'PATCH',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ status: 'active' })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to activate campaign');
+        }
+
+        showNotification('Campaign activated successfully', 'success');
+        loadCampaigns();
+
+    } catch (error) {
+        console.error('Activate campaign error:', error);
+        showNotification(error.message, 'error');
+    }
+}
+
+        // Delete campaign
+        async function deleteCampaign(campaignId) {
+    if (!confirm('Are you sure you want to delete this campaign? This action cannot be undone.')) return;
+
+    try {
+        const response = await fetch(`${API_URL}/campaigns/${campaignId}`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to delete campaign');
+        }
+
+        showNotification('Campaign deleted successfully', 'success');
+        loadCampaigns();
+
+    } catch (error) {
+        console.error('Delete campaign error:', error);
+        showNotification(error.message, 'error');
+    }
+}
+
+        // Notification system
+        // Notification system
+function showNotification(message, type = 'info') {
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        background: ${type === 'success' ? '#c6f6d5' : type === 'error' ? '#fed7d7' : '#bee3f8'};
+        color: ${type === 'success' ? '#22543d' : type === 'error' ? '#742a2a' : '#2c5282'};
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        max-width: 400px;
+        font-weight: 600;
+        animation: slideIn 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    `;
+
+    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+    notification.innerHTML = `
+        <span style="font-size: 20px;">${icon}</span>
+        <span>${message}</span>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
+}
+        // Add this function anywhere in your script section
+        async function loadUserBalance() {
+    try {
+        console.log('Loading user balance...');
+        
+        const response = await fetch(`${API_URL}/auth/me`, {
+            headers: getAuthHeaders()
+        });
+        
+        console.log('Response status:', response.status);
+
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem('authToken');
+            window.location.href = '/login.html';
+            return;
+        }
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error response:', errorData);
+            throw new Error(errorData.message || 'Failed to load user data');
+        }
+
+        const data = await response.json();
+        console.log('User data received:', data);
+        console.log('Balance value:', data.user?.balance);
+        
+        // Update balance in the dashboard
+        const dashboardPage = document.getElementById('dashboard');
+        const balanceElement = dashboardPage?.querySelector('.card-value');
+        
+        if (balanceElement && data.user?.balance !== undefined) {
+            const formattedBalance = `$${parseFloat(data.user.balance).toFixed(2)}`;
+            console.log('Setting balance to:', formattedBalance);
+            balanceElement.textContent = formattedBalance;
+        } else {
+            console.error('Balance element not found or balance is undefined');
+        }
+
+    } catch (error) {
+        console.error('Load user balance error:', error);
+    }
+}
+
+        // Updated logout function
+       async function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login.html';
+    }
+}
+
+        // Add CSS animation for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+`;
+        document.head.appendChild(style);
+
+    </script>
+</body>
+
+</html>

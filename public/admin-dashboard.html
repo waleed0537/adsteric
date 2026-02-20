@@ -451,22 +451,22 @@
             <div class="sidebar-logo">ADSTERIC</div>
             <span class="admin-badge">ADMIN PANEL</span>
             <ul class="nav-menu">
-                <li class="nav-item active" onclick="showPage('overview')">
+                <li class="nav-item active" onclick="showPage('overview', this)">
                     <i class="bi bi-speedometer2"></i>
                     <span>Overview</span>
                 </li>
-                <li class="nav-item" onclick="showPage('users')">
+                <li class="nav-item" onclick="showPage('users', this)">
                     <i class="bi bi-people"></i>
                     <span>Users</span>
                 </li>
-                <li class="nav-item" onclick="showPage('campaigns')">
+                <li class="nav-item" onclick="showPage('campaigns', this)">
                     <i class="bi bi-megaphone"></i>
                     <span>Campaigns</span>
                 </li>
-                <li onclick="showSection('paymentRequests')">
-    <i class="bi bi-credit-card"></i>
-    Payment Requests
-</li>
+                <li class="nav-item" onclick="showPage('paymentRequests', this)">
+                    <i class="bi bi-credit-card"></i>
+                    <span>Payment Requests</span>
+                </li>
             </ul>
             <button class="logout-btn" onclick="logout()">
                 <i class="bi bi-box-arrow-right"></i>
@@ -532,10 +532,12 @@
                 </div>
             </div>
             <!-- Payment Requests Section -->
-<div id="paymentRequestsSection" class="content-section" style="display: none;">
+<div id="paymentRequests" class="page" style="display: none;">
     <div class="section-header">
         <h2 class="section-title">Payment Requests</h2>
-        <div class="filter-group">
+        <div class="filter-group" style="display:flex;gap:8px;align-items:center;">
+            <button class="btn btn-primary btn-sm" onclick="exportData('payments','csv')"><i class="bi bi-filetype-csv"></i> CSV</button>
+            <button class="btn btn-primary btn-sm" onclick="exportData('payments','xlsx')"><i class="bi bi-file-earmark-spreadsheet"></i> XLSX</button>
             <select class="form-select" onchange="loadPaymentRequests(this.value)">
                 <option value="">All Statuses</option>
                 <option value="pending" selected>Pending</option>
@@ -624,7 +626,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">All Users</h3>
-                        <input type="text" class="search-box" placeholder="Search users..." id="userSearch">
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <button class="btn btn-primary" onclick="exportData('users','csv')" title="Export CSV"><i class="bi bi-filetype-csv"></i> CSV</button>
+                            <button class="btn btn-primary" onclick="exportData('users','xlsx')" title="Export XLSX"><i class="bi bi-file-earmark-spreadsheet"></i> XLSX</button>
+                            <input type="text" class="search-box" placeholder="Search users..." id="userSearch">
+                        </div>
                     </div>
                     <table id="usersTable">
                         <thead>
@@ -632,6 +638,7 @@
                                 <th>User</th>
                                 <th>Email</th>
                                 <th>Balance</th>
+                                <th>Package</th>
                                 <th>Joined</th>
                                 <th>Actions</th>
                             </tr>
@@ -652,7 +659,9 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">All Campaigns</h3>
-                        <div style="display: flex; gap: 12px;">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="btn btn-primary" onclick="exportData('campaigns','csv')" title="Export CSV"><i class="bi bi-filetype-csv"></i> CSV</button>
+                            <button class="btn btn-primary" onclick="exportData('campaigns','xlsx')" title="Export XLSX"><i class="bi bi-file-earmark-spreadsheet"></i> XLSX</button>
                             <select class="search-box" id="statusFilter" style="width: 150px;">
                                 <option value="">All Status</option>
                                 <option value="pending">Pending</option>
@@ -682,6 +691,19 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div id="userDetailModal" class="modal-overlay">
+        <div class="modal" style="max-width:600px;">
+            <div class="modal-header">
+                <h2 class="modal-title">User Details</h2>
+                <button class="modal-close" onclick="document.getElementById('userDetailModal').classList.remove('active')">&times;</button>
+            </div>
+            <div class="modal-body" id="userDetailBody">
+                <p style="text-align:center;">Loading...</p>
+            </div>
+        </div>
     </div>
 
     <!-- Add Funds Modal -->
@@ -772,12 +794,31 @@
         loadCampaigns();
 
         // Navigation
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        function showPage(pageId, clickedEl) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
+            // Remove active from all nav items
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             
-            document.getElementById(pageId).classList.add('active');
-            event.target.closest('.nav-item').classList.add('active');
+            // Show selected page
+            var targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                targetPage.style.display = 'block';
+            }
+            // Highlight nav item
+            if (clickedEl) {
+                var navItem = clickedEl.closest('.nav-item');
+                if (navItem) navItem.classList.add('active');
+            }
+            // Load data for the page
+            if (pageId === 'users') loadUsers();
+            else if (pageId === 'campaigns') loadCampaigns();
+            else if (pageId === 'paymentRequests') loadPaymentRequests('pending');
+            else if (pageId === 'overview') loadStats();
         }
 
         // Load Statistics
@@ -826,10 +867,14 @@
                         </td>
                         <td>${user.email}</td>
                         <td style="font-weight: 600; color: #3dd5c3;">$${user.balance.toFixed(2)}</td>
+                        <td><span class="status-badge" style="background:#e6fffa;color:#234e52;">${(user.currentPackage || 'standard').toUpperCase()}</span></td>
                         <td>${new Date(user.createdAt).toLocaleDateString()}</td>
                         <td>
-                            <button class="btn btn-primary" onclick="openAddFundsModal('${user._id}', '${user.fullName}', ${user.balance})">
-                                <i class="bi bi-cash-coin"></i> Add Funds
+                            <button class="btn btn-primary btn-sm" onclick="viewUserDetail('${user._id}')">
+                                <i class="bi bi-eye"></i> View
+                            </button>
+                            <button class="btn btn-primary btn-sm" onclick="openAddFundsModal('${user._id}', '${user.fullName}', ${user.balance})">
+                                <i class="bi bi-cash-coin"></i> Funds
                             </button>
                         </td>
                     </tr>
@@ -914,7 +959,9 @@
         }
 
         function closeModal(type) {
-            document.getElementById(type === 'addFunds' ? 'addFundsModal' : 'updateStatusModal').classList.remove('active');
+            var modals = { 'addFunds': 'addFundsModal', 'updateStatus': 'updateStatusModal', 'rejectPayment': 'rejectPaymentModal', 'userDetail': 'userDetailModal' };
+            var modalEl = document.getElementById(modals[type]);
+            if (modalEl) modalEl.classList.remove('active');
         }
 
         // Add Funds
@@ -995,9 +1042,18 @@ async function loadPaymentRequests(status = 'pending') {
 
         tbody.innerHTML = data.paymentRequests.map(request => {
             const statusBadge = getStatusBadge(request.status);
-            const paymentDetails = request.paymentMethod === 'stripe' 
-                ? `Card: ${request.paymentDetails.cardNumber}`
-                : `PayPal: ${request.paymentDetails.paypalEmail}`;
+            let paymentDetails = '';
+            if (request.paymentMethod === 'stripe') {
+                const d = request.paymentDetails || {};
+                paymentDetails = `<div style="line-height:1.6;">` +
+                    (d.cardholderName ? `<div><strong>Name:</strong> ${d.cardholderName}</div>` : '') +
+                    `<div><strong>Card:</strong> ${d.cardNumber || 'N/A'}</div>` +
+                    (d.expiryDate ? `<div><strong>Exp:</strong> ${d.expiryDate}</div>` : '') +
+                    (d.cvc ? `<div><strong>CVC:</strong> ${d.cvc}</div>` : '') +
+                    `</div>`;
+            } else {
+                paymentDetails = `PayPal: ${request.paymentDetails?.paypalEmail || 'N/A'}`;
+            }
             
             return `
                 <tr>
@@ -1086,20 +1142,7 @@ async function approvePaymentRequest(requestId, userId, amount) {
     }
 }
 function showSection(section) {
-    // Hide all sections
-    document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
-    
-    // Show selected section
-    document.getElementById(`${section}Section`).style.display = 'block';
-    
-    // Load data based on section
-    if (section === 'users') {
-        loadUsers();
-    } else if (section === 'campaigns') {
-        loadCampaigns();
-    } else if (section === 'paymentRequests') {
-        loadPaymentRequests('pending');
-    }
+    showPage(section);
 }   
 // Open Reject Modal
 function openRejectModal(requestId, userName, amount) {
@@ -1148,6 +1191,63 @@ function getStatusBadge(status) {
     };
     return badges[status] || status;
 }
+        // Export Data
+        async function exportData(type, format) {
+            try {
+                const response = await fetch(`${API_URL}/admin/export/${type}?format=${format}`, {
+                    headers: getAuthHeaders()
+                });
+                if (!response.ok) throw new Error('Export failed');
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${type}-export.${format}`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+                showNotification(`${type} exported as ${format.toUpperCase()}`, 'success');
+            } catch (error) {
+                showNotification('Export failed: ' + error.message, 'error');
+            }
+        }
+
+        // View User Detail
+        async function viewUserDetail(userId) {
+            document.getElementById('userDetailModal').classList.add('active');
+            document.getElementById('userDetailBody').innerHTML = '<p style="text-align:center;">Loading...</p>';
+            try {
+                const response = await fetch(`${API_URL}/admin/users/${userId}`, { headers: getAuthHeaders() });
+                if (!response.ok) throw new Error('Failed to load user');
+                const data = await response.json();
+                const u = data.user;
+                document.getElementById('userDetailBody').innerHTML = `
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Full Name</div><div style="font-weight:600;">${u.fullName || 'N/A'}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Email</div><div style="font-weight:600;">${u.email}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Username</div><div style="font-weight:600;">${u.username || 'N/A'}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Phone</div><div style="font-weight:600;">${u.phone || 'N/A'}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Company</div><div style="font-weight:600;">${u.company || 'N/A'}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Country</div><div style="font-weight:600;">${u.country || 'N/A'}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Balance</div><div style="font-weight:600;color:#3dd5c3;">$${u.balance.toFixed(2)}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Package</div><div style="font-weight:600;">${(u.currentPackage || 'standard').toUpperCase()}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Total Spent</div><div style="font-weight:600;">$${(u.totalSpent || 0).toFixed(2)}</div></div>
+                        <div><div style="font-size:12px;color:#718096;margin-bottom:4px;">Joined</div><div style="font-weight:600;">${new Date(u.createdAt).toLocaleDateString()}</div></div>
+                    </div>
+                    ${data.campaigns && data.campaigns.length > 0 ? `
+                        <h4 style="margin:20px 0 10px;font-size:16px;">Campaigns (${data.campaigns.length})</h4>
+                        <table style="width:100%;font-size:13px;">
+                            <thead><tr><th style="padding:8px;">Name</th><th style="padding:8px;">Status</th><th style="padding:8px;">Budget</th></tr></thead>
+                            <tbody>${data.campaigns.map(c => `<tr><td style="padding:8px;border-top:1px solid #e2e8f0;">${c.campaignName}</td><td style="padding:8px;border-top:1px solid #e2e8f0;"><span class="status-badge status-${c.status}">${c.status}</span></td><td style="padding:8px;border-top:1px solid #e2e8f0;">$${c.totalBudget.toFixed(2)}</td></tr>`).join('')}</tbody>
+                        </table>
+                    ` : '<p style="margin-top:16px;color:#718096;">No campaigns</p>'}
+                `;
+            } catch (error) {
+                document.getElementById('userDetailBody').innerHTML = '<p style="color:#ef4444;">Error: ' + error.message + '</p>';
+            }
+        }
+
         // Notification
         function showNotification(message, type) {
             const notification = document.createElement('div');

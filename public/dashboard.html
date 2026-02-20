@@ -1,2293 +1,1611 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adsteric Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Dashboard - Adsteric</title>
+    <link rel="stylesheet" href="/dashboard.css">
+    <link rel="stylesheet" href="/finances.css">
+    <link rel="stylesheet" href="/campaigns.css">
+    <link rel="stylesheet" href="/create-campaign.css">
+    <link rel="stylesheet" href="/fullpage-campaign.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background-color: #f9fafb; color: #111827; overflow-x: hidden; }
+        body.overflow-hidden { overflow: hidden; }
+
+        .dashboard { display: flex; min-height: 100vh; }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar { width: 280px; background: white; border-right: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; display: flex; flex-direction: column; transition: transform 0.3s ease; }
+        .sidebar-header { padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e5e7eb; }
+        .logo { font-weight: 700; font-size: 1.25rem; color: #6d28d9; display: flex; align-items: center; gap: 0.5rem; }
+        .close-menu { background: none; border: none; color: #6b7280; cursor: pointer; font-size: 1.25rem; display: none; }
+
+        .nav-menu { flex-grow: 1; display: flex; flex-direction: column; padding: 1.5rem 0; overflow-y: auto; }
+        .nav-menu ul { list-style: none; padding: 0 1rem; }
+        .nav-menu ul li { margin: 0.25rem 0; }
+        .nav-menu ul li a { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; text-decoration: none; color: #374151; font-weight: 500; border-radius: 0.5rem; transition: all 0.2s ease; }
+        .nav-menu ul li.active a { background: rgba(109,40,217,0.1); color: #6d28d9; }
+        .nav-menu ul li a:hover { background: rgba(109,40,217,0.05); color: #5b21b6; }
+        .nav-menu ul li a i { width: 1.25rem; text-align: center; font-size: 1.1rem; color: #6b7280; transition: color 0.2s; }
+        .nav-menu ul li.active a i, .nav-menu ul li a:hover i { color: #6d28d9; }
+
+        .nav-divider { height: 1px; background: #e5e7eb; margin: 0.75rem 1rem; }
+        .nav-section-label { padding: 0.5rem 1.75rem; font-size: 0.7rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .logout-section { padding: 1rem 1.5rem; border-top: 1px solid #e5e7eb; }
+        .logout-link { display: flex; align-items: center; gap: 0.75rem; color: #ef4444; text-decoration: none; padding: 0.75rem 1rem; border-radius: 0.5rem; font-weight: 500; transition: background 0.2s; }
+        .logout-link:hover { background: rgba(239,68,68,0.05); }
+        .logout-link i { width: 1.25rem; text-align: center; }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content { flex-grow: 1; margin-left: 280px; transition: margin-left 0.3s ease; }
+
+        /* ===== TOP NAV ===== */
+        .top-nav { background: white; border-bottom: 1px solid #e5e7eb; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+        .top-nav h1 { font-size: 1.5rem; font-weight: 600; color: #111827; }
+        .header-actions { display: flex; align-items: center; gap: 1rem; }
+        .balance { display: flex; align-items: baseline; gap: 0.5rem; }
+        .balance-label { color: #6b7280; font-size: 0.875rem; }
+        .balance-amount { font-weight: 600; }
+        .add-funds-button { background: #6d28d9; color: white; padding: 0.5rem 1rem; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+        .add-funds-button:hover { background: #5b21b6; }
+
+        .content-area { padding: 1.5rem; flex-grow: 1; position: relative; }
+
+        .hidden { display: none !important; }
+
+        /* ===== HOME SECTION ===== */
+        .home-section { animation: fadeIn 0.5s ease; }
+        .welcome-banner { background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 50%, #8b5cf6 100%); border-radius: 16px; padding: 2.5rem; color: white; margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .welcome-banner::before { content: ''; position: absolute; top: -50%; right: -20%; width: 400px; height: 400px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .welcome-banner h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .welcome-banner p { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        .welcome-stats { display: flex; gap: 2rem; }
+        .welcome-stat { background: rgba(255,255,255,0.15); padding: 1rem 1.5rem; border-radius: 10px; }
+        .welcome-stat .label { font-size: 0.75rem; opacity: 0.8; margin-bottom: 0.25rem; }
+        .welcome-stat .value { font-size: 1.5rem; font-weight: 700; }
+
+        .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+        .action-card { background: white; border-radius: 12px; padding: 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; border: 1px solid #e5e7eb; }
+        .action-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-color: #6d28d9; }
+        .action-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 1rem; }
+        .action-card-icon.purple { background: #ede9fe; color: #6d28d9; }
+        .action-card-icon.blue { background: #dbeafe; color: #2563eb; }
+        .action-card-icon.green { background: #d1fae5; color: #059669; }
+        .action-card-icon.orange { background: #ffedd5; color: #ea580c; }
+        .action-card h3 { font-size: 1rem; font-weight: 600; color: #111827; margin-bottom: 0.375rem; }
+        .action-card p { font-size: 0.8rem; color: #6b7280; line-height: 1.4; }
+
+        .recent-activity { background: white; border-radius: 12px; padding: 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e5e7eb; }
+        .recent-activity h3 { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 1rem; }
+        .activity-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .activity-dot.green { background: #059669; }
+        .activity-dot.blue { background: #2563eb; }
+        .activity-dot.orange { background: #ea580c; }
+        .activity-text { flex: 1; font-size: 0.875rem; color: #374151; }
+        .activity-time { font-size: 0.75rem; color: #9ca3af; }
+
+        /* ===== STATISTICS SECTION ===== */
+        .statistics-section { position: fixed; top: 0; left: 280px; right: 0; bottom: 0; background: #f9fafb; z-index: 1000; overflow-y: auto; padding: 0; }
+        .stats-page-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 1.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        .stats-page-header h1 { font-size: 1.5rem; font-weight: 600; color: #111827; }
+        .package-info-banner { background: linear-gradient(135deg, #6d28d9, #5b21b6); margin: 1.5rem 2rem; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(109,40,217,0.2); }
+        .package-info-content { display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+        .package-badge { display: flex; align-items: center; gap: 0.75rem; color: white; font-size: 1.5rem; font-weight: 700; }
+        .package-badge i { font-size: 2rem; color: #fbbf24; }
+        .package-stats { display: flex; gap: 3rem; }
+        .package-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+        .package-stat .stat-label { color: rgba(255,255,255,0.8); font-size: 0.875rem; }
+        .package-stat .stat-value { color: white; font-size: 1.25rem; font-weight: 700; }
+        .stats-table-wrapper { background: white; margin: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; overflow: hidden; }
+        .table-scroll-container { overflow-x: auto; }
+        .stats-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        .stats-table thead { background: #f9fafb; border-bottom: 2px solid #e5e7eb; position: sticky; top: 0; z-index: 10; }
+        .stats-table th { padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; border-bottom: 2px solid #e5e7eb; }
+        .stats-table th:first-child { padding-left: 1.5rem; }
+        .stats-table .header-group { background: #f3f4f6; font-weight: 600; color: #111827; }
+        .stats-table tbody tr { border-bottom: 1px solid #f3f4f6; transition: background 0.15s; }
+        .stats-table tbody tr:hover { background: #f9fafb; }
+        .stats-table td { padding: 1rem; color: #374151; white-space: nowrap; }
+        .stats-table td:first-child { padding-left: 1.5rem; font-weight: 500; color: #111827; }
+        .stats-table tfoot { background: #f9fafb; border-top: 2px solid #e5e7eb; font-weight: 600; }
+        .stats-table tfoot td { padding: 1rem; color: #111827; }
+        .stats-table tfoot td:first-child { font-weight: 700; color: #6d28d9; }
+        .stats-table th.col-divider, .stats-table td.col-divider { border-left: 2px solid #e5e7eb; }
+        .stats-table .highlight-col { background: #faf5ff; }
+        .stats-table tbody tr:hover .highlight-col { background: #f3e8ff; }
+        .stats-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 2rem; }
+
+        /* ===== CAMPAIGNS SECTION ===== */
+        .campaigns-section { padding: 0; }
+        .campaigns-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .campaigns-header h2 { font-size: 1.5rem; font-weight: 600; color: #111827; }
+        .btn-primary { background: linear-gradient(135deg, #6d28d9, #5b21b6); color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(109,40,217,0.3); }
+        .campaigns-container { display: grid; gap: 1.5rem; }
+        .campaign-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: all 0.2s; }
+        .campaign-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .campaign-card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+        .campaign-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.25rem; }
+        .campaign-url { font-size: 0.875rem; color: #6b7280; text-decoration: none; }
+        .campaign-status { display: inline-flex; align-items: center; padding: 0.375rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .campaign-status.pending { background: #fef3c7; color: #92400e; }
+        .campaign-status.active { background: #d1fae5; color: #065f46; }
+        .campaign-status.paused { background: #fef3c7; color: #92400e; }
+        .campaign-status.completed { background: #d1fae5; color: #065f46; }
+        .campaign-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; }
+        .campaign-detail-label { font-size: 0.75rem; color: #6b7280; }
+        .campaign-detail-value { font-size: 1rem; font-weight: 600; color: #111827; }
+        .empty-campaigns { text-align: center; padding: 4rem 2rem; background: white; border-radius: 12px; }
+
+        /* ===== CREATE CAMPAIGN ===== */
+        .create-campaign-section { position: fixed; top: 0; left: 280px; right: 0; bottom: 0; background: #f9fafb; z-index: 1000; overflow-y: auto; }
+        .create-campaign-header { background: white; border-bottom: 1px solid #e5e7eb; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header-subtitle { color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem; }
+        .campaign-form-wrapper { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .form-sections-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .form-section-card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .section-title i { color: #6d28d9; }
+        .form-field { margin-bottom: 1.25rem; }
+        .field-label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+        .field-label .required { color: #ef4444; }
+        .field-input { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; color: #111827; }
+        .field-input:focus { outline: none; border-color: #6d28d9; box-shadow: 0 0 0 3px rgba(109,40,217,0.1); }
+        .field-select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; color: #111827; background: white; }
+        .radio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .radio-grid-two { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .radio-card { position: relative; cursor: pointer; border: 2px solid #e5e7eb; border-radius: 8px; padding: 1rem; transition: all 0.2s; background: white; }
+        .radio-card:hover { border-color: #6d28d9; background: #f9f5ff; }
+        .radio-card input[type="radio"] { position: absolute; opacity: 0; }
+        .radio-card input[type="radio"]:checked ~ .radio-content { color: #6d28d9; }
+        .radio-card:has(input:checked) { border-color: #6d28d9; background: #f9f5ff; }
+        .radio-content { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; color: #374151; }
+        .radio-content i { font-size: 1.125rem; }
+        .country-selector { position: relative; }
+        .country-selector-btn { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; background: white; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.875rem; color: #374151; }
+        .country-dropdown { position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 100; max-height: 300px; overflow: hidden; }
+        .country-search { padding: 0.75rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 0.5rem; }
+        .country-search input { flex: 1; border: none; outline: none; font-size: 0.875rem; }
+        .country-list { max-height: 240px; overflow-y: auto; }
+        .country-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; cursor: pointer; transition: background 0.2s; }
+        .country-item:hover { background: #f9fafb; }
+        .country-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .selected-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+        .country-tag { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.75rem; background: #f3f4f6; border-radius: 6px; font-size: 0.875rem; }
+        .country-tag button { background: none; border: none; color: #6b7280; cursor: pointer; padding: 0; display: flex; align-items: center; }
+        .country-tag button:hover { color: #ef4444; }
+        .form-row-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .budget-section { grid-column: 1 / -1; }
+        .budget-summary { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; }
+        .summary-row { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.875rem; color: #374151; }
+        .summary-row.total { border-top: 2px solid #e5e7eb; margin-top: 0.5rem; padding-top: 0.75rem; font-size: 1rem; }
+        .form-actions { display: flex; justify-content: flex-end; gap: 1rem; padding: 2rem 0; }
+        .btn-cancel { background: #f3f4f6; color: #374151; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-submit { background: linear-gradient(135deg, #6d28d9, #5b21b6); color: white; padding: 0.75rem 2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-submit:hover { box-shadow: 0 4px 12px rgba(109,40,217,0.3); }
+
+        /* ===== PAYMENT / FINANCES ===== */
+        .payment-form { max-width: 700px; margin: 2rem auto; background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .payment-form-header { padding: 1.5rem 2rem; border-bottom: 1px solid #e5e7eb; }
+        .payment-form-header h2 { font-size: 1.5rem; font-weight: 600; color: #111827; }
+        .payment-form-content { padding: 2rem; }
+        .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+        .payment-method { padding: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; }
+        .payment-method.active { border-color: #6d28d9; background: #f0f0ff; color: #6d28d9; }
+        .payment-method i { font-size: 1.25rem; }
+        .form-section { margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 1rem; }
+        .form-group input:focus { outline: none; border-color: #6d28d9; box-shadow: 0 0 0 3px rgba(109,40,217,0.1); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .submit-button { width: 100%; padding: 0.75rem; background: #6d28d9; color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; position: relative; overflow: hidden; }
+        .submit-button:hover { background: #5b21b6; }
+        .submit-button .button-text { transition: opacity 0.3s; }
+        .submit-button .loader { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; }
+        .submit-button.loading .button-text { opacity: 0; }
+        .submit-button.loading .loader { opacity: 1; visibility: visible; }
+        .loader-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .payment-review-notification { margin-top: 1.5rem; padding: 1rem 1.25rem; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; border-radius: 8px; font-size: 0.95rem; font-weight: 500; }
+        .payment-review-notification.hidden { display: none; }
+        .payment-history-section { margin-top: 2rem; }
+        .payment-history-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; table-layout: fixed; }
+        .payment-history-table th:nth-child(1), .payment-history-table td:nth-child(1) { width: 28%; }
+        .payment-history-table th:nth-child(2), .payment-history-table td:nth-child(2) { width: 25%; }
+        .payment-history-table th:nth-child(3), .payment-history-table td:nth-child(3) { width: 22%; }
+        .payment-history-table th:nth-child(4), .payment-history-table td:nth-child(4) { width: 25%; }
+        .payment-history-table th { padding: 0.75rem 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        .payment-history-table td { padding: 0.75rem 0.75rem; color: #374151; border-bottom: 1px solid #f3f4f6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .payment-status-badge { display: inline-flex; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .payment-status-badge.approved { background: #d1fae5; color: #065f46; }
+        .payment-status-badge.pending { background: #fef3c7; color: #92400e; }
+        .payment-status-badge.rejected { background: #fee2e2; color: #991b1b; }
+
+        /* ===== PROFILE SECTION ===== */
+        .profile-section { max-width: 700px; margin: 0 auto; }
+        .profile-card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e5e7eb; margin-bottom: 1.5rem; }
+        .profile-card h3 { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .profile-card h3 i { color: #6d28d9; }
+        .profile-form-group { margin-bottom: 1.25rem; }
+        .profile-form-group label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+        .profile-form-group input { width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 0.9rem; color: #111827; }
+        .profile-form-group input:focus { outline: none; border-color: #6d28d9; box-shadow: 0 0 0 3px rgba(109,40,217,0.1); }
+        .profile-form-group input:disabled { background: #f3f4f6; color: #9ca3af; }
+        .profile-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .profile-save-btn { background: linear-gradient(135deg, #6d28d9, #5b21b6); color: white; padding: 0.75rem 2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+        .profile-save-btn:hover { box-shadow: 0 4px 12px rgba(109,40,217,0.3); }
+        .profile-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .profile-alert { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.875rem; }
+        .profile-alert.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .profile-alert.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        /* ===== SUPPORT SECTION ===== */
+        .support-section { max-width: 700px; margin: 0 auto; }
+        .support-card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e5e7eb; margin-bottom: 1.5rem; }
+        .support-card h3 { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 1rem; }
+        .support-card p { color: #6b7280; line-height: 1.6; margin-bottom: 0.75rem; }
+        .support-contact-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f9fafb; border-radius: 8px; margin-bottom: 0.75rem; }
+        .support-contact-item i { font-size: 1.25rem; color: #6d28d9; width: 20px; text-align: center; }
+        .support-contact-item a { color: #6d28d9; text-decoration: none; font-weight: 500; }
+        .support-contact-item a:hover { text-decoration: underline; }
+
+        /* ===== ALERTS ===== */
+        .alert { padding: 1rem; border-radius: 8px; margin: 0 2rem 1.5rem; font-weight: 500; }
+        .alert.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .alert.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .alert.hidden { display: none; }
+
+        /* ===== NOTIFICATION BAR ===== */
+        .payment-notification { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; width: 100%; position: relative; z-index: 1005; animation: slideDown 0.5s ease; }
+        .payment-notification.approved { background: #E6F7E9; border-bottom: 1px solid #A2D9AC; color: #1F7D32; }
+        .payment-notification.rejected { background: #FEEBEC; border-bottom: 1px solid #F1A5A5; color: #B42929; }
+        .notification-content { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .notification-message { font-size: 14px; font-weight: 500; }
+        .notification-close { cursor: pointer; background: none; border: none; color: inherit; opacity: 0.7; padding: 5px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .notification-close:hover { opacity: 1; background: rgba(0,0,0,0.05); }
+        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== LOGOUT MODAL ===== */
+        .logout-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .logout-modal.active { opacity: 1; visibility: visible; }
+        .logout-modal-content { background: white; border-radius: 12px; padding: 2rem; max-width: 400px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: scale(0.95); transition: transform 0.3s; }
+        .logout-modal.active .logout-modal-content { transform: scale(1); }
+        .logout-modal-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .logout-modal-icon { width: 48px; height: 48px; border-radius: 50%; background: #fee2e2; color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .logout-modal-title { font-size: 1.25rem; font-weight: 600; }
+        .logout-modal-message { color: #6b7280; margin-bottom: 1.5rem; line-height: 1.5; }
+        .logout-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+        .logout-modal-btn { padding: 0.625rem 1.25rem; border-radius: 8px; font-weight: 500; font-size: 0.875rem; cursor: pointer; border: none; }
+        .logout-modal-btn-cancel { background: #f3f4f6; color: #374151; }
+        .logout-modal-btn-cancel:hover { background: #e5e7eb; }
+        .logout-modal-btn-confirm { background: #ef4444; color: white; }
+        .logout-modal-btn-confirm:hover { background: #dc2626; }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu-toggle { display: none; position: fixed; top: 1rem; left: 1rem; z-index: 1010; background: rgba(255,255,255,0.9); border: none; border-radius: 5px; width: 40px; height: 40px; align-items: center; justify-content: center; font-size: 1.2rem; color: #374151; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .mobile-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1007; display: none; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .mobile-overlay.active { display: block; opacity: 1; visibility: visible; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #f5f7fa;
-            color: #2d3748;
-        }
-
-        .dashboard-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #3dd5c3 0%, #4db8e8 100%);
-            color: white;
-            padding: 30px 0;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar-logo {
-            font-size: 28px;
-            font-weight: 700;
-            padding: 0 30px;
-            margin-bottom: 40px;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-menu {
-            list-style: none;
-        }
-
-        .nav-item {
-            padding: 14px 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 15px;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-left-color: white;
-        }
-
-        .nav-item.active {
-            background: rgba(255, 255, 255, 0.15);
-            border-left-color: white;
-            font-weight: 600;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .logout-btn {
-            margin: 30px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1001;
-            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 260px;
-            padding: 30px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header */
-        .page-header {
-            margin-bottom: 30px;
-        }
-
-        .page-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 8px;
-        }
-
-        .page-subtitle {
-            color: #718096;
-            font-size: 15px;
-        }
-
-        /* Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .card-title {
-            font-size: 14px;
-            color: #718096;
-            font-weight: 500;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .card-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 8px;
-        }
-
-        .card-subtitle {
-            font-size: 13px;
-            color: #718096;
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-            color: white;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-            color: white;
-            box-shadow: 0 4px 14px rgba(61, 213, 195, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(61, 213, 195, 0.4);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #3dd5c3;
-            border: 2px solid #3dd5c3;
-        }
-
-        .btn-secondary:hover {
-            background: #f7fafc;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: white;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1a202c;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #718096;
-            padding: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: #f7fafc;
-            color: #2d3748;
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 15px;
-            color: #2d3748;
-            transition: all 0.3s ease;
-            background: #f7fafc;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: #3dd5c3;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(61, 213, 195, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .card-input {
-            background: #f7fafc;
-            padding: 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            margin-bottom: 16px;
-        }
-
-        .card-brands {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-size: 24px;
-        }
-
-        /* Table */
-        .table-container {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background: #f7fafc;
-        }
-
-        th {
-            padding: 16px;
-            text-align: left;
-            font-size: 13px;
-            font-weight: 600;
-            color: #4a5568;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            padding: 16px;
-            border-top: 1px solid #e2e8f0;
-            font-size: 14px;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .status-active {
-            background: #c6f6d5;
-            color: #22543d;
-        }
-
-        .status-paused {
-            background: #fed7d7;
-            color: #742a2a;
-        }
-
-        .status-pending {
-            background: #feebc8;
-            color: #7c2d12;
-        }
-
-        /* Chart Container */
-        .chart-container {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 24px;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a202c;
-        }
-
-        .chart-placeholder {
-            height: 300px;
-            background: linear-gradient(to bottom, #f7fafc 0%, white 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #a0aec0;
-            font-size: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chart-bars {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 100%;
-            padding: 40px 20px 20px;
-        }
-
-        .chart-bar {
-            width: 40px;
-            background: linear-gradient(to top, #3dd5c3, #4db8e8);
-            border-radius: 4px 4px 0 0;
-            animation: growUp 1s ease;
-            position: relative;
-        }
-
-        @keyframes growUp {
-            from {
-                height: 0;
-            }
-        }
-
-        .chart-bar-label {
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
-            color: #718096;
-            white-space: nowrap;
-        }
-
-        /* FAQ */
-        .faq-item {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-        }
-
-        .faq-question {
-            padding: 20px 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: #2d3748;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: #f7fafc;
-        }
-
-        .faq-icon {
-            transition: transform 0.3s ease;
-            font-size: 18px;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            padding: 0 24px;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 0 24px 20px;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #3dd5c3, #4db8e8);
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .stat-icon-wrapper {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: #718096;
-            margin-bottom: 8px;
-        }
-
-        .stat-change {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .stat-change.positive {
-            color: #22543d;
-            background: #c6f6d5;
-        }
-
-        .stat-change.negative {
-            color: #742a2a;
-            background: #fed7d7;
-        }
-
-        /* Analytics Cards */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 30px;
-        }
-
-        .metric-card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border-left: 4px solid #3dd5c3;
-        }
-
-        .metric-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .metric-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .metric-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .metric-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 8px;
-        }
-
-        .metric-comparison {
-            font-size: 13px;
-            color: #718096;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 12px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3dd5c3, #4db8e8);
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-
-        /* Time Range Selector */
-        .time-range {
-            display: flex;
-            gap: 8px;
-            background: white;
-            padding: 6px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 24px;
-            width: fit-content;
-        }
-
-        .time-btn {
-            padding: 8px 16px;
-            border: none;
-            background: transparent;
-            color: #718096;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .time-btn:hover {
-            background: #f7fafc;
-        }
-
-        .time-btn.active {
-            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-            color: white;
-        }
-
-        /* Donut Chart */
-        .donut-chart {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: conic-gradient(#3dd5c3 0deg 120deg,
-                    #4db8e8 120deg 240deg,
-                    #e2e8f0 240deg 360deg);
-            position: relative;
-            margin: 20px auto;
-        }
-
-        .donut-chart::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 140px;
-            height: 140px;
-            background: white;
-            border-radius: 50%;
-        }
-
-        .donut-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 2;
-        }
-
-        .donut-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #1a202c;
-        }
-
-        .donut-label {
-            font-size: 12px;
-            color: #718096;
-        }
-
-        .legend {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-        }
-
-        .legend-text {
-            font-size: 14px;
-            color: #4a5568;
-            flex: 1;
-        }
-
-        .legend-value {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        /* Line Chart Effect */
-        .line-chart {
-            height: 250px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 20px 0;
-            position: relative;
-        }
-
-        .line-point {
-            width: 12px;
-            height: 12px;
-            background: #3dd5c3;
-            border: 3px solid white;
-            border-radius: 50%;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(61, 213, 195, 0.4);
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .line-point:hover {
-            transform: scale(1.3);
-            box-shadow: 0 4px 12px rgba(61, 213, 195, 0.6);
-        }
-
-        .line-point::after {
-            content: attr(data-value);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2d3748;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            margin-bottom: 8px;
-        }
-
-        .line-point:hover::after {
-            opacity: 1;
-        }
-
-        .line-segment {
-            position: absolute;
-            height: 3px;
-            background: linear-gradient(90deg, #3dd5c3, #4db8e8);
-            transform-origin: left;
-        }
-
-        /* Top Performers Table */
-        .performers-table {
-            width: 100%;
-        }
-
-        .performer-row {
-            display: flex;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .performer-rank {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            margin-right: 16px;
-        }
-
-        .performer-info {
-            flex: 1;
-        }
-
-        .performer-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 4px;
-        }
-
-        .performer-type {
-            font-size: 12px;
-            color: #718096;
-        }
-
-        .performer-stats {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .performer-stat {
-            text-align: right;
-        }
-
-        .performer-stat-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .performer-stat-label {
-            font-size: 11px;
-            color: #718096;
-            text-transform: uppercase;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .empty-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-            opacity: 0.3;
-            color: #3dd5c3;
-        }
-
-        .empty-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .empty-text {
-            color: #718096;
-            margin-bottom: 24px;
-        }
-
-        /* Responsive */
         @media (max-width: 1024px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+            .form-sections-grid { grid-template-columns: 1fr; }
+            .form-row-three { grid-template-columns: 1fr; }
         }
-
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 80px 20px 20px;
-            }
-
-            .page-title {
-                font-size: 24px;
-            }
-
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            table {
-                font-size: 13px;
-            }
-
-            th,
-            td {
-                padding: 12px 8px;
-            }
-
-            .modal {
-                width: 95%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .chart-bars {
-                padding: 30px 10px 20px;
-            }
-
-            .chart-bar {
-                width: 25px;
-            }
+            .sidebar { width: 240px; position: fixed; left: -240px; z-index: 1008; }
+            .sidebar.active { transform: translateX(240px); box-shadow: 2px 0 10px rgba(0,0,0,0.2); }
+            .close-menu { display: block; }
+            .mobile-menu-toggle { display: flex; }
+            .main-content { margin-left: 0; }
+            .top-nav { padding-left: 60px; }
+            .statistics-section, .create-campaign-section { left: 0; }
+            .welcome-stats { flex-direction: column; }
+            .quick-actions { grid-template-columns: 1fr; }
+            .profile-form-row { grid-template-columns: 1fr; }
+            .payment-methods { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
+    <script src="config.js"></script>
 </head>
-
 <body>
-    <button class="mobile-toggle" onclick="toggleSidebar()">
-        <i class="bi bi-list"></i>
-    </button>
+    <div class="dashboard">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
 
-    <div class="dashboard-container">
-        <!-- Sidebar -->
+        <!-- ===== SIDEBAR ===== -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo">ADSTERIC</div>
-            <ul class="nav-menu">
-                <li class="nav-item active" onclick="showPage('dashboard')">
-                    <i class="bi bi-speedometer2 nav-icon"></i>
-                    <span>Dashboard</span>
-                </li>
-                <li class="nav-item" onclick="showPage('campaigns')">
-                    <i class="bi bi-megaphone nav-icon"></i>
-                    <span>Campaigns</span>
-                </li>
-                <li class="nav-item" onclick="showPage('analytics')">
-                    <i class="bi bi-graph-up-arrow nav-icon"></i>
-                    <span>Analytics</span>
-                </li>
-                <li class="nav-item" onclick="showPage('faq')">
-                    <i class="bi bi-question-circle nav-icon"></i>
-                    <span>FAQ</span>
-                </li>
-                <li class="nav-item" onclick="showPage('support')">
-                    <i class="bi bi-chat-dots nav-icon"></i>
-                    <span>Support</span>
-                </li>
-            </ul>
-            <button class="logout-btn" onclick="logout()">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Logout</span>
-            </button>
+            <div class="sidebar-header">
+                <div class="logo"><i class="fa-solid fa-chart-line"></i><span>Adsteric</span></div>
+                <button class="close-menu" onclick="toggleSidebar()"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="active">
+                        <a href="#home" onclick="showSection('homeSection'); return false;">
+                            <i class="fa-solid fa-house"></i><span>Home</span>
+                        </a>
+                    </li>
+                    <div class="nav-divider"></div>
+                    <div class="nav-section-label">Advertising</div>
+                    <li>
+                        <a href="#campaigns" onclick="showSection('campaignsSection'); return false;">
+                            <i class="fa-solid fa-bullhorn"></i><span>Campaigns</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#create-campaign" onclick="showSection('createCampaignSection'); return false;">
+                            <i class="fa-solid fa-plus-circle"></i><span>Create Campaign</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#statistics" onclick="showSection('statisticsSection'); return false;">
+                            <i class="fa-solid fa-chart-bar"></i><span>Statistics</span>
+                        </a>
+                    </li>
+                    <div class="nav-divider"></div>
+                    <div class="nav-section-label">Finance</div>
+                    <li>
+                        <a href="#add-funds" onclick="showSection('paymentForm'); return false;">
+                            <i class="fa-solid fa-wallet"></i><span>Add Funds</span>
+                        </a>
+                    </li>
+                    <div class="nav-divider"></div>
+                    <div class="nav-section-label">Account</div>
+                    <li>
+                        <a href="#profile" onclick="showSection('profileSection'); return false;">
+                            <i class="fa-solid fa-user-circle"></i><span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#support" onclick="showSection('supportSection'); return false;">
+                            <i class="fa-solid fa-life-ring"></i><span>Support</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="logout-section">
+                <a href="#" class="logout-link" onclick="logout(); return false;">
+                    <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+                </a>
+            </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- ===== MAIN ===== -->
         <main class="main-content">
-            <!-- Dashboard Page -->
-            <!-- Replace the entire Dashboard Page section (starting from line ~600) with this: -->
-
-<!-- Dashboard Page -->
-<div id="dashboard" class="page active">
-    <div class="page-header">
-        <h1 class="page-title">Add Funds to Your Account</h1>
-        <p class="page-subtitle">Securely add funds to start your advertising campaigns</p>
-    </div>
-
-    <!-- Account Balance Card -->
-    <div style="max-width: 800px; margin: 0 auto 40px auto;">
-        <div class="card" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); color: white; padding: 40px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-size: 16px; opacity: 0.9; margin-bottom: 8px;">Current Balance</div>
-                    <div style="font-size: 48px; font-weight: 700;">$0.00</div>
+            <!-- Payment notification bar -->
+            <div id="paymentNotification" class="payment-notification hidden">
+                <div class="notification-content">
+                    <div class="notification-icon"><i class="fa-solid fa-circle-info"></i></div>
+                    <div class="notification-message" id="notificationMessage"></div>
                 </div>
-                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-wallet2" style="font-size: 40px;"></i>
-                </div>
+                <button class="notification-close" onclick="closeNotification()"><i class="fa-solid fa-times"></i></button>
             </div>
-        </div>
-    </div>
 
-    <!-- Add Funds Form -->
-    <div style="max-width: 800px; margin: 0 auto;">
-        <div class="card" style="padding: 40px;">
-            <h2 style="font-size: 24px; font-weight: 700; color: #1a202c; margin-bottom: 30px;">
-                <i class="bi bi-credit-card" style="color: #3dd5c3;"></i> Add Funds
-            </h2>
-            
-            <form onsubmit="processFunds(event)">
-                <div class="form-group" style="margin-bottom: 30px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-cash-coin"></i> Amount (USD)
-                    </label>
-                    <input 
-                        type="number" 
-                        class="form-input" 
-                        id="fundAmount" 
-                        placeholder="Enter amount" 
-                        min="10" 
-                        step="0.01" 
-                        style="padding: 18px 20px; font-size: 18px; font-weight: 600;"
-                        required
-                    >
-                    <p style="font-size: 14px; color: #718096; margin-top: 8px;">
-                        <i class="bi bi-info-circle"></i> Minimum deposit: $10.00
-                    </p>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 30px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-credit-card-2-front"></i> Payment Information
-                    </label>
-                    
-                    <div style="background: #f7fafc; padding: 24px; border: 2px solid #e2e8f0; border-radius: 12px;">
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                            <i class="bi bi-credit-card-fill" style="font-size: 32px; color: #3dd5c3;"></i>
-                            <div>
-                                <div style="font-size: 15px; font-weight: 600; color: #2d3748; margin-bottom: 4px;">
-                                    Accepted Cards
-                                </div>
-                                <div style="font-size: 13px; color: #718096;">
-                                    Visa, Mastercard, American Express
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="background: white; padding: 4px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;">
-                            <i class="bi bi-shield-check" style="color: #22543d;"></i>
-                            <span style="font-size: 13px; font-weight: 600; color: #22543d;">Secure Payment via Stripe</span>
-                        </div>
-                        
-                        <div class="form-group" style="margin-bottom: 20px;">
-                            <label class="form-label" style="font-size: 15px;">Card Number</label>
-                            <input 
-                                type="text" 
-                                class="form-input" 
-                                placeholder="1234 5678 9012 3456" 
-                                maxlength="19"
-                                style="padding: 16px; font-size: 16px;"
-                                required
-                            >
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
-                            <div class="form-group">
-                                <label class="form-label" style="font-size: 15px;">Expiry Date</label>
-                                <input 
-                                    type="text" 
-                                    class="form-input" 
-                                    placeholder="MM/YY" 
-                                    maxlength="5"
-                                    style="padding: 16px; font-size: 16px;"
-                                    required
-                                >
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" style="font-size: 15px;">CVC</label>
-                                <input 
-                                    type="text" 
-                                    class="form-input" 
-                                    placeholder="123" 
-                                    maxlength="4"
-                                    style="padding: 16px; font-size: 16px;"
-                                    required
-                                >
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" style="font-size: 15px;">Cardholder Name</label>
-                            <input 
-                                type="text" 
-                                class="form-input" 
-                                placeholder="Name on card"
-                                style="padding: 16px; font-size: 16px;"
-                                required
-                            >
-                        </div>
+            <!-- Top nav -->
+            <header class="top-nav">
+                <h1 id="pageTitle">Home</h1>
+                <div class="header-actions">
+                    <div class="balance">
+                        <span class="balance-label">Balance</span>
+                        <span class="balance-amount">$ 0.00</span>
                     </div>
+                    <button class="add-funds-button" onclick="showSection('paymentForm')">Add Funds</button>
                 </div>
+            </header>
 
-                <div style="background: #e6fffa; border: 2px solid #3dd5c3; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
-                    <div style="display: flex; gap: 12px;">
-                        <i class="bi bi-info-circle-fill" style="color: #3dd5c3; font-size: 24px;"></i>
-                        <div>
-                            <div style="font-size: 14px; font-weight: 600; color: #1a202c; margin-bottom: 4px;">
-                                Secure Transaction
+            <!-- Content area -->
+            <div class="content-area" id="contentArea">
+
+                <!-- ========== HOME SECTION ========== -->
+                <div class="home-section" id="homeSection">
+                    <div class="welcome-banner">
+                        <h2 id="welcomeName">Welcome back!</h2>
+                        <p>Your advertising dashboard overview</p>
+                        <div class="welcome-stats">
+                            <div class="welcome-stat">
+                                <div class="label">Balance</div>
+                                <div class="value" id="homeBalance">$0.00</div>
                             </div>
-                            <div style="font-size: 13px; color: #4a5568; line-height: 1.6;">
-                                Your payment information is encrypted and secure. Funds will be added to your account instantly upon successful payment.
+                            <div class="welcome-stat">
+                                <div class="label">Total Campaigns</div>
+                                <div class="value" id="homeActiveCampaigns">0</div>
+                            </div>
+                            <div class="welcome-stat">
+                                <div class="label">Total Spent</div>
+                                <div class="value" id="homeTotalSpent">$0.00</div>
+                            </div>
+                            <div class="welcome-stat">
+                                <div class="label">Package</div>
+                                <div class="value" id="homePackage">STANDARD</div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <button 
-                    type="submit" 
-                    class="btn btn-primary" 
-                    style="width: 100%; padding: 20px; font-size: 18px; font-weight: 700;"
-                >
-                    <i class="bi bi-lock-fill"></i> Process Secure Payment
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
-
-            <!-- Campaigns Page -->
-            <div id="campaigns" class="page">
-                <div class="page-header">
-                    <h1 class="page-title">Campaigns</h1>
-                    <p class="page-subtitle">Manage your advertising campaigns</p>
-                </div>
-
-                <button class="btn btn-primary" style="margin-bottom: 24px;" onclick="openModal('createCampaign')">
-                    <i class="bi bi-plus-circle"></i> Create Campaign
-                </button>
-
-                <div class="empty-state">
-                    <div class="empty-icon">
-                        <i class="bi bi-megaphone-fill"></i>
-                    </div>
-                    <h3 class="empty-title">No campaigns yet</h3>
-                    <p class="empty-text">Create your first campaign to start driving traffic</p>
-                    <button class="btn btn-primary" onclick="openModal('createCampaign')">
-                        <i class="bi bi-plus-circle"></i> Create Campaign
-                    </button>
-                </div>
-            </div>
-
-            <!-- Analytics Page -->
-            <!-- Replace the entire Analytics Page section (around line 1100) with this simplified version: -->
-
-<!-- Analytics Page -->
-<div id="analytics" class="page">
-    <div class="page-header">
-        <h1 class="page-title">Analytics Overview</h1>
-        <p class="page-subtitle">Track your campaign performance at a glance</p>
-    </div>
-
-    <!-- Key Metrics Summary -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px;">
-        <div class="card" style="background: linear-gradient(135deg, #3dd5c3, #4db8e8); color: white; padding: 32px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                <div>
-                    <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Total Revenue</div>
-                    <div style="font-size: 42px; font-weight: 700; margin-bottom: 8px;">$3,642</div>
-                    <div style="font-size: 13px; opacity: 0.8;">
-                        <i class="bi bi-arrow-up"></i> +15.3% from last month
-                    </div>
-                </div>
-                <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-currency-dollar" style="font-size: 28px;"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="padding: 32px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                <div>
-                    <div style="font-size: 14px; color: #718096; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Total Clicks</div>
-                    <div style="font-size: 42px; font-weight: 700; color: #1a202c; margin-bottom: 8px;">847</div>
-                    <div style="font-size: 13px; color: #22543d; background: #c6f6d5; padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
-                        <i class="bi bi-arrow-up"></i> +8.3%
-                    </div>
-                </div>
-                <div style="width: 60px; height: 60px; background: #fef5e7; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-cursor-fill" style="font-size: 28px; color: #f39c12;"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="padding: 32px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                <div>
-                    <div style="font-size: 14px; color: #718096; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Conversions</div>
-                    <div style="font-size: 42px; font-weight: 700; color: #1a202c; margin-bottom: 8px;">142</div>
-                    <div style="font-size: 13px; color: #22543d; background: #c6f6d5; padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
-                        <i class="bi bi-arrow-up"></i> +18.9%
-                    </div>
-                </div>
-                <div style="width: 60px; height: 60px; background: #fce4ec; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-check-circle-fill" style="font-size: 28px; color: #e91e63;"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="padding: 32px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                <div>
-                    <div style="font-size: 14px; color: #718096; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Conversion Rate</div>
-                    <div style="font-size: 42px; font-weight: 700; color: #1a202c; margin-bottom: 8px;">16.77%</div>
-                    <div style="font-size: 13px; color: #718096;">
-                        Industry avg: 5.2%
-                    </div>
-                </div>
-                <div style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-graph-up-arrow" style="font-size: 28px; color: #4caf50;"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Performance Chart -->
-    <div class="chart-container" style="margin-bottom: 40px;">
-        <div class="chart-header">
-            <h3 class="chart-title">Weekly Performance</h3>
-            <div style="display: flex; gap: 16px; font-size: 13px;">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <div style="width: 12px; height: 12px; background: #3dd5c3; border-radius: 3px;"></div>
-                    <span style="color: #718096;">Clicks</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <div style="width: 12px; height: 12px; background: #4db8e8; border-radius: 3px;"></div>
-                    <span style="color: #718096;">Conversions</span>
-                </div>
-            </div>
-        </div>
-        <div style="height: 280px; padding: 20px; position: relative;">
-            <!-- Grid lines -->
-            <div style="position: absolute; width: calc(100% - 40px); height: calc(100% - 60px); top: 20px; left: 20px;">
-                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 0;"></div>
-                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 25%;"></div>
-                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 50%;"></div>
-                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; top: 75%;"></div>
-                <div style="position: absolute; width: 100%; height: 1px; background: #e2e8f0; bottom: 0;"></div>
-            </div>
-            
-            <!-- Bars -->
-            <div style="display: flex; align-items: flex-end; justify-content: space-around; height: calc(100% - 40px); position: relative; z-index: 2;">
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 140px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 80px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Mon</span>
-                </div>
-
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 180px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 100px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Tue</span>
-                </div>
-
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 110px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 65px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Wed</span>
-                </div>
-
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 200px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 120px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Thu</span>
-                </div>
-
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 165px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 95px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Fri</span>
-                </div>
-
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 125px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 75px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Sat</span>
-                </div>
-
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 80px;">
-                    <div style="display: flex; gap: 4px; align-items: flex-end; margin-bottom: 12px;">
-                        <div style="width: 35px; background: linear-gradient(to top, #3dd5c3, #4db8e8); height: 95px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(61, 213, 195, 0.3);"></div>
-                        <div style="width: 20px; background: linear-gradient(to top, #4db8e8, #3dd5c3); height: 60px; border-radius: 6px 6px 0 0; box-shadow: 0 2px 8px rgba(77, 184, 232, 0.3); opacity: 0.8;"></div>
-                    </div>
-                    <span style="font-size: 12px; color: #718096; font-weight: 600;">Sun</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quick Stats Grid -->
-    <h3 style="font-size: 20px; font-weight: 700; color: #1a202c; margin-bottom: 16px;">
-        <i class="bi bi-speedometer2" style="color: #3dd5c3;"></i> Quick Stats
-    </h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
-        <div class="card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 50px; height: 50px; background: #e6fffa; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-eye-fill" style="font-size: 24px; color: #3dd5c3;"></i>
-                </div>
-                <div>
-                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">Impressions</div>
-                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">12,543</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 50px; height: 50px; background: #e8f5e9; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-percent" style="font-size: 24px; color: #4caf50;"></i>
-                </div>
-                <div>
-                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">Click Rate</div>
-                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">6.75%</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 50px; height: 50px; background: #f3e5f5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-cash-stack" style="font-size: 24px; color: #9c27b0;"></i>
-                </div>
-                <div>
-                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">Avg. CPC</div>
-                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">$0.43</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 50px; height: 50px; background: #fff3e0; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <i class="bi bi-trophy-fill" style="font-size: 24px; color: #ff9800;"></i>
-                </div>
-                <div>
-                    <div style="font-size: 12px; color: #718096; margin-bottom: 4px;">ROI</div>
-                    <div style="font-size: 24px; font-weight: 700; color: #1a202c;">900%</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>  
-
-            <!-- FAQ Page -->
-            <div id="faq" class="page">
-                <div class="page-header">
-                    <h1 class="page-title">Frequently Asked Questions</h1>
-                    <p class="page-subtitle">Find answers to common questions</p>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span><i class="bi bi-rocket-takeoff" style="margin-right: 10px; color: #3dd5c3;"></i>How do I
-                            create a campaign?</span>
-                        <i class="bi bi-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        To create a campaign, click on the "Create Campaign" button from the dashboard or campaigns
-                        page. Fill in the required details including campaign name, budget, target URL, and targeting
-                        options. Once submitted, your campaign will be reviewed and activated.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span><i class="bi bi-credit-card" style="margin-right: 10px; color: #3dd5c3;"></i>What payment
-                            methods do you accept?</span>
-                        <i class="bi bi-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        We accept all major credit cards (Visa, Mastercard, American Express) through our secure Stripe
-                        payment gateway. All transactions are encrypted and secure.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span><i class="bi bi-cash-stack" style="margin-right: 10px; color: #3dd5c3;"></i>How is my
-                            budget used?</span>
-                        <i class="bi bi-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Your campaign budget is used to pay for clicks or impressions based on your bidding strategy.
-                        You can set daily or total budgets, and campaigns will automatically pause when budgets are
-                        reached.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span><i class="bi bi-pause-circle" style="margin-right: 10px; color: #3dd5c3;"></i>Can I pause
-                            or edit my campaigns?</span>
-                        <i class="bi bi-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Yes! You can pause, resume, or edit your campaigns at any time from the Campaigns page. Changes
-                        to targeting and budgets take effect immediately.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span><i class="bi bi-arrow-counterclockwise"
-                                style="margin-right: 10px; color: #3dd5c3;"></i>How do I get a refund?</span>
-                        <i class="bi bi-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Unused funds in your account balance can be refunded at any time. Please contact our support
-                        team with your refund request, and we'll process it within 5-7 business days.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span><i class="bi bi-headset" style="margin-right: 10px; color: #3dd5c3;"></i>What kind of
-                            support do you offer?</span>
-                        <i class="bi bi-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        We offer 24/7 email support and live chat during business hours. Our team typically responds
-                        within 2-4 hours. For urgent issues, please use the priority support option.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Support Page -->
-            <div id="support" class="page">
-                <div class="page-header">
-                    <h1 class="page-title">Support</h1>
-                    <p class="page-subtitle">Get help from our team</p>
-                </div>
-
-                <div class="card" style="max-width: 600px;">
-                    <form onsubmit="submitSupport(event)">
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="bi bi-envelope"></i> Subject
-                            </label>
-                            <input type="text" class="form-input" placeholder="Brief description of your issue"
-                                required>
+                    <div class="quick-actions">
+                        <div class="action-card" onclick="showSection('createCampaignSection')">
+                            <div class="action-card-icon purple"><i class="fa-solid fa-rocket"></i></div>
+                            <h3>Create Campaign</h3>
+                            <p>Launch a new advertising campaign with advanced targeting</p>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="bi bi-flag"></i> Priority
-                            </label>
-                            <select class="form-select" required>
-                                <option value="">Select priority</option>
-                                <option value="low">Low</option>
-                                <option value="medium">Medium</option>
-                                <option value="high">High</option>
-                                <option value="urgent">Urgent</option>
-                            </select>
+                        <div class="action-card" onclick="showSection('paymentForm')">
+                            <div class="action-card-icon green"><i class="fa-solid fa-wallet"></i></div>
+                            <h3>Add Funds</h3>
+                            <p>Top up your balance to keep campaigns running</p>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="bi bi-folder"></i> Category
-                            </label>
-                            <select class="form-select" required>
-                                <option value="">Select category</option>
-                                <option value="billing">Billing</option>
-                                <option value="technical">Technical Issue</option>
-                                <option value="campaign">Campaign Help</option>
-                                <option value="account">Account</option>
-                                <option value="other">Other</option>
-                            </select>
+                        <div class="action-card" onclick="showSection('statisticsSection')">
+                            <div class="action-card-icon blue"><i class="fa-solid fa-chart-line"></i></div>
+                            <h3>View Statistics</h3>
+                            <p>Analyze performance with detailed reporting</p>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="bi bi-chat-left-text"></i> Message
-                            </label>
-                            <textarea class="form-textarea" placeholder="Describe your issue in detail..."
-                                required></textarea>
+                        <div class="action-card" onclick="showSection('profileSection')">
+                            <div class="action-card-icon orange"><i class="fa-solid fa-user-gear"></i></div>
+                            <h3>Edit Profile</h3>
+                            <p>Manage your account settings and details</p>
                         </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3><i class="fa-solid fa-clock-rotate-left" style="color:#6d28d9;margin-right:0.5rem;"></i>Recent Campaigns</h3>
+                        <div id="recentCampaignsList">
+                            <p style="color:#9ca3af;padding:1rem 0;text-align:center;">Loading...</p>
+                        </div>
+                    </div>
+                </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-send"></i> Submit Ticket
+                <!-- ========== CAMPAIGNS SECTION ========== -->
+                <div id="campaignsSection" class="campaigns-section hidden">
+                    <div class="campaigns-header">
+                        <h2>Your Campaigns</h2>
+                        <button class="btn-primary" onclick="showSection('createCampaignSection')">
+                            <i class="fa-solid fa-plus"></i> Create Campaign
                         </button>
-                    </form>
+                    </div>
+                    <div id="campaignsContainer" class="campaigns-container">
+                        <div class="empty-campaigns">
+                            <i class="fa-solid fa-spinner fa-spin" style="font-size:2rem;color:#6d28d9;"></i>
+                            <p style="margin-top:1rem;">Loading campaigns...</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- ========== ADD FUNDS SECTION ========== -->
+                <div class="payment-form hidden" id="paymentForm">
+                    <div class="payment-form-header"><h2>Add Funds</h2></div>
+                    <form class="payment-form-content" id="paymentFormContent" autocomplete="off">
+                        <div class="payment-methods">
+                            <button type="button" class="payment-method active" onclick="selectPaymentMethod('stripe')" data-method="stripe">
+                                <i class="fa-brands fa-stripe"></i><span></span>
+                            </button>
+                            <button type="button" class="payment-method" onclick="selectPaymentMethod('paypal')" data-method="paypal">
+                                <i class="fa-brands fa-paypal"></i><span></span>
+                            </button>
+                        </div>
+                        <div class="form-section stripe-section">
+                            <div class="form-group">
+                                <label for="cardholderName">Cardholder Name</label>
+                                <input type="text" id="cardholderName" name="ccname" autocomplete="off" placeholder="Full name on card" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" name="ccnumber" autocomplete="off" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiry Date</label>
+                                    <input type="text" id="expiryDate" name="ccexp" autocomplete="off" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvc">CVC</label>
+                                    <input type="text" id="cvc" name="cccsc" autocomplete="off" placeholder="123" maxlength="4" required inputmode="numeric">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-section paypal-section hidden">
+                            <div class="form-group">
+                                <label for="paypalEmail">PayPal Email</label>
+                                <input type="email" id="paypalEmail" name="paypalEmail" placeholder="your@email.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount (USD)</label>
+                            <input type="number" id="amount" name="amount" placeholder="Enter amount" min="1" step="0.01" required>
+                        </div>
+                        <button type="submit" class="submit-button">
+                            <span class="button-text">Submit for Approval</span>
+                            <div class="loader"><div class="loader-spinner"></div></div>
+                        </button>
+                        <div id="paymentReviewNotification" class="payment-review-notification hidden"></div>
+                    </form>
+                    <div class="payment-history-section" style="padding: 0 2rem 2rem;">
+                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin-bottom:1rem;">Payment History</h3>
+                        <div id="paymentHistoryContainer">
+                            <p style="color:#9ca3af;text-align:center;padding:1rem;">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== PROFILE SECTION ========== -->
+                <div class="profile-section hidden" id="profileSection">
+                    <div id="profileAlert"></div>
+                    <div class="profile-card">
+                        <h3><i class="fa-solid fa-user"></i> Personal Information</h3>
+                        <form id="profileForm">
+                            <div class="profile-form-row">
+                                <div class="profile-form-group">
+                                    <label for="profileFullName">Full Name</label>
+                                    <input type="text" id="profileFullName" placeholder="Your full name">
+                                </div>
+                                <div class="profile-form-group">
+                                    <label for="profileUsername">Username</label>
+                                    <input type="text" id="profileUsername" placeholder="Choose a username">
+                                </div>
+                            </div>
+                            <div class="profile-form-group">
+                                <label for="profileEmail">Email Address</label>
+                                <input type="email" id="profileEmail" placeholder="your@email.com">
+                            </div>
+                            <div class="profile-form-row">
+                                <div class="profile-form-group">
+                                    <label for="profilePhone">Phone Number</label>
+                                    <input type="tel" id="profilePhone" placeholder="+1 (555) 000-0000">
+                                </div>
+                                <div class="profile-form-group">
+                                    <label for="profileCompany">Company</label>
+                                    <input type="text" id="profileCompany" placeholder="Your company name">
+                                </div>
+                            </div>
+                            <div class="profile-form-group">
+                                <label for="profileCountry">Country</label>
+                                <input type="text" id="profileCountry" placeholder="Your country">
+                            </div>
+                            <button type="submit" class="profile-save-btn" id="profileSaveBtn">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="profile-card">
+                        <h3><i class="fa-solid fa-lock"></i> Change Password</h3>
+                        <form id="passwordForm">
+                            <div class="profile-form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                            </div>
+                            <div class="profile-form-row">
+                                <div class="profile-form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" placeholder="Min 6 characters" minlength="6" required>
+                                </div>
+                                <div class="profile-form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" placeholder="Repeat new password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="profile-save-btn" id="passwordSaveBtn">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ========== SUPPORT SECTION ========== -->
+                <div class="support-section hidden" id="supportSection">
+                    <div class="support-card">
+                        <h3><i class="fa-solid fa-headset" style="color:#6d28d9;margin-right:0.5rem;"></i>Contact Support</h3>
+                        <p>Our support team is available 24/7 to help you with any questions or issues.</p>
+                        <div class="support-contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div><strong>Email</strong><br><a href="mailto:support@adsteric.com">support@adsteric.com</a></div>
+                        </div>
+                        <div class="support-contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div><strong>Business Inquiries</strong><br><a href="mailto:info@adsteric.com">info@adsteric.com</a></div>
+                        </div>
+                    </div>
+                    <div class="support-card">
+                        <h3><i class="fa-solid fa-circle-question" style="color:#6d28d9;margin-right:0.5rem;"></i>FAQ</h3>
+                        <details style="margin-bottom:0.75rem;">
+                            <summary style="cursor:pointer;font-weight:500;color:#374151;padding:0.5rem 0;">How long does campaign activation take?</summary>
+                            <p style="padding:0.5rem 0 0.5rem 1rem;color:#6b7280;">Campaigns are automatically activated 1.5 hours after creation.</p>
+                        </details>
+                        <details style="margin-bottom:0.75rem;">
+                            <summary style="cursor:pointer;font-weight:500;color:#374151;padding:0.5rem 0;">How do payment approvals work?</summary>
+                            <p style="padding:0.5rem 0 0.5rem 1rem;color:#6b7280;">Payment requests are reviewed by our team and typically processed within 24 hours.</p>
+                        </details>
+                        <details style="margin-bottom:0.75rem;">
+                            <summary style="cursor:pointer;font-weight:500;color:#374151;padding:0.5rem 0;">What are the package tiers?</summary>
+                            <p style="padding:0.5rem 0 0.5rem 1rem;color:#6b7280;">Standard ($0-300), Bronze ($301-1000), Silver ($1001-3000), Gold ($3001-8000), Platinum ($8001-25000), Diamond ($25001+). Higher tiers unlock better campaign performance.</p>
+                        </details>
+                        <details style="margin-bottom:0.75rem;">
+                            <summary style="cursor:pointer;font-weight:500;color:#374151;padding:0.5rem 0;">Can I change my email address?</summary>
+                            <p style="padding:0.5rem 0 0.5rem 1rem;color:#6b7280;">Yes, you can update your email in the Profile section.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- ========== STATISTICS SECTION ========== -->
+                <div id="statisticsSection" class="statistics-section hidden">
+                    <div class="stats-page-header"><h1>Statistics &amp; Performance</h1></div>
+                    <div class="package-info-banner" id="packageBanner">
+                        <div class="package-info-content">
+                            <div class="package-badge"><i class="fa-solid fa-crown"></i><span id="currentPackage">STANDARD</span></div>
+                            <div class="package-stats">
+                                <div class="package-stat"><span class="stat-label">Total Spent:</span><span class="stat-value" id="totalSpent">$0.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-table-wrapper">
+                        <div class="table-scroll-container">
+                            <table class="stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th><th>CAMPAIGN</th><th>CLICKS</th>
+                                        <th class="col-divider highlight-col">APPROVED</th><th class="highlight-col">HOLD</th><th class="highlight-col">DECLINED</th><th class="highlight-col">TOTAL</th>
+                                        <th class="col-divider">CTR</th><th>EPC</th>
+                                        <th class="col-divider">APPROVED</th><th>HOLD</th><th>DECLINED</th><th>TOTAL</th>
+                                    </tr>
+                                    <tr class="header-group">
+                                        <th colspan="3"></th>
+                                        <th colspan="4" class="col-divider">CONVERSIONS</th>
+                                        <th colspan="2"></th>
+                                        <th colspan="4" class="col-divider">PAYOUTS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="statsTableBody">
+                                    <tr><td colspan="13" style="text-align:center;padding:3rem;">
+                                        <div class="stats-loading"><i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;color:#6d28d9;"></i><p style="margin-top:0.5rem;">Loading statistics...</p></div>
+                                    </td></tr>
+                                </tbody>
+                                <tfoot id="statsTableFoot">
+                                    <tr>
+                                        <td colspan="2">Total</td><td>0</td>
+                                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                                        <td>0%</td><td>$0.00</td>
+                                        <td>$0.00</td><td>$0.00</td><td>$0.00</td><td>$0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== CREATE CAMPAIGN SECTION ========== -->
+                <div id="createCampaignSection" class="create-campaign-section hidden">
+                    <div class="create-campaign-header">
+                        <div>
+                            <h1>Create New Campaign</h1>
+                            <p class="header-subtitle">Configure your advertising campaign with advanced targeting</p>
+                        </div>
+                        <button type="button" style="background:none;border:none;font-size:1.25rem;cursor:pointer;color:#6b7280;" onclick="showSection('campaignsSection')"><i class="fa-solid fa-times"></i></button>
+                    </div>
+                    <div id="campaignAlert" class="alert hidden"></div>
+                    <div class="campaign-form-wrapper">
+                        <form id="createCampaignForm">
+                            <div class="form-sections-grid">
+                                <!-- Basic Settings -->
+                                <div class="form-section-card">
+                                    <h3 class="section-title"><i class="fa-solid fa-gear"></i> Basic Settings</h3>
+                                    <div class="form-field">
+                                        <label class="field-label">Campaign Name <span class="required">*</span></label>
+                                        <input type="text" id="campaignName" class="field-input" placeholder="e.g., Summer Sale 2024" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="field-label">Advertising Format <span class="required">*</span></label>
+                                        <div class="radio-grid">
+                                            <label class="radio-card"><input type="radio" name="adFormat" value="push" checked><div class="radio-content"><i class="fa-solid fa-bell"></i><span>Push Notifications</span></div></label>
+                                            <label class="radio-card"><input type="radio" name="adFormat" value="inpage"><div class="radio-content"><i class="fa-solid fa-window-maximize"></i><span>InPage</span></div></label>
+                                            <label class="radio-card"><input type="radio" name="adFormat" value="popunder"><div class="radio-content"><i class="fa-solid fa-up-right-from-square"></i><span>Popunder</span></div></label>
+                                            <label class="radio-card"><input type="radio" name="adFormat" value="native"><div class="radio-content"><i class="fa-solid fa-newspaper"></i><span>NativeAds</span></div></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="field-label">Pricing Model <span class="required">*</span></label>
+                                        <div class="radio-grid-two">
+                                            <label class="radio-card"><input type="radio" name="pricingModel" value="cpc" checked><div class="radio-content"><i class="fa-solid fa-mouse-pointer"></i><span>CPC</span></div></label>
+                                            <label class="radio-card"><input type="radio" name="pricingModel" value="cpm"><div class="radio-content"><i class="fa-solid fa-eye"></i><span>CPM</span></div></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="field-label">Target URL <span class="required">*</span></label>
+                                        <input type="url" id="targetUrl" class="field-input" placeholder="https://example.com/landing" required>
+                                    </div>
+                                </div>
+                                <!-- Targeting -->
+                                <div class="form-section-card">
+                                    <h3 class="section-title"><i class="fa-solid fa-bullseye"></i> Targeting</h3>
+                                    <div class="form-field">
+                                        <label class="field-label">Target Countries <span class="required">*</span></label>
+                                        <div class="country-selector">
+                                            <button type="button" class="country-selector-btn" onclick="toggleCountryDropdown()">
+                                                <span id="selectedCountriesText">Select countries...</span>
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </button>
+                                            <div id="countryDropdown" class="country-dropdown hidden">
+                                                <div class="country-search">
+                                                    <i class="fa-solid fa-search" style="color:#9ca3af;"></i>
+                                                    <input type="text" placeholder="Search countries..." onkeyup="filterCountries(this.value)">
+                                                </div>
+                                                <div class="country-list" id="countryList">
+                                                    <label class="country-item"><input type="checkbox" value="US" onchange="updateCountrySelection()"><span>United States</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="GB" onchange="updateCountrySelection()"><span>United Kingdom</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="CA" onchange="updateCountrySelection()"><span>Canada</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="AU" onchange="updateCountrySelection()"><span>Australia</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="DE" onchange="updateCountrySelection()"><span>Germany</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="FR" onchange="updateCountrySelection()"><span>France</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="IT" onchange="updateCountrySelection()"><span>Italy</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="ES" onchange="updateCountrySelection()"><span>Spain</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="JP" onchange="updateCountrySelection()"><span>Japan</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="IN" onchange="updateCountrySelection()"><span>India</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="BR" onchange="updateCountrySelection()"><span>Brazil</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="MX" onchange="updateCountrySelection()"><span>Mexico</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="NL" onchange="updateCountrySelection()"><span>Netherlands</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="SE" onchange="updateCountrySelection()"><span>Sweden</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="PL" onchange="updateCountrySelection()"><span>Poland</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="KR" onchange="updateCountrySelection()"><span>South Korea</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="RU" onchange="updateCountrySelection()"><span>Russia</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="TR" onchange="updateCountrySelection()"><span>Turkey</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="ZA" onchange="updateCountrySelection()"><span>South Africa</span></label>
+                                                    <label class="country-item"><input type="checkbox" value="NG" onchange="updateCountrySelection()"><span>Nigeria</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="selectedCountriesTags" class="selected-tags"></div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="field-label">Device</label>
+                                        <select id="deviceType" class="field-select">
+                                            <option value="all">All Devices</option>
+                                            <option value="desktop">Desktop</option>
+                                            <option value="mobile">Mobile</option>
+                                            <option value="tablet">Tablet</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Budget & Schedule -->
+                            <div class="form-section-card budget-section">
+                                <h3 class="section-title"><i class="fa-solid fa-wallet"></i> Budget &amp; Schedule</h3>
+                                <div class="form-row-three">
+                                    <div class="form-field">
+                                        <label class="field-label">Daily Budget <span class="required">*</span></label>
+                                        <select id="dailyBudget" class="field-select" required onchange="calculateBudget()">
+                                            <option value="">Select daily budget</option>
+                                            <option value="60">$60/day</option>
+                                            <option value="120">$120/day</option>
+                                            <option value="200">$200/day</option>
+                                            <option value="320">$320/day</option>
+                                            <option value="540">$540/day</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="field-label">Duration <span class="required">*</span></label>
+                                        <select id="campaignDuration" class="field-select" required onchange="calculateBudget()">
+                                            <option value="">Select duration</option>
+                                            <option value="7">1 Week</option>
+                                            <option value="14">2 Weeks</option>
+                                            <option value="30">1 Month</option>
+                                            <option value="60">2 Months</option>
+                                            <option value="90">3 Months</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="field-label">Campaign Group</label>
+                                        <select id="campaignGroup" class="field-select">
+                                            <option value="none">No Group</option>
+                                            <option value="seasonal">Seasonal</option>
+                                            <option value="product">Product Launch</option>
+                                            <option value="brand">Brand Awareness</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="budget-summary">
+                                    <div class="summary-row"><span>Your Balance:</span><strong id="userBalance">$0.00</strong></div>
+                                    <div class="summary-row"><span>Daily Budget:</span><strong id="displayDailyBudget">$0.00</strong></div>
+                                    <div class="summary-row"><span>Duration:</span><strong id="displayDuration">0 days</strong></div>
+                                    <div class="summary-row total"><span>Total Cost:</span><strong id="displayTotalBudget">$0.00</strong></div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-cancel" onclick="showSection('campaignsSection')"><i class="fa-solid fa-times"></i> Cancel</button>
+                                <button type="submit" class="btn-submit" id="submitBtn"><i class="fa-solid fa-rocket"></i> Create Campaign</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div><!-- end content-area -->
         </main>
     </div>
 
-
-    <!-- Create Campaign Modal -->
-    <!-- Replace the Create Campaign Modal section (around line 1800-1850) with this: -->
-
-    <!-- Create Campaign Modal -->
-    <!-- Replace the Create Campaign Modal section (around line 1800-1850) with this: -->
-
-<!-- Create Campaign Modal -->
-<div id="createCampaignModal" class="modal-overlay">
-    <div class="modal" style="max-width: 700px; max-height: 95vh;">
-        <div class="modal-header" style="padding: 30px;">
-            <h2 class="modal-title" style="font-size: 28px;">Create New Campaign</h2>
-            <button class="modal-close" onclick="closeModal('createCampaign')">
-                <i class="bi bi-x"></i>
-            </button>
-        </div>
-        <div class="modal-body" style="padding: 30px 40px 40px 40px;">
-            <form onsubmit="createCampaign(event)">
-                <div class="form-group" style="margin-bottom: 28px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-tag"></i> Campaign Name
-                    </label>
-                    <input type="text" class="form-input" name="campaignName" placeholder="Enter campaign name" style="padding: 16px 20px; font-size: 16px;" required>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 28px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-link-45deg"></i> Target URL
-                    </label>
-                    <input type="url" class="form-input" name="targetUrl" placeholder="https://your-website.com" style="padding: 16px 20px; font-size: 16px;" required>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 28px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-calendar-day"></i> Budget Per Day
-                    </label>
-                    <select class="form-select" name="dailyBudget" style="padding: 16px 20px; font-size: 16px; height: auto;" required>
-                        <option value="">Select daily budget</option>
-                        <option value="60">$60 per day</option>
-                        <option value="120">$120 per day</option>
-                        <option value="200">$200 per day</option>
-                        <option value="320">$320 per day</option>
-                        <option value="540">$540 per day</option>
-                    </select>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 28px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-diagram-3"></i> Campaign Type
-                    </label>
-                    <select class="form-select" name="campaignType" style="padding: 16px 20px; font-size: 16px; height: auto;" required>
-                        <option value="">Select type</option>
-                        <option value="cpc">Cost Per Click (CPC)</option>
-                        <option value="cpm">Cost Per Mille (CPM)</option>
-                        <option value="cpa">Cost Per Action (CPA)</option>
-                    </select>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 32px;">
-                    <label class="form-label" style="font-size: 16px; margin-bottom: 12px;">
-                        <i class="bi bi-globe"></i> Target Audience
-                    </label>
-                    <select class="form-select" name="targetAudience" style="padding: 16px 20px; font-size: 16px; height: auto;" required>
-                        <option value="">Select audience</option>
-                        <option value="global">Global</option>
-                        <option value="us">United States</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="eu">European Union</option>
-                        <option value="asia">Asia Pacific</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 18px 24px; font-size: 17px; font-weight: 700;">
-                    <i class="bi bi-plus-circle"></i> Create Campaign
-                </button>
-            </form>
+    <!-- LOGOUT MODAL -->
+    <div id="logoutModal" class="logout-modal">
+        <div class="logout-modal-content">
+            <div class="logout-modal-header">
+                <div class="logout-modal-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+                <h3 class="logout-modal-title">Confirm Logout</h3>
+            </div>
+            <p class="logout-modal-message">Are you sure you want to logout? You will need to sign in again.</p>
+            <div class="logout-modal-actions">
+                <button class="logout-modal-btn logout-modal-btn-cancel" onclick="closeLogoutModal()">Cancel</button>
+                <button class="logout-modal-btn logout-modal-btn-confirm" onclick="confirmLogout()">Logout</button>
+            </div>
         </div>
     </div>
-</div>
-    <script src="config.js"></script>
 
-    <script>
-        // Navigation
-        function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    
-    document.getElementById(pageId).classList.add('active');
-    event.target.closest('.nav-item').classList.add('active');
-    
-    // Load campaigns only when the campaigns page is shown
-    if (pageId === 'campaigns') {
-        loadCampaigns();
-    }
-    
-    if (window.innerWidth <= 768) {
-        document.getElementById('sidebar').classList.remove('active');
-    }
+<script>
+// =====================================================
+//  DASHBOARD JAVASCRIPT
+// =====================================================
+const API_URL = config.API_URL;
+let currentPaymentStatus = null;
+let lastPaymentId = null;
+let paymentCheckInterval = null;
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuth();
+    loadUserData();
+    loadCampaigns();
+    setupPaymentForm();
+    checkPaymentStatus();
+    loadPaymentHistory();
+    setInterval(refreshBalance, 30000);
+
+    // Hash navigation
+    window.addEventListener('hashchange', handleHash);
+    if (window.location.hash) handleHash();
+});
+
+function handleHash() {
+    const hash = window.location.hash.substring(1);
+    const map = {
+        'home': 'homeSection',
+        'campaigns': 'campaignsSection',
+        'create-campaign': 'createCampaignSection',
+        'statistics': 'statisticsSection',
+        'add-funds': 'paymentForm',
+        'profile': 'profileSection',
+        'support': 'supportSection'
+    };
+    if (map[hash]) showSection(map[hash]);
 }
 
-        // Sidebar Toggle
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-
-        // Modal Controls
-            // function openModal(modalType) {
-            //     const modalId = modalType === 'addFunds' ? 'addFundsModal' : 'createCampaignModal';
-            //     document.getElementById(modalId).classList.add('active');
-            // }
-
-
-        // Close modal on overlay click
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    overlay.classList.remove('active');
-                }
-            });
-        });
-
-        // FAQ Toggle
-        function toggleFaq(element) {
-            const faqItem = element.parentElement;
-            faqItem.classList.toggle('active');
-        }
-
-        // Form Submissions
-        // Update the processFunds function - remove the closeModal call:
-
-function processFunds(event) {
-    event.preventDefault();
-    const amount = document.getElementById('fundAmount').value;
-    
-    showNotification(`Processing payment of $${amount}...`, 'info');
-    
-    setTimeout(() => {
-        showNotification(`Successfully added $${amount} to your account! This will be connected to Stripe in the backend.`, 'success');
-        loadUserBalance();
-        event.target.reset();
-    }, 1500);
-}
-async function displayBalanceInModal() {
-    try {
-        const response = await fetch(`${API_URL}/auth/me`, {
-            headers: getAuthHeaders()
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            const balance = data.user?.balance || 0;
-            
-            // Add balance display to modal if it doesn't exist
-            const modalBody = document.querySelector('#createCampaignModal .modal-body');
-            let balanceDisplay = modalBody.querySelector('.balance-display');
-            
-            if (!balanceDisplay) {
-                balanceDisplay = document.createElement('div');
-                balanceDisplay.className = 'balance-display';
-                balanceDisplay.style.cssText = `
-                    background: linear-gradient(135deg, #3dd5c3, #4db8e8);
-                    color: white;
-                    padding: 16px 20px;
-                    border-radius: 8px;
-                    margin-bottom: 28px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                `;
-                
-                // Insert at the beginning of the form
-                const form = modalBody.querySelector('form');
-                form.insertBefore(balanceDisplay, form.firstChild);
-            }
-            
-            balanceDisplay.innerHTML = `
-                <div>
-                    <div style="font-size: 13px; opacity: 0.9; margin-bottom: 4px;">Available Balance</div>
-                    <div style="font-size: 24px; font-weight: 700;">$${balance.toFixed(2)}</div>
-                </div>
-                <i class="bi bi-wallet2" style="font-size: 32px;"></i>
-            `;
-        }
-    } catch (error) {
-        console.error('Error loading balance for modal:', error);
-    }
-}
-
-// Remove or comment out the openModal function for 'addFunds' since it's no longer needed
-
-        function createCampaign(event) {
-            event.preventDefault();
-            alert('Campaign created successfully! This will be saved to MongoDB.');
-            closeModal('createCampaign');
-        }
-
-        function submitSupport(event) {
-            event.preventDefault();
-            alert('Support ticket submitted successfully! Our team will respond within 24 hours.');
-            event.target.reset();
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                alert('Logging out...');
-                // Redirect to login page
-            }
-        }
-
-        // Card number formatting
-        document.addEventListener('DOMContentLoaded', () => {
-            const cardInput = document.querySelector('input[placeholder="1234 5678 9012 3456"]');
-            if (cardInput) {
-                cardInput.addEventListener('input', (e) => {
-                    let value = e.target.value.replace(/\s/g, '');
-                    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-                    e.target.value = formattedValue;
-                });
-            }
-
-            const expiryInput = document.querySelector('input[placeholder="MM/YY"]');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', (e) => {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length >= 2) {
-                        value = value.slice(0, 2) + '/' + value.slice(2, 4);
-                    }
-                    e.target.value = value;
-                });
-            }
-        });
-        // API Configuration
-        const API_URL = config.API_URL;
-
-        // Check authentication on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Dashboard loaded'); // DEBUG
-
-            checkAuth();
-            loadUserBalance();  // ADD THIS LINE
-
-
-        });
-
-        function checkAuth() {
-            const token = localStorage.getItem('authToken');
-            if (!token) {
-                window.location.href = '/login.html';
-                return;
-            }
-        }
-
-        function getAuthHeaders() {
-            return {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            };
-        }
-
-        // Load campaigns
-       async function loadCampaigns() {
-    try {
-        const response = await fetch(`${API_URL}/campaigns`, {
-            headers: getAuthHeaders()
-        });
-
-        if (response.status === 401) {
-            localStorage.removeItem('authToken');
-            window.location.href = '/login.html';
-            return;
-        }
-
-        if (!response.ok) throw new Error('Failed to load campaigns');
-
-        const data = await response.json();
-        displayCampaigns(data.campaigns);
-        // REMOVED: updateCampaignStats(data.campaigns);
-
-    } catch (error) {
-        console.error('Load campaigns error:', error);
-        showNotification('Failed to load campaigns', 'error');
-    }
-}
-function openModal(modalType) {
-    const modalId = 'createCampaignModal';
-    const modal = document.getElementById(modalId);
-    modal.classList.add('active');
-    
-    // Show current balance in modal
-    displayBalanceInModal();
-}
-function closeModal(modalType) {
-    const modalId = 'createCampaignModal';
-    document.getElementById(modalId).classList.remove('active');
-}
-
-
-
-        // Display campaigns in the table
-        // Replace the displayCampaigns function (around line 2000) with this updated version:
-
-        // Replace the displayCampaigns function (around line 2000) with this updated version:
-
-        function displayCampaigns(campaigns) {
-    const campaignsPage = document.getElementById('campaigns');
-    const emptyState = campaignsPage.querySelector('.empty-state');
-
-    if (campaigns.length === 0) {
-        if (emptyState) emptyState.style.display = 'block';
+// ==================== AUTH ====================
+function checkAuth() {
+    if (!localStorage.getItem('authToken')) {
+        window.location.href = '/login.html';
         return;
     }
-
-    if (emptyState) emptyState.style.display = 'none';
-
-    const tableHTML = `
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Campaign Name</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Daily Budget</th>
-                        <th>Spent</th>
-                        <th>Clicks</th>
-                        <th>Conversions</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${campaigns.map(campaign => `
-                        <tr>
-                            <td>
-                                <div style="font-weight: 600; color: #2d3748;">${campaign.campaignName}</div>
-                                <div style="font-size: 12px; color: #718096;">${campaign.targetUrl}</div>
-                            </td>
-                            <td style="text-transform: uppercase; font-weight: 600; color: #3dd5c3;">${campaign.campaignType}</td>
-                            <td>
-                                <span class="status-badge ${getStatusClass(campaign.status)}">
-                                    ${campaign.status}
-                                </span>
-                            </td>
-                            <td style="font-weight: 600;">$${campaign.dailyBudget.toFixed(2)}/day</td>
-                            <td style="font-weight: 600;">$${campaign.statistics.spent.toFixed(2)}</td>
-                            <td>${campaign.statistics.clicks}</td>
-                            <td>${campaign.statistics.conversions}</td>
-                            <td>
-                                <div style="display: flex; gap: 8px;">
-                                    ${campaign.status === 'active' ? 
-                                        `<button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="pauseCampaign('${campaign._id}')">
-                                            <i class="bi bi-pause"></i>
-                                        </button>` :
-                                        campaign.status === 'paused' ?
-                                        `<button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;" onclick="activateCampaign('${campaign._id}')">
-                                            <i class="bi bi-play"></i>
-                                        </button>` : ''
-                                    }
-                                    ${campaign.status !== 'active' ?
-                                        `<button class="btn" style="padding: 6px 12px; font-size: 13px; background: #fed7d7; color: #742a2a; border: none;" onclick="deleteCampaign('${campaign._id}')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>` : ''
-                                    }
-                                </div>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        </div>
-    `;
-
-    const existingTable = campaignsPage.querySelector('.table-container');
-    if (existingTable) {
-        existingTable.remove();
-    }
-
-    const createButton = campaignsPage.querySelector('.btn-primary');
-    createButton.insertAdjacentHTML('afterend', tableHTML);
 }
-        function getStatusClass(status) {
-            const classes = {
-                'active': 'status-active',
-                'paused': 'status-paused',
-                'pending': 'status-pending',
-                'completed': 'status-active',
-                'rejected': 'status-paused'
-            };
-            return classes[status] || 'status-pending';
-        }
 
-        // Update campaign statistics on dashboard
-      
-
-        // Load dashboard stats
-        async function loadDashboardStats() {
-               console.log('Dashboard stats loading skipped');
-
-        }
-
-        // Create campaign - Updated
-        // Replace the createCampaign function (around line 2100) with this:
-
-       async function createCampaign(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const dailyBudget = parseFloat(form.dailyBudget.value);
-    
-    const formData = {
-        campaignName: form.campaignName.value.trim(),
-        targetUrl: form.targetUrl.value.trim(),
-        dailyBudget: dailyBudget,
-        totalBudget: dailyBudget * 30,
-        campaignType: form.campaignType.value,
-        targetAudience: form.targetAudience.value,
-        description: `Campaign for ${form.campaignName.value.trim()}`
+function getAuthHeaders() {
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('authToken')
     };
+}
 
-    // Show loading state
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.innerHTML;
-    submitButton.innerHTML = '<i class="bi bi-hourglass-split"></i> Creating Campaign...';
-    submitButton.disabled = true;
+function logout() {
+    document.getElementById('logoutModal').classList.add('active');
+}
 
-    try {
-        const response = await fetch(`${API_URL}/campaigns`, {
-            method: 'POST',
-            headers: getAuthHeaders(),
-            body: JSON.stringify(formData)
-        });
+function closeLogoutModal() {
+    document.getElementById('logoutModal').classList.remove('active');
+}
 
-        const data = await response.json();
+function confirmLogout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userBalance');
+    localStorage.removeItem('pendingPaymentId');
+    localStorage.removeItem('pendingPaymentAmount');
+    window.location.href = '/login.html';
+}
 
-        if (!response.ok) {
-            // Handle insufficient balance error specially
-            if (response.status === 400 && data.currentBalance !== undefined) {
-                const shortage = data.requiredAmount - data.currentBalance;
-                showNotification(
-                    `Insuffiecient balance.
+// ==================== NAVIGATION ====================
+function showSection(sectionId) {
+    var allSections = ['homeSection', 'campaignsSection', 'paymentForm', 'statisticsSection', 'createCampaignSection', 'profileSection', 'supportSection'];
+    allSections.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
+    var target = document.getElementById(sectionId);
+    if (target) target.classList.remove('hidden');
 
-Funds are deducted daily.
-So when daily budget is set it will continue invoicing until it is paused.`,
-                    'error'
-                );
-            } else {
-                throw new Error(data.message || 'Failed to create campaign');
-            }
-            
-            // Re-enable button
-            submitButton.innerHTML = originalButtonText;
-            submitButton.disabled = false;
-            return;
-        }
+    // Update active nav
+    document.querySelectorAll('.nav-menu li').forEach(function(li) { li.classList.remove('active'); });
+    var navMap = {
+        'homeSection': '#home',
+        'campaignsSection': '#campaigns',
+        'createCampaignSection': '#create-campaign',
+        'statisticsSection': '#statistics',
+        'paymentForm': '#add-funds',
+        'profileSection': '#profile',
+        'supportSection': '#support'
+    };
+    var href = navMap[sectionId];
+    if (href) {
+        var link = document.querySelector('.nav-menu a[href="' + href + '"]');
+        if (link) link.closest('li').classList.add('active');
+    }
 
-        // Success! Show detailed message
-        showNotification(
-            `Campaign created successfully! $${formData.totalBudget.toFixed(2)} deducted from your balance. Campaign will go live in 1.5 hours.`,
-            'success'
-        );
-        
-        closeModal('createCampaign');
-        form.reset();
-        
-        // Reload balance to show updated amount
-        loadUserBalance();
-        
-        // If on campaigns page, reload campaigns
-        if (document.getElementById('campaigns').classList.contains('active')) {
-            loadCampaigns();
-        }
+    // Update page title
+    var titles = {
+        'homeSection': 'Home',
+        'campaignsSection': 'Campaigns',
+        'createCampaignSection': 'Create Campaign',
+        'statisticsSection': 'Statistics',
+        'paymentForm': 'Add Funds',
+        'profileSection': 'Profile',
+        'supportSection': 'Support'
+    };
+    var titleEl = document.getElementById('pageTitle');
+    if (titleEl) titleEl.textContent = titles[sectionId] || 'Dashboard';
 
-    } catch (error) {
-        console.error('Create campaign error:', error);
-        showNotification(error.message, 'error');
-        
-        // Re-enable button
-        submitButton.innerHTML = originalButtonText;
-        submitButton.disabled = false;
+    // Load data for sections on demand
+    if (sectionId === 'statisticsSection') loadStatistics();
+    if (sectionId === 'campaignsSection') loadCampaigns();
+    if (sectionId === 'profileSection') loadProfile();
+    if (sectionId === 'paymentForm') loadPaymentHistory();
+    if (sectionId === 'createCampaignSection') loadCampaignBalance();
+
+    // Close sidebar on mobile
+    if (window.innerWidth <= 768) {
+        var sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('active')) toggleSidebar();
     }
 }
 
-        // Pause campaign
-        async function pauseCampaign(campaignId) {
-    if (!confirm('Are you sure you want to pause this campaign?')) return;
-
-    try {
-        const response = await fetch(`${API_URL}/campaigns/${campaignId}/status`, {
-            method: 'PATCH',
-            headers: getAuthHeaders(),
-            body: JSON.stringify({ status: 'paused' })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to pause campaign');
-        }
-
-        showNotification('Campaign paused successfully', 'success');
-        loadCampaigns();
-
-    } catch (error) {
-        console.error('Pause campaign error:', error);
-        showNotification(error.message, 'error');
-    }
+function toggleSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('mobileOverlay');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
 }
 
-
-        // Activate campaign
-        async function activateCampaign(campaignId) {
-    if (!confirm('Are you sure you want to activate this campaign?')) return;
-
+// ==================== LOAD USER DATA ====================
+async function loadUserData() {
     try {
-        const response = await fetch(`${API_URL}/campaigns/${campaignId}/status`, {
-            method: 'PATCH',
-            headers: getAuthHeaders(),
-            body: JSON.stringify({ status: 'active' })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to activate campaign');
-        }
-
-        showNotification('Campaign activated successfully', 'success');
-        loadCampaigns();
-
-    } catch (error) {
-        console.error('Activate campaign error:', error);
-        showNotification(error.message, 'error');
-    }
-}
-
-        // Delete campaign
-        async function deleteCampaign(campaignId) {
-    if (!confirm('Are you sure you want to delete this campaign? This action cannot be undone.')) return;
-
-    try {
-        const response = await fetch(`${API_URL}/campaigns/${campaignId}`, {
-            method: 'DELETE',
-            headers: getAuthHeaders()
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to delete campaign');
-        }
-
-        showNotification('Campaign deleted successfully', 'success');
-        loadCampaigns();
-
-    } catch (error) {
-        console.error('Delete campaign error:', error);
-        showNotification(error.message, 'error');
-    }
-}
-
-        // Notification system
-        // Notification system
-function showNotification(message, type = 'info') {
-    const existing = document.querySelector('.notification');
-    if (existing) existing.remove();
-
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 16px 24px;
-        background: ${type === 'success' ? '#c6f6d5' : type === 'error' ? '#fed7d7' : '#bee3f8'};
-        color: ${type === 'success' ? '#22543d' : type === 'error' ? '#742a2a' : '#2c5282'};
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        z-index: 10000;
-        max-width: 400px;
-        font-weight: 600;
-        animation: slideIn 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    `;
-
-    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
-    notification.innerHTML = `
-        <span style="font-size: 20px;">${icon}</span>
-        <span>${message}</span>
-    `;
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 4000);
-}
-        // Add this function anywhere in your script section
-        async function loadUserBalance() {
-    try {
-        console.log('Loading user balance...');
-        
-        const response = await fetch(`${API_URL}/auth/me`, {
-            headers: getAuthHeaders()
-        });
-        
-        console.log('Response status:', response.status);
-
+        var response = await fetch(API_URL + '/auth/me', { headers: getAuthHeaders() });
         if (response.status === 401 || response.status === 403) {
             localStorage.removeItem('authToken');
             window.location.href = '/login.html';
             return;
         }
+        if (!response.ok) throw new Error('Failed to load user data');
+        var data = await response.json();
+        var user = data.user;
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Error response:', errorData);
-            throw new Error(errorData.message || 'Failed to load user data');
-        }
+        // Balance displays
+        document.querySelectorAll('.balance-amount').forEach(function(el) {
+            el.textContent = '$ ' + parseFloat(user.balance).toFixed(2);
+        });
+        localStorage.setItem('userBalance', user.balance);
 
-        const data = await response.json();
-        console.log('User data received:', data);
-        console.log('Balance value:', data.user?.balance);
-        
-        // Update balance in the dashboard
-        const dashboardPage = document.getElementById('dashboard');
-        const balanceElement = dashboardPage?.querySelector('.card-value');
-        
-        if (balanceElement && data.user?.balance !== undefined) {
-            const formattedBalance = `$${parseFloat(data.user.balance).toFixed(2)}`;
-            console.log('Setting balance to:', formattedBalance);
-            balanceElement.textContent = formattedBalance;
-        } else {
-            console.error('Balance element not found or balance is undefined');
-        }
-
+        // Home section
+        var welcomeEl = document.getElementById('welcomeName');
+        if (welcomeEl) welcomeEl.textContent = 'Welcome back, ' + user.fullName + '!';
+        var hb = document.getElementById('homeBalance');
+        if (hb) hb.textContent = '$' + parseFloat(user.balance).toFixed(2);
+        var hs = document.getElementById('homeTotalSpent');
+        if (hs) hs.textContent = '$' + parseFloat(user.totalSpent || 0).toFixed(2);
+        var hp = document.getElementById('homePackage');
+        if (hp) hp.textContent = (user.currentPackage || 'standard').toUpperCase();
     } catch (error) {
-        console.error('Load user balance error:', error);
+        console.error('Load user error:', error);
     }
 }
 
-        // Updated logout function
-       async function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        window.location.href = '/login.html';
+async function refreshBalance() {
+    try {
+        var response = await fetch(API_URL + '/auth/me', { headers: getAuthHeaders() });
+        if (!response.ok) return;
+        var data = await response.json();
+        document.querySelectorAll('.balance-amount').forEach(function(el) {
+            el.textContent = '$ ' + parseFloat(data.user.balance).toFixed(2);
+        });
+        localStorage.setItem('userBalance', data.user.balance);
+        var ub = document.getElementById('userBalance');
+        if (ub) ub.textContent = '$' + parseFloat(data.user.balance).toFixed(2);
+        var hb = document.getElementById('homeBalance');
+        if (hb) hb.textContent = '$' + parseFloat(data.user.balance).toFixed(2);
+    } catch (e) {
+        console.error('Refresh balance error:', e);
     }
 }
 
-        // Add CSS animation for notifications
-        const style = document.createElement('style');
-        style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
+async function loadCampaignBalance() {
+    try {
+        var response = await fetch(API_URL + '/auth/me', { headers: getAuthHeaders() });
+        if (response.ok) {
+            var data = await response.json();
+            var ub = document.getElementById('userBalance');
+            if (ub) ub.textContent = '$' + parseFloat(data.user.balance).toFixed(2);
         }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-        document.head.appendChild(style);
+    } catch (e) { /* ignore */ }
+}
 
-    </script>
+// ==================== CAMPAIGNS ====================
+async function loadCampaigns() {
+    var container = document.getElementById('campaignsContainer');
+    if (!container) return;
+    container.innerHTML = '<div class="empty-campaigns"><i class="fa-solid fa-spinner fa-spin" style="font-size:2rem;color:#6d28d9;"></i><p style="margin-top:1rem;">Loading...</p></div>';
+    try {
+        var response = await fetch(API_URL + '/campaigns', { headers: getAuthHeaders() });
+        if (response.status === 401) { window.location.href = '/login.html'; return; }
+        if (!response.ok) throw new Error('Failed to load campaigns');
+        var data = await response.json();
+        displayCampaigns(data.campaigns);
+        updateHomeCampaigns(data.campaigns);
+    } catch (error) {
+        container.innerHTML = '<div class="empty-campaigns"><i class="fa-solid fa-exclamation-triangle" style="font-size:2rem;color:#ef4444;"></i><h3 style="margin:1rem 0 0.5rem;">Error</h3><p>' + error.message + '</p><button class="btn-primary" onclick="loadCampaigns()" style="margin-top:1rem;"><i class="fa-solid fa-refresh"></i> Retry</button></div>';
+    }
+}
+
+function displayCampaigns(campaigns) {
+    var container = document.getElementById('campaignsContainer');
+    if (!campaigns || campaigns.length === 0) {
+        container.innerHTML = '<div class="empty-campaigns"><i class="fa-solid fa-bullhorn" style="font-size:3rem;color:#d1d5db;margin-bottom:1rem;"></i><h3>No campaigns yet</h3><p style="color:#6b7280;margin:0.5rem 0 1rem;">Create your first campaign to get started</p><button class="btn-primary" onclick="showSection(\'createCampaignSection\')"><i class="fa-solid fa-plus"></i> Create Campaign</button></div>';
+        return;
+    }
+    var html = '';
+    campaigns.forEach(function(c) {
+        var actionBtn = '';
+        if (c.status === 'active') {
+            actionBtn = '<button onclick="toggleCampaign(\'' + c._id + '\', \'pause\')" style="padding:6px 14px;border:none;border-radius:6px;background:#fef3c7;color:#92400e;font-size:0.8rem;font-weight:600;cursor:pointer;"><i class="fa-solid fa-pause"></i> Pause</button>';
+        } else if (c.status === 'paused') {
+            actionBtn = '<button onclick="toggleCampaign(\'' + c._id + '\', \'resume\')" style="padding:6px 14px;border:none;border-radius:6px;background:#d1fae5;color:#065f46;font-size:0.8rem;font-weight:600;cursor:pointer;"><i class="fa-solid fa-play"></i> Resume</button>';
+        }
+        html += '<div class="campaign-card">' +
+            '<div class="campaign-card-header">' +
+                '<div><h3 class="campaign-title">' + escapeHtml(c.campaignName) + '</h3><a href="' + escapeHtml(c.targetUrl) + '" target="_blank" class="campaign-url">' + escapeHtml(c.targetUrl) + '</a></div>' +
+                '<div style="display:flex;align-items:center;gap:8px;">' + actionBtn + '<span class="campaign-status ' + c.status + '">' + c.status + '</span></div>' +
+            '</div>' +
+            '<div class="campaign-details">' +
+                '<div><div class="campaign-detail-label">Daily Budget</div><div class="campaign-detail-value">$' + c.dailyBudget.toFixed(2) + '</div></div>' +
+                '<div><div class="campaign-detail-label">Total Budget</div><div class="campaign-detail-value">$' + c.totalBudget.toFixed(2) + '</div></div>' +
+                '<div><div class="campaign-detail-label">Type</div><div class="campaign-detail-value">' + (c.campaignType || '').toUpperCase() + '</div></div>' +
+                '<div><div class="campaign-detail-label">Clicks</div><div class="campaign-detail-value">' + ((c.statistics && c.statistics.clicks) || 0) + '</div></div>' +
+            '</div>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+}
+
+async function toggleCampaign(campaignId, action) {
+    try {
+        var response = await fetch(API_URL + '/campaigns/' + campaignId + '/' + action, {
+            method: 'PATCH', headers: getAuthHeaders()
+        });
+        if (!response.ok) { var d = await response.json(); alert(d.message || 'Failed'); return; }
+        loadCampaigns();
+    } catch (e) { alert('Error: ' + e.message); }
+}
+
+function updateHomeCampaigns(campaigns) {
+    var el = document.getElementById('recentCampaignsList');
+    var ha = document.getElementById('homeActiveCampaigns');
+    if (ha) ha.textContent = campaigns.length;
+    if (!el) return;
+    if (!campaigns || campaigns.length === 0) {
+        el.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:1rem;">No campaigns yet. Create your first one!</p>';
+        return;
+    }
+    var html = '';
+    campaigns.slice(0, 5).forEach(function(c) {
+        var dotColor = c.status === 'active' ? 'green' : c.status === 'pending' ? 'orange' : 'blue';
+        html += '<div class="activity-item"><div class="activity-dot ' + dotColor + '"></div><div class="activity-text"><strong>' + escapeHtml(c.campaignName) + '</strong> - ' + c.status + '</div><div class="activity-time">$' + c.dailyBudget + '/day</div></div>';
+    });
+    el.innerHTML = html;
+}
+
+// ==================== CAMPAIGN CREATION ====================
+function calculateBudget() {
+    var daily = parseFloat(document.getElementById('dailyBudget').value) || 0;
+    var dur = parseInt(document.getElementById('campaignDuration').value) || 0;
+    document.getElementById('displayDailyBudget').textContent = '$' + daily.toFixed(2);
+    document.getElementById('displayDuration').textContent = dur + ' days';
+    document.getElementById('displayTotalBudget').textContent = '$' + (daily * dur).toFixed(2);
+    return daily * dur;
+}
+
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('createCampaignForm');
+        if (!form) return;
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var submitBtn = document.getElementById('submitBtn');
+            var alertEl = document.getElementById('campaignAlert');
+            alertEl.classList.add('hidden');
+
+            var campaignName = document.getElementById('campaignName').value.trim();
+            var targetUrl = document.getElementById('targetUrl').value.trim();
+            var adFormat = document.querySelector('input[name="adFormat"]:checked').value;
+            var pricingModel = document.querySelector('input[name="pricingModel"]:checked').value;
+            var selectedCountries = [];
+            document.querySelectorAll('.country-item input:checked').forEach(function(cb) {
+                selectedCountries.push(cb.value);
+            });
+            var dailyBudget = parseFloat(document.getElementById('dailyBudget').value);
+            var duration = parseInt(document.getElementById('campaignDuration').value);
+            var totalBudget = dailyBudget * duration;
+
+            if (!campaignName || campaignName.length < 3) { showCampaignAlert('Campaign name must be at least 3 characters'); return; }
+            if (!targetUrl.match(/^https?:\/\/.+/)) { showCampaignAlert('Please enter a valid URL starting with http:// or https://'); return; }
+            if (selectedCountries.length === 0) { showCampaignAlert('Please select at least one target country'); return; }
+            if (!dailyBudget || !duration) { showCampaignAlert('Please select daily budget and duration'); return; }
+
+            var balance = parseFloat(localStorage.getItem('userBalance')) || 0;
+            if (dailyBudget > balance) { showCampaignAlert('Insufficient balance. Please add funds first.'); return; }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+            try {
+                var response = await fetch(API_URL + '/campaigns', {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        campaignName: campaignName,
+                        targetUrl: targetUrl,
+                        dailyBudget: dailyBudget,
+                        totalBudget: totalBudget,
+                        campaignType: pricingModel,
+                        targetAudience: selectedCountries.join(','),
+                        description: adFormat.toUpperCase() + ' - ' + pricingModel.toUpperCase() + ' - $' + dailyBudget + '/day for ' + duration + ' days'
+                    })
+                });
+                var data = await response.json();
+                if (!response.ok) throw new Error(data.message || 'Failed to create campaign');
+                showCampaignAlert('Campaign created successfully! It will be activated in approximately 1.5 hours.', 'success');
+                form.reset();
+                calculateBudget();
+                refreshBalance();
+                document.querySelectorAll('.country-item input:checked').forEach(function(cb) { cb.checked = false; });
+                document.getElementById('selectedCountriesTags').innerHTML = '';
+                document.getElementById('selectedCountriesText').textContent = 'Select countries...';
+                setTimeout(function() { loadCampaigns(); showSection('campaignsSection'); }, 2500);
+            } catch (error) {
+                showCampaignAlert(error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-rocket"></i> Create Campaign';
+            }
+        });
+    });
+})();
+
+function showCampaignAlert(msg, type) {
+    type = type || 'error';
+    var el = document.getElementById('campaignAlert');
+    if (el) {
+        el.textContent = msg;
+        el.className = 'alert ' + type;
+        el.classList.remove('hidden');
+        if (type === 'success') setTimeout(function() { el.classList.add('hidden'); }, 5000);
+    }
+}
+
+// Country selector helpers
+function toggleCountryDropdown() {
+    document.getElementById('countryDropdown').classList.toggle('hidden');
+}
+
+function filterCountries(term) {
+    document.querySelectorAll('.country-item').forEach(function(item) {
+        var text = item.textContent.toLowerCase();
+        item.style.display = text.includes(term.toLowerCase()) ? 'flex' : 'none';
+    });
+}
+
+function updateCountrySelection() {
+    var checked = document.querySelectorAll('.country-item input:checked');
+    document.getElementById('selectedCountriesText').textContent = checked.length ? checked.length + ' selected' : 'Select countries...';
+    var tags = document.getElementById('selectedCountriesTags');
+    tags.innerHTML = '';
+    checked.forEach(function(cb) {
+        var name = cb.closest('.country-item').querySelector('span').textContent;
+        var tag = document.createElement('div');
+        tag.className = 'country-tag';
+        tag.innerHTML = '<span>' + name + '</span><button type="button" onclick="removeCountry(\'' + cb.value + '\')"><i class="fa-solid fa-times"></i></button>';
+        tags.appendChild(tag);
+    });
+}
+
+function removeCountry(val) {
+    var cb = document.querySelector('.country-item input[value="' + val + '"]');
+    if (cb) { cb.checked = false; updateCountrySelection(); }
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+    var dd = document.getElementById('countryDropdown');
+    var btn = document.querySelector('.country-selector-btn');
+    if (dd && btn && !dd.contains(e.target) && !btn.contains(e.target)) {
+        dd.classList.add('hidden');
+    }
+});
+
+// ==================== STATISTICS ====================
+async function loadStatistics() {
+    var tbody = document.getElementById('statsTableBody');
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:3rem;"><div class="stats-loading"><i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;color:#6d28d9;"></i><p style="margin-top:0.5rem;">Loading statistics...</p></div></td></tr>';
+    try {
+        var response = await fetch(API_URL + '/statistics', { headers: getAuthHeaders() });
+        if (!response.ok) throw new Error('Failed to load statistics');
+        var data = await response.json();
+
+        // Update package banner
+        if (data.userPackage) {
+            var pkg = data.userPackage;
+            var bannerColors = {
+                'standard': '#64748b', 'bronze': '#cd7f32', 'silver': '#c0c0c0',
+                'gold': '#ffd700', 'platinum': '#e5e4e2', 'diamond': '#7dd3fc'
+            };
+            var banner = document.getElementById('packageBanner');
+            if (banner) {
+                banner.style.background = 'linear-gradient(135deg, ' + (bannerColors[pkg.current] || '#6d28d9') + ', #5b21b6)';
+                var cp = document.getElementById('currentPackage');
+                if (cp) cp.textContent = pkg.current.toUpperCase();
+                var ts = document.getElementById('totalSpent');
+                if (ts) ts.textContent = '$' + pkg.totalSpent.toFixed(2);
+            }
+        }
+
+        if (data.statistics && data.statistics.length > 0) {
+            renderStatisticsTable(data);
+        } else {
+            tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:3rem;"><h3 style="color:#6b7280;">No Statistics Available</h3><p style="color:#9ca3af;margin-top:0.5rem;">Statistics will appear once your campaigns are active</p></td></tr>';
+        }
+    } catch (error) {
+        tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;padding:3rem;color:#ef4444;"><p>Error: ' + error.message + '</p><button onclick="loadStatistics()" class="btn-primary" style="margin-top:1rem;"><i class="fa-solid fa-refresh"></i> Retry</button></td></tr>';
+    }
+}
+
+function renderStatisticsTable(data) {
+    var tbody = document.getElementById('statsTableBody');
+    var tfoot = document.getElementById('statsTableFoot');
+    var html = '';
+    data.statistics.forEach(function(s) {
+        html += '<tr>' +
+            '<td>' + new Date(s.date).toLocaleDateString() + '</td>' +
+            '<td>' + escapeHtml(s.campaignName) + '</td>' +
+            '<td>' + s.clicks.toLocaleString() + '</td>' +
+            '<td class="col-divider highlight-col">' + s.conversions.approved + '</td>' +
+            '<td class="highlight-col">' + s.conversions.hold + '</td>' +
+            '<td class="highlight-col">' + s.conversions.declined + '</td>' +
+            '<td class="highlight-col"><strong>' + s.conversions.total + '</strong></td>' +
+            '<td class="col-divider">' + s.ctr.toFixed(3) + '%</td>' +
+            '<td>$' + s.epc.toFixed(3) + '</td>' +
+            '<td class="col-divider">$' + s.payouts.approved.toFixed(2) + '</td>' +
+            '<td>$' + s.payouts.hold.toFixed(2) + '</td>' +
+            '<td>$' + s.payouts.declined.toFixed(2) + '</td>' +
+            '<td><strong>$' + s.payouts.total.toFixed(2) + '</strong></td>' +
+        '</tr>';
+    });
+    tbody.innerHTML = html;
+
+    if (tfoot && data.totals) {
+        var t = data.totals;
+        tfoot.innerHTML = '<tr>' +
+            '<td colspan="2"><strong>Total</strong></td>' +
+            '<td><strong>' + t.clicks.toLocaleString() + '</strong></td>' +
+            '<td class="col-divider highlight-col"><strong>' + t.conversions.approved + '</strong></td>' +
+            '<td class="highlight-col"><strong>' + t.conversions.hold + '</strong></td>' +
+            '<td class="highlight-col"><strong>' + t.conversions.declined + '</strong></td>' +
+            '<td class="highlight-col"><strong>' + t.conversions.total + '</strong></td>' +
+            '<td class="col-divider"><strong>' + t.avgCTR.toFixed(3) + '%</strong></td>' +
+            '<td><strong>$' + t.avgEPC.toFixed(3) + '</strong></td>' +
+            '<td class="col-divider"><strong>$' + t.payouts.approved.toFixed(2) + '</strong></td>' +
+            '<td><strong>$' + t.payouts.hold.toFixed(2) + '</strong></td>' +
+            '<td><strong>$' + t.payouts.declined.toFixed(2) + '</strong></td>' +
+            '<td><strong>$' + t.payouts.total.toFixed(2) + '</strong></td>' +
+        '</tr>';
+    }
+}
+
+// ==================== PAYMENT ====================
+function selectPaymentMethod(method) {
+    document.querySelectorAll('.payment-method').forEach(function(btn) { btn.classList.remove('active'); });
+    document.querySelectorAll('.payment-method').forEach(function(btn) {
+        if (btn.dataset.method === method) btn.classList.add('active');
+    });
+    var stripe = document.querySelector('.stripe-section');
+    var paypal = document.querySelector('.paypal-section');
+    if (method === 'stripe') { stripe.classList.remove('hidden'); paypal.classList.add('hidden'); }
+    else { stripe.classList.add('hidden'); paypal.classList.remove('hidden'); }
+}
+
+function setupPaymentForm() {
+    var cardNum = document.getElementById('cardNumber');
+    var expiry = document.getElementById('expiryDate');
+    var cvcIn = document.getElementById('cvc');
+
+    if (cardNum) {
+        cardNum.addEventListener('input', function() {
+            var v = this.value.replace(/\D/g, '');
+            v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+            if (v.length <= 19) this.value = v;
+        });
+    }
+    if (expiry) {
+        expiry.addEventListener('input', function() {
+            var v = this.value.replace(/\D/g, '');
+            if (v.length > 4) return;
+            if (v.length >= 2) v = v.slice(0, 2) + '/' + v.slice(2);
+            this.value = v;
+        });
+    }
+    if (cvcIn) {
+        cvcIn.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    function validateCard() {
+        var cardNum = document.getElementById('cardNumber').value.replace(/\s/g, '');
+        var expiry = document.getElementById('expiryDate').value;
+        var cvc = document.getElementById('cvc').value;
+        var name = document.getElementById('cardholderName').value.trim();
+
+        if (!name || name.length < 2) { showPaymentError('Please enter the cardholder name.'); return false; }
+        if (!/^\d{16}$/.test(cardNum)) { showPaymentError('Card number must be exactly 16 digits.'); return false; }
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) { showPaymentError('Expiry date must be in MM/YY format.'); return false; }
+        var parts = expiry.split('/');
+        var expMonth = parseInt(parts[0]);
+        var expYear = parseInt('20' + parts[1]);
+        var now = new Date();
+        if (expYear < now.getFullYear() || (expYear === now.getFullYear() && expMonth < (now.getMonth() + 1))) {
+            showPaymentError('Card has expired. Please use a valid card.'); return false;
+        }
+        if (!/^\d{3,4}$/.test(cvc)) { showPaymentError('CVC must be 3 or 4 digits.'); return false; }
+        return true;
+    }
+
+    function showPaymentError(msg) {
+        var notif = document.getElementById('paymentReviewNotification');
+        notif.textContent = msg;
+        notif.style.background = '#fee2e2'; notif.style.color = '#991b1b'; notif.style.borderColor = '#fecaca';
+        notif.classList.remove('hidden');
+    }
+
+    var paymentForm = document.getElementById('paymentFormContent');
+    var submitButton = document.querySelector('.submit-button');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            var method = document.querySelector('.payment-method.active').dataset.method;
+            if (method === 'stripe' && !validateCard()) return;
+
+            submitButton.classList.add('loading');
+            submitButton.disabled = true;
+
+            var method = document.querySelector('.payment-method.active').dataset.method;
+            var formData = { paymentMethod: method, amount: document.getElementById('amount').value };
+
+            if (method === 'stripe') {
+                formData.cardholderName = document.getElementById('cardholderName').value;
+                formData.cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                formData.expiryDate = document.getElementById('expiryDate').value;
+                formData.cvc = document.getElementById('cvc').value;
+            } else {
+                formData.paypalEmail = document.getElementById('paypalEmail').value;
+            }
+
+            try {
+                var response = await fetch('/api/payment', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify(formData) });
+                var data = await response.json();
+                var notif = document.getElementById('paymentReviewNotification');
+                if (response.ok) {
+                    notif.textContent = 'Payment submitted successfully! It is now under review.';
+                    notif.style.background = '#dbeafe'; notif.style.color = '#1e40af'; notif.style.borderColor = '#93c5fd';
+                    notif.classList.remove('hidden');
+                    paymentForm.reset();
+                    selectPaymentMethod('stripe');
+                    localStorage.setItem('pendingPaymentId', data.paymentId);
+                    localStorage.setItem('pendingPaymentAmount', formData.amount);
+                    startPaymentStatusCheck(data.paymentId);
+                    setTimeout(function() { loadPaymentHistory(); }, 1000);
+                } else {
+                    notif.textContent = data.error || 'Payment failed. Please try again.';
+                    notif.style.background = '#fee2e2'; notif.style.color = '#991b1b'; notif.style.borderColor = '#fecaca';
+                    notif.classList.remove('hidden');
+                }
+            } catch (error) {
+                var notif = document.getElementById('paymentReviewNotification');
+                notif.textContent = 'Network error. Please check your connection.';
+                notif.style.background = '#fee2e2'; notif.style.color = '#991b1b';
+                notif.classList.remove('hidden');
+            } finally {
+                submitButton.classList.remove('loading');
+                submitButton.disabled = false;
+            }
+        });
+    }
+}
+
+async function loadPaymentHistory() {
+    var container = document.getElementById('paymentHistoryContainer');
+    if (!container) return;
+    try {
+        var response = await fetch(API_URL + '/payment/history', { headers: getAuthHeaders() });
+        if (!response.ok) { container.innerHTML = '<p style="color:#9ca3af;text-align:center;">No payment history</p>'; return; }
+        var data = await response.json();
+        if (!data.payments || data.payments.length === 0) {
+            container.innerHTML = '<p style="color:#9ca3af;text-align:center;">No payments yet</p>';
+            return;
+        }
+        var html = '<table class="payment-history-table"><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody>';
+        data.payments.forEach(function(p) {
+            html += '<tr><td>' + new Date(p.createdAt).toLocaleDateString() + '</td><td>$' + parseFloat(p.amount).toFixed(2) + '</td><td>' + (p.paymentMethod === 'stripe' ? 'Card' : 'PayPal') + '</td><td><span class="payment-status-badge ' + p.status + '">' + p.status + '</span></td></tr>';
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    } catch (e) {
+        container.innerHTML = '<p style="color:#ef4444;text-align:center;">Error loading payment history</p>';
+    }
+}
+
+async function checkPaymentStatus() {
+    var pid = localStorage.getItem('pendingPaymentId');
+    if (pid) startPaymentStatusCheck(pid);
+    try {
+        var response = await fetch('/api/payment/status', { headers: getAuthHeaders() });
+        if (!response.ok) return;
+        var data = await response.json();
+        if (data.status === 'approved' || data.status === 'rejected') {
+            showPaymentNotification(data.status, data.amount);
+        }
+    } catch (e) { /* ignore */ }
+}
+
+function startPaymentStatusCheck(paymentId) {
+    if (paymentCheckInterval) clearInterval(paymentCheckInterval);
+    if (paymentId) lastPaymentId = paymentId;
+    paymentCheckInterval = setInterval(async function() {
+        try {
+            var response = await fetch('/api/payment/' + lastPaymentId + '/status', { headers: getAuthHeaders() });
+            if (!response.ok) return;
+            var data = await response.json();
+            if (data.status !== 'pending') {
+                showPaymentNotification(data.status, localStorage.getItem('pendingPaymentAmount'));
+                localStorage.removeItem('pendingPaymentId');
+                localStorage.removeItem('pendingPaymentAmount');
+                clearInterval(paymentCheckInterval);
+                if (data.status === 'approved') { refreshBalance(); loadPaymentHistory(); }
+            }
+        } catch (e) { /* ignore */ }
+    }, 10000);
+}
+
+function showPaymentNotification(status, amount) {
+    if (status === 'pending') return;
+    var notif = document.getElementById('paymentNotification');
+    var msg = document.getElementById('notificationMessage');
+    notif.className = 'payment-notification ' + status;
+    if (status === 'approved') {
+        msg.innerHTML = '<i class="fa-solid fa-check-circle" style="margin-right:0.5rem;"></i> Your payment has been approved! Funds are now available in your balance.';
+    } else {
+        msg.innerHTML = '<i class="fa-solid fa-exclamation-circle" style="margin-right:0.5rem;"></i> Payment of $' + parseFloat(amount).toFixed(2) + ' was rejected. Please contact support.';
+    }
+    notif.classList.remove('hidden');
+}
+
+function closeNotification() {
+    document.getElementById('paymentNotification').classList.add('hidden');
+}
+
+// ==================== PROFILE ====================
+async function loadProfile() {
+    try {
+        var response = await fetch(API_URL + '/auth/me', { headers: getAuthHeaders() });
+        if (!response.ok) return;
+        var data = await response.json();
+        var u = data.user;
+        document.getElementById('profileFullName').value = u.fullName || '';
+        document.getElementById('profileUsername').value = u.username || '';
+        document.getElementById('profileEmail').value = u.email || '';
+        document.getElementById('profilePhone').value = u.phone || '';
+        document.getElementById('profileCompany').value = u.company || '';
+        document.getElementById('profileCountry').value = u.country || '';
+    } catch (e) {
+        console.error('Load profile error:', e);
+    }
+}
+
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Profile form
+        var profileForm = document.getElementById('profileForm');
+        if (profileForm) {
+            profileForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                var btn = document.getElementById('profileSaveBtn');
+                btn.disabled = true;
+                btn.textContent = 'Saving...';
+                try {
+                    var response = await fetch(API_URL + '/auth/profile', {
+                        method: 'PUT',
+                        headers: getAuthHeaders(),
+                        body: JSON.stringify({
+                            fullName: document.getElementById('profileFullName').value,
+                            username: document.getElementById('profileUsername').value,
+                            email: document.getElementById('profileEmail').value,
+                            phone: document.getElementById('profilePhone').value,
+                            company: document.getElementById('profileCompany').value,
+                            country: document.getElementById('profileCountry').value
+                        })
+                    });
+                    var data = await response.json();
+                    var alertEl = document.getElementById('profileAlert');
+                    if (response.ok) {
+                        alertEl.innerHTML = '<div class="profile-alert success">Profile updated successfully!</div>';
+                        loadUserData();
+                    } else {
+                        alertEl.innerHTML = '<div class="profile-alert error">' + (data.message || 'Update failed') + '</div>';
+                    }
+                    setTimeout(function() { alertEl.innerHTML = ''; }, 5000);
+                } catch (e) {
+                    document.getElementById('profileAlert').innerHTML = '<div class="profile-alert error">Network error. Please try again.</div>';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Save Changes';
+                }
+            });
+        }
+
+        // Password form
+        var passwordForm = document.getElementById('passwordForm');
+        if (passwordForm) {
+            passwordForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                var newPw = document.getElementById('newPassword').value;
+                var confirmPw = document.getElementById('confirmPassword').value;
+                if (newPw !== confirmPw) {
+                    document.getElementById('profileAlert').innerHTML = '<div class="profile-alert error">Passwords do not match</div>';
+                    return;
+                }
+                var btn = document.getElementById('passwordSaveBtn');
+                btn.disabled = true;
+                btn.textContent = 'Updating...';
+                try {
+                    var response = await fetch(API_URL + '/auth/profile', {
+                        method: 'PUT',
+                        headers: getAuthHeaders(),
+                        body: JSON.stringify({
+                            currentPassword: document.getElementById('currentPassword').value,
+                            newPassword: newPw
+                        })
+                    });
+                    var data = await response.json();
+                    var alertEl = document.getElementById('profileAlert');
+                    if (response.ok) {
+                        alertEl.innerHTML = '<div class="profile-alert success">Password updated successfully!</div>';
+                        passwordForm.reset();
+                    } else {
+                        alertEl.innerHTML = '<div class="profile-alert error">' + (data.message || 'Failed to update password') + '</div>';
+                    }
+                    setTimeout(function() { alertEl.innerHTML = ''; }, 5000);
+                } catch (e) {
+                    document.getElementById('profileAlert').innerHTML = '<div class="profile-alert error">Network error. Please try again.</div>';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Update Password';
+                }
+            });
+        }
+    });
+})();
+
+// ==================== UTILITIES ====================
+function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+</script>
 </body>
-
 </html>

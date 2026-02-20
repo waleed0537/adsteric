@@ -532,6 +532,7 @@
 
                     <div class="form-panel" id="signup-panel">
                         <div id="signup-alert"></div>
+                        <!-- Step 1: Registration form -->
                         <form id="signupForm">
                             <div class="form-group">
                                 <label class="form-label">Full Name</label>
@@ -563,6 +564,52 @@
 
                             <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
                         </form>
+
+                        <!-- Step 2: Verification code input -->
+                        <div id="verification-step" style="display: none;">
+                            <div style="text-align: center; margin-bottom: 24px;">
+                                <div style="width: 60px; height: 60px; margin: 0 auto 16px; background: linear-gradient(135deg, #3dd5c3, #4db8e8); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                                </div>
+                                <h3 style="color: #1a202c; font-size: 20px; font-weight: 600; margin-bottom: 8px;">Verify Your Email</h3>
+                                <p style="color: #718096; font-size: 14px; line-height: 1.5;">
+                                    We've sent a 6-digit verification code to<br>
+                                    <strong id="verification-email-display" style="color: #3dd5c3;"></strong>
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" style="text-align: center;">Enter Verification Code</label>
+                                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 8px;" id="code-inputs">
+                                    <input type="text" maxlength="1" class="code-digit" data-index="0" inputmode="numeric" pattern="[0-9]"
+                                        style="width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: #f7fafc; color: #1a202c; transition: all 0.3s ease; outline: none;">
+                                    <input type="text" maxlength="1" class="code-digit" data-index="1" inputmode="numeric" pattern="[0-9]"
+                                        style="width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: #f7fafc; color: #1a202c; transition: all 0.3s ease; outline: none;">
+                                    <input type="text" maxlength="1" class="code-digit" data-index="2" inputmode="numeric" pattern="[0-9]"
+                                        style="width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: #f7fafc; color: #1a202c; transition: all 0.3s ease; outline: none;">
+                                    <input type="text" maxlength="1" class="code-digit" data-index="3" inputmode="numeric" pattern="[0-9]"
+                                        style="width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: #f7fafc; color: #1a202c; transition: all 0.3s ease; outline: none;">
+                                    <input type="text" maxlength="1" class="code-digit" data-index="4" inputmode="numeric" pattern="[0-9]"
+                                        style="width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: #f7fafc; color: #1a202c; transition: all 0.3s ease; outline: none;">
+                                    <input type="text" maxlength="1" class="code-digit" data-index="5" inputmode="numeric" pattern="[0-9]"
+                                        style="width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: #f7fafc; color: #1a202c; transition: all 0.3s ease; outline: none;">
+                                </div>
+                            </div>
+
+                            <button type="button" class="submit-btn" id="verify-btn" disabled style="margin-top: 8px;">Verify & Create Account</button>
+
+                            <div style="text-align: center; margin-top: 20px;">
+                                <p style="color: #718096; font-size: 14px;">
+                                    Didn't receive the code?
+                                    <a href="#" id="resend-code-btn" class="forgot-link" style="pointer-events: none; opacity: 0.5;">
+                                        Resend Code <span id="resend-timer">(60s)</span>
+                                    </a>
+                                </p>
+                            </div>
+                            <div style="text-align: center; margin-top: 12px;">
+                                <a href="#" id="back-to-signup" class="forgot-link">Change Email</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-panel" id="forgot-panel">
@@ -670,7 +717,7 @@ document.getElementById('signinForm').addEventListener('submit', async (e) => {
             
             // Redirect to dashboard
             setTimeout(() => {
-                window.location.href = '/dashboard2.html';
+                window.location.href = '/dashboard.html';
             }, 1500);
         } else {
             showAlert('signin-alert', data.message || 'Login failed', 'error');
@@ -684,7 +731,10 @@ document.getElementById('signinForm').addEventListener('submit', async (e) => {
     }
 });
 
-// Sign Up Form - FIXED: Changed 'token' to 'authToken'
+// Sign Up Form - Step 1: Send verification code
+let signupData = {};
+let resendInterval = null;
+
 document.getElementById('signupForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -694,40 +744,161 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     const submitBtn = document.getElementById('signup-btn');
     
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Creating Account...';
+    submitBtn.textContent = 'Sending Code...';
 
     try {
-        const response = await fetch(`${API_URL}/auth/signup`, {
+        const response = await fetch(`${API_URL}/auth/send-verification`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ fullName, email, password })
         });
 
         const data = await response.json();
 
         if (response.ok) {
-            // FIXED: Store token with key 'authToken' to match dashboard.html
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            
-            showAlert('signup-alert', 'Account created successfully! Redirecting...', 'success');
-            
-            // Redirect to dashboard
-            setTimeout(() => {
-                window.location.href = '/dashboard2.html';
-            }, 1500);
+            signupData = { fullName, email, password };
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('verification-step').style.display = 'block';
+            document.getElementById('verification-email-display').textContent = email;
+            startResendTimer();
+            document.querySelectorAll('.code-digit')[0].focus();
+            showAlert('signup-alert', 'Verification code sent! Check your email.', 'success');
         } else {
-            showAlert('signup-alert', data.message || 'Registration failed', 'error');
+            showAlert('signup-alert', data.message || 'Failed to send verification code', 'error');
         }
     } catch (error) {
         showAlert('signup-alert', 'Network error. Please try again.', 'error');
-        console.error('Signup error:', error);
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Create Account';
     }
+});
+
+// Code digit inputs - auto-focus, paste support
+const codeDigits = document.querySelectorAll('.code-digit');
+codeDigits.forEach((input, idx) => {
+    input.addEventListener('input', (e) => {
+        const val = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = val;
+        if (val && idx < 5) codeDigits[idx + 1].focus();
+        checkCodeComplete();
+    });
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+            codeDigits[idx - 1].focus();
+        }
+    });
+    input.addEventListener('focus', function() {
+        this.style.borderColor = '#3dd5c3';
+        this.style.background = 'white';
+        this.style.boxShadow = '0 0 0 3px rgba(61, 213, 195, 0.15)';
+    });
+    input.addEventListener('blur', function() {
+        if (!this.value) {
+            this.style.borderColor = '#e2e8f0';
+            this.style.background = '#f7fafc';
+            this.style.boxShadow = 'none';
+        }
+    });
+    input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '').slice(0, 6);
+        pasted.split('').forEach((ch, i) => { if (codeDigits[i]) codeDigits[i].value = ch; });
+        if (pasted.length > 0) codeDigits[Math.min(pasted.length, 5)].focus();
+        checkCodeComplete();
+    });
+});
+
+function checkCodeComplete() {
+    const code = Array.from(codeDigits).map(i => i.value).join('');
+    document.getElementById('verify-btn').disabled = code.length !== 6;
+}
+
+// Verify code and create account
+document.getElementById('verify-btn').addEventListener('click', async () => {
+    const code = Array.from(codeDigits).map(i => i.value).join('');
+    if (code.length !== 6) return;
+    const btn = document.getElementById('verify-btn');
+    btn.disabled = true;
+    btn.textContent = 'Verifying...';
+
+    try {
+        const response = await fetch(`${API_URL}/auth/signup`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: signupData.email, verificationCode: code })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            showAlert('signup-alert', 'Account created! Redirecting to sign in...', 'success');
+            setTimeout(() => {
+                document.getElementById('verification-step').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('signupForm').reset();
+                codeDigits.forEach(i => i.value = '');
+                tabs[0].click();
+            }, 2000);
+        } else {
+            showAlert('signup-alert', data.message || 'Verification failed', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Verify & Create Account';
+        }
+    } catch (error) {
+        showAlert('signup-alert', 'Network error. Please try again.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Verify & Create Account';
+    }
+});
+
+// Resend timer
+function startResendTimer() {
+    let seconds = 60;
+    const resendBtn = document.getElementById('resend-code-btn');
+    const timerSpan = document.getElementById('resend-timer');
+    resendBtn.style.pointerEvents = 'none';
+    resendBtn.style.opacity = '0.5';
+    timerSpan.textContent = `(${seconds}s)`;
+    if (resendInterval) clearInterval(resendInterval);
+    resendInterval = setInterval(() => {
+        seconds--;
+        timerSpan.textContent = `(${seconds}s)`;
+        if (seconds <= 0) {
+            clearInterval(resendInterval);
+            resendBtn.style.pointerEvents = 'auto';
+            resendBtn.style.opacity = '1';
+            timerSpan.textContent = '';
+        }
+    }, 1000);
+}
+
+document.getElementById('resend-code-btn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!signupData.email) return;
+    try {
+        const response = await fetch(`${API_URL}/auth/send-verification`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(signupData)
+        });
+        const data = await response.json();
+        if (response.ok) {
+            showAlert('signup-alert', 'New code sent!', 'success');
+            startResendTimer();
+            codeDigits.forEach(i => i.value = '');
+            codeDigits[0].focus();
+        } else {
+            showAlert('signup-alert', data.message || 'Failed to resend code', 'error');
+        }
+    } catch (error) {
+        showAlert('signup-alert', 'Network error.', 'error');
+    }
+});
+
+document.getElementById('back-to-signup').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('verification-step').style.display = 'none';
+    document.getElementById('signupForm').style.display = 'block';
+    if (resendInterval) clearInterval(resendInterval);
 });
 
 // Forgot Password Form
