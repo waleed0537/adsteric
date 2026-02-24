@@ -307,7 +307,7 @@ app.post('/api/auth/send-verification', async (req, res) => {
 
     try {
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>',
+        from: `"Adsteric" <${process.env.SMTP_USER}>`,
         to: email,
         subject: 'Your Verification Code - Adsteric',
         html: emailTemplate('Verify Your Email', `
@@ -364,7 +364,7 @@ app.post('/api/auth/signup', async (req, res) => {
 
     try {
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>',
+        from: `"Adsteric" <${process.env.SMTP_USER}>`,
         to: user.email,
         subject: 'Welcome to Adsteric!',
         html: emailTemplate('Welcome, ' + user.fullName + '!', `
@@ -433,7 +433,7 @@ app.post('/api/auth/forgot-password', async (req, res) => {
 
     try {
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>', to: email, subject: 'Password Reset Request',
+        from: `"Adsteric" <${process.env.SMTP_USER}>`, to: email, subject: 'Password Reset Request',
         html: emailTemplate('Password Reset Request', `
           <p style="color: #4a5568; font-size: 16px;">Hi ${user.fullName},</p>
           <p style="color: #4a5568; font-size: 16px;">You requested to reset your password. Click the button below:</p>
@@ -472,7 +472,7 @@ app.post('/api/auth/reset-password', async (req, res) => {
 
     try {
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>', to: user.email, subject: 'Password Changed Successfully',
+        from: `"Adsteric" <${process.env.SMTP_USER}>`, to: user.email, subject: 'Password Changed Successfully',
         html: emailTemplate('Password Changed', `
           <p style="color: #4a5568;">Hi ${user.fullName}, Your password has been successfully changed.</p>
           <div style="text-align: center; margin: 30px 0;">
@@ -564,7 +564,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
 
     try {
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>', to: user.email, subject: 'Campaign Created Successfully',
+        from: `"Adsteric" <${process.env.SMTP_USER}>`, to: user.email, subject: 'Campaign Created Successfully',
         html: emailTemplate('Campaign Created!', `
           <p style="color: #4a5568;">Your campaign "${campaign.campaignName}" has been created.</p>
           <div style="background: #fef3c7; padding: 16px; margin: 20px 0; border-radius: 8px;">
@@ -651,7 +651,7 @@ app.patch('/api/campaigns/:id/status', authenticateToken, async (req, res) => {
       const user = await User.findById(req.user.userId);
       const sm = { active: 'activated', paused: 'paused', completed: 'completed' };
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>', to: user.email,
+        from: `"Adsteric" <${process.env.SMTP_USER}>`, to: user.email,
         subject: `Campaign ${sm[status].charAt(0).toUpperCase() + sm[status].slice(1)}`,
         html: emailTemplate('Campaign Status Updated', `
           <p style="color: #4a5568;">Your campaign "<strong>${campaign.campaignName}</strong>" has been ${sm[status]}.</p>
@@ -962,7 +962,7 @@ app.post('/api/payment', authenticateToken, async (req, res) => {
 
     try {
       await transporter.sendMail({
-        from: '"Adsteric System" <adstericteam@gmail.com>', to: COMPANY_EMAIL,
+        from: `"Adsteric System" <${process.env.SMTP_USER}>`, to: COMPANY_EMAIL,
         subject: `Payment Request - $${parseFloat(amount).toFixed(2)} - ${user.email}`,
         html: emailTemplate('New Payment Request', `
           <div style="background:#dbeafe;padding:16px;margin:15px 0;border-radius:8px">
@@ -1058,7 +1058,7 @@ async function deductDailyBudgets() {
           campaign.status = 'paused'; await campaign.save();
           try {
             await transporter.sendMail({
-              from: '"Adsteric" <adstericteam@gmail.com>', to: user.email,
+              from: `"Adsteric" <${process.env.SMTP_USER}>`, to: user.email,
               subject: 'Campaign Paused - Insufficient Balance',
               html: emailTemplate('Campaign Paused', `
                 <p style="color:#4a5568">Your campaign "${campaign.campaignName}" has been paused due to insufficient balance.</p>
@@ -1117,7 +1117,7 @@ app.post('/api/admin/forgot-password', async (req, res) => {
     admin.resetPasswordExpires = Date.now() + 3600000; await admin.save();
     const resetURL = `${FRONTEND_URL}/admin-reset-password.html?token=${resetToken}`;
     await transporter.sendMail({
-      from: '"Adsteric Admin" <adstericteam@gmail.com>', to: email, subject: 'Admin Password Reset',
+      from: `"Adsteric Admin" <${process.env.SMTP_USER}>`, to: email, subject: 'Admin Password Reset',
       html: emailTemplate('Admin Password Reset', `<p>Click below to reset:</p><div style="text-align:center;margin:30px 0"><a href="${resetURL}" style="background:linear-gradient(135deg,#3dd5c3,#4db8e8);color:white;padding:14px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-weight:600">Reset Password</a></div><p style="color:#718096;font-size:14px">Expires in 1 hour.</p>`)
     });
     res.json({ message: 'If that email exists, a reset link has been sent' });
@@ -1194,7 +1194,7 @@ app.patch('/api/admin/campaigns/:id/status', authenticateAdmin, async (req, res)
     await campaign.save();
     try {
       await transporter.sendMail({
-        from: '"Adsteric" <adstericteam@gmail.com>', to: campaign.userId.email,
+        from: `"Adsteric" <${process.env.SMTP_USER}>`, to: campaign.userId.email,
         subject: `Campaign ${status.charAt(0).toUpperCase() + status.slice(1)}`,
         html: emailTemplate('Campaign Status Updated', `<p>Your campaign "${campaign.campaignName}" has been ${status}.</p><div style="text-align:center;margin:30px 0"><a href="${FRONTEND_URL}/dashboard.html" style="background:linear-gradient(135deg,#3dd5c3,#4db8e8);color:white;padding:14px 30px;text-decoration:none;border-radius:8px;display:inline-block;font-weight:600">View Dashboard</a></div>`)
       });
