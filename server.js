@@ -129,6 +129,8 @@ const campaignSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   campaignName: { type: String, required: true },
   targetUrl: { type: String, required: true },
+  budgetType: { type: String, enum: ['daily', 'weekly'], default: 'daily' },
+  budgetAmount: { type: Number, required: true },
   dailyBudget: { type: Number, required: true },
   totalBudget: { type: Number, required: true },
   campaignType: { type: String, required: true, enum: ['cpc', 'cpm', 'cpa'] },
@@ -538,27 +540,33 @@ app.put('/api/auth/profile', authenticateToken, async (req, res) => {
 
 app.post('/api/campaigns', authenticateToken, async (req, res) => {
   try {
-    const { campaignName, targetUrl, dailyBudget, totalBudget, campaignType, targetAudience, description } = req.body;
-    if (!campaignName || !targetUrl || !dailyBudget || !totalBudget || !campaignType || !targetAudience) {
+    const { campaignName, targetUrl, budgetType, budgetAmount, dailyBudget, totalBudget, campaignType, targetAudience, description } = req.body;
+    if (!campaignName || !targetUrl || !budgetAmount || !dailyBudget || !totalBudget || !campaignType || !targetAudience) {
       return res.status(400).json({ message: 'All required fields must be provided' });
     }
     if (campaignName.length < 3 || campaignName.length > 100) return res.status(400).json({ message: 'Campaign name must be between 3 and 100 characters' });
     if (!/^https?:\/\/.+\..+/.test(targetUrl)) return res.status(400).json({ message: 'Please enter a valid URL starting with http:// or https://' });
 
-    const daily = parseFloat(dailyBudget), total = parseFloat(totalBudget);
+    const bType = (budgetType || 'daily').toLowerCase();
+    if (!['daily', 'weekly'].includes(bType)) return res.status(400).json({ message: 'Invalid budget type. Must be daily or weekly.' });
+
+    const bAmount = parseFloat(budgetAmount), daily = parseFloat(dailyBudget), total = parseFloat(totalBudget);
+    if (isNaN(bAmount) || bAmount <= 0) return res.status(400).json({ message: 'Budget amount must be greater than 0' });
     if (isNaN(daily) || daily <= 0) return res.status(400).json({ message: 'Daily budget must be greater than 0' });
     if (isNaN(total) || total <= 0) return res.status(400).json({ message: 'Total budget must be greater than 0' });
     if (!['cpc', 'cpm', 'cpa'].includes(campaignType.toLowerCase())) return res.status(400).json({ message: 'Invalid campaign type' });
 
     const user = await User.findById(req.user.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    if (user.balance < daily) return res.status(400).json({ message: `Insufficient balance. You need at least $${daily.toFixed(2)} to start this campaign. Please add funds first.` });
+    const minBalance = bType === 'daily' ? daily : bAmount;
+    if (user.balance < minBalance) return res.status(400).json({ message: `Insufficient balance. You need at least $${minBalance.toFixed(2)} to start this campaign. Please add funds first.` });
 
     const campaign = new Campaign({
       userId: req.user.userId, campaignName: campaignName.trim(), targetUrl: targetUrl.trim(),
+      budgetType: bType, budgetAmount: bAmount,
       dailyBudget: daily, totalBudget: total, campaignType: campaignType.toLowerCase(),
       targetAudience: targetAudience.toLowerCase(),
-      description: description || `Campaign with $${daily} daily budget`, status: 'pending'
+      description: description || (bType === 'daily' ? `Campaign with $${daily} daily budget` : `Campaign with $${bAmount} weekly budget`), status: 'pending'
     });
     await campaign.save();
 
@@ -588,6 +596,7 @@ app.post('/api/campaigns', authenticateToken, async (req, res) => {
       message: 'Campaign created successfully! It will be activated in 1.5 hours.',
       campaign: {
         id: campaign._id, campaignName: campaign.campaignName, targetUrl: campaign.targetUrl,
+        budgetType: campaign.budgetType, budgetAmount: campaign.budgetAmount,
         dailyBudget: campaign.dailyBudget, totalBudget: campaign.totalBudget, campaignType: campaign.campaignType,
         targetAudience: campaign.targetAudience, status: campaign.status, createdAt: campaign.createdAt
       }
@@ -615,13 +624,15 @@ app.get('/api/campaigns/:id', authenticateToken, async (req, res) => {
 
 app.put('/api/campaigns/:id', authenticateToken, async (req, res) => {
   try {
-    const { campaignName, targetUrl, dailyBudget, totalBudget, targetAudience, description } = req.body;
+    const { campaignName, targetUrl, budgetType, budgetAmount, dailyBudget, totalBudget, targetAudience, description } = req.body;
     const campaign = await Campaign.findOne({ _id: req.params.id, userId: req.user.userId });
     if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
     if (campaign.status === 'active') return res.status(400).json({ message: 'Cannot edit active campaign. Pause it first.' });
 
     if (campaignName !== undefined) { if (campaignName.length < 3 || campaignName.length > 100) return res.status(400).json({ message: 'Campaign name must be between 3 and 100 characters' }); campaign.campaignName = campaignName.trim(); }
     if (targetUrl !== undefined) { if (!/^https?:\/\/.+\..+/.test(targetUrl)) return res.status(400).json({ message: 'Invalid URL' }); campaign.targetUrl = targetUrl.trim(); }
+    if (budgetType !== undefined) { if (!['daily', 'weekly'].includes(budgetType)) return res.status(400).json({ message: 'Budget type must be daily or weekly' }); campaign.budgetType = budgetType; }
+    if (budgetAmount !== undefined) { const b = parseFloat(budgetAmount); if (isNaN(b) || b <= 0) return res.status(400).json({ message: 'Budget amount must be greater than 0' }); campaign.budgetAmount = b; }
     if (dailyBudget !== undefined) { const d = parseFloat(dailyBudget); if (isNaN(d) || d < 5) return res.status(400).json({ message: 'Daily budget must be at least $5' }); campaign.dailyBudget = d; }
     if (totalBudget !== undefined) { const t = parseFloat(totalBudget); if (isNaN(t) || t < 10) return res.status(400).json({ message: 'Total budget must be at least $10' }); campaign.totalBudget = t; }
     if (campaign.dailyBudget > campaign.totalBudget) return res.status(400).json({ message: 'Daily budget cannot exceed total budget' });

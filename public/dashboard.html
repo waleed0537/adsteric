@@ -764,10 +764,23 @@
                             <!-- Budget & Schedule -->
                             <div class="form-section-card budget-section">
                                 <h3 class="section-title"><i class="fa-solid fa-wallet"></i> Budget &amp; Schedule</h3>
+                                <!-- Budget Type Toggle -->
+                                <div class="budget-type-toggle">
+                                    <label class="field-label" style="margin-bottom: 0.5rem; display: block;">Budget Type <span class="required">*</span></label>
+                                    <div class="toggle-group">
+                                        <button type="button" class="toggle-btn active" id="btnDaily" onclick="setBudgetType('daily')">
+                                            <i class="fa-solid fa-calendar-day"></i> Daily Budget
+                                        </button>
+                                        <button type="button" class="toggle-btn" id="btnWeekly" onclick="setBudgetType('weekly')">
+                                            <i class="fa-solid fa-calendar-week"></i> Weekly Budget
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="budgetType" value="daily">
                                 <div class="form-row-three">
                                     <div class="form-field">
-                                        <label class="field-label">Daily Budget <span class="required">*</span></label>
-                                        <select id="dailyBudget" class="field-select" required onchange="calculateBudget()">
+                                        <label class="field-label" id="budgetAmountLabel">Daily Budget <span class="required">*</span></label>
+                                        <select id="budgetAmount" class="field-select" required onchange="calculateBudget()">
                                             <option value="">Select daily budget</option>
                                             <option value="60">$60/day</option>
                                             <option value="120">$120/day</option>
@@ -799,7 +812,7 @@
                                 </div>
                                 <div class="budget-summary">
                                     <div class="summary-row"><span>Your Balance:</span><strong id="userBalance">$0.00</strong></div>
-                                    <div class="summary-row"><span>Daily Budget:</span><strong id="displayDailyBudget">$0.00</strong></div>
+                                    <div class="summary-row" id="summaryBudgetRow"><span>Daily Budget:</span><strong id="displayBudgetAmount">$0.00</strong></div>
                                     <div class="summary-row"><span>Duration:</span><strong id="displayDuration">0 days</strong></div>
                                     <div class="summary-row total"><span>Total Cost:</span><strong id="displayTotalBudget">$0.00</strong></div>
                                 </div>
@@ -1093,19 +1106,67 @@ function updateHomeCampaigns(campaigns) {
     var html = '';
     campaigns.slice(0, 5).forEach(function(c) {
         var dotColor = c.status === 'active' ? 'green' : c.status === 'pending' ? 'orange' : 'blue';
-        html += '<div class="activity-item"><div class="activity-dot ' + dotColor + '"></div><div class="activity-text"><strong>' + escapeHtml(c.campaignName) + '</strong> - ' + c.status + '</div><div class="activity-time">$' + c.dailyBudget + '/day</div></div>';
+        html += '<div class="activity-item"><div class="activity-dot ' + dotColor + '"></div><div class="activity-text"><strong>' + escapeHtml(c.campaignName) + '</strong> - ' + c.status + '</div><div class="activity-time">$' + (c.budgetAmount || c.dailyBudget) + '/' + (c.budgetType === 'weekly' ? 'week' : 'day') + '</div></div>';
     });
     el.innerHTML = html;
 }
 
 // ==================== CAMPAIGN CREATION ====================
+function setBudgetType(type) {
+    var budgetTypeInput = document.getElementById('budgetType');
+    var btnDaily = document.getElementById('btnDaily');
+    var btnWeekly = document.getElementById('btnWeekly');
+    var label = document.getElementById('budgetAmountLabel');
+    var select = document.getElementById('budgetAmount');
+
+    budgetTypeInput.value = type;
+    select.value = '';
+
+    if (type === 'daily') {
+        btnDaily.classList.add('active');
+        btnWeekly.classList.remove('active');
+        label.innerHTML = 'Daily Budget <span class="required">*</span>';
+        select.innerHTML = '<option value="">Select daily budget</option>' +
+            '<option value="60">$60/day</option>' +
+            '<option value="120">$120/day</option>' +
+            '<option value="200">$200/day</option>' +
+            '<option value="320">$320/day</option>' +
+            '<option value="540">$540/day</option>';
+    } else {
+        btnWeekly.classList.add('active');
+        btnDaily.classList.remove('active');
+        label.innerHTML = 'Weekly Budget <span class="required">*</span>';
+        select.innerHTML = '<option value="">Select weekly budget</option>' +
+            '<option value="420">$420/week</option>' +
+            '<option value="840">$840/week</option>' +
+            '<option value="1400">$1,400/week</option>' +
+            '<option value="2240">$2,240/week</option>' +
+            '<option value="3780">$3,780/week</option>';
+    }
+    calculateBudget();
+}
+
 function calculateBudget() {
-    var daily = parseFloat(document.getElementById('dailyBudget').value) || 0;
+    var budgetType = document.getElementById('budgetType').value;
+    var amount = parseFloat(document.getElementById('budgetAmount').value) || 0;
     var dur = parseInt(document.getElementById('campaignDuration').value) || 0;
-    document.getElementById('displayDailyBudget').textContent = '$' + daily.toFixed(2);
+    var summaryRow = document.getElementById('summaryBudgetRow');
+    var totalCost = 0;
+
+    if (budgetType === 'daily') {
+        summaryRow.querySelector('span').textContent = 'Daily Budget:';
+        document.getElementById('displayBudgetAmount').textContent = '$' + amount.toFixed(2);
+        totalCost = amount * dur;
+    } else {
+        summaryRow.querySelector('span').textContent = 'Weekly Budget:';
+        document.getElementById('displayBudgetAmount').textContent = '$' + amount.toFixed(2);
+        var weeks = Math.ceil(dur / 7);
+        totalCost = amount * weeks;
+    }
+
     document.getElementById('displayDuration').textContent = dur + ' days';
-    document.getElementById('displayTotalBudget').textContent = '$' + (daily * dur).toFixed(2);
-    return daily * dur;
+    document.getElementById('displayTotalBudget').textContent = '$' + totalCost.toFixed(2);
+    return totalCost;
 }
 
 (function() {
@@ -1126,17 +1187,29 @@ function calculateBudget() {
             document.querySelectorAll('.country-item input:checked').forEach(function(cb) {
                 selectedCountries.push(cb.value);
             });
-            var dailyBudget = parseFloat(document.getElementById('dailyBudget').value);
+            var budgetType = document.getElementById('budgetType').value;
+            var budgetAmount = parseFloat(document.getElementById('budgetAmount').value);
             var duration = parseInt(document.getElementById('campaignDuration').value);
-            var totalBudget = dailyBudget * duration;
+            var dailyBudget, totalBudget;
+
+            if (budgetType === 'daily') {
+                dailyBudget = budgetAmount;
+                totalBudget = budgetAmount * duration;
+            } else {
+                // Weekly: dailyBudget = weeklyAmount / 7, totalBudget = weeklyAmount * weeks
+                dailyBudget = budgetAmount / 7;
+                var weeks = Math.ceil(duration / 7);
+                totalBudget = budgetAmount * weeks;
+            }
 
             if (!campaignName || campaignName.length < 3) { showCampaignAlert('Campaign name must be at least 3 characters'); return; }
             if (!targetUrl.match(/^https?:\/\/.+/)) { showCampaignAlert('Please enter a valid URL starting with http:// or https://'); return; }
             if (selectedCountries.length === 0) { showCampaignAlert('Please select at least one target country'); return; }
-            if (!dailyBudget || !duration) { showCampaignAlert('Please select daily budget and duration'); return; }
+            if (!budgetAmount || !duration) { showCampaignAlert('Please select budget amount and duration'); return; }
 
             var balance = parseFloat(localStorage.getItem('userBalance')) || 0;
-            if (dailyBudget > balance) { showCampaignAlert('Insufficient balance. Please add funds first.'); return; }
+            var deductionAmount = budgetType === 'daily' ? dailyBudget : budgetAmount;
+            if (deductionAmount > balance) { showCampaignAlert('Insufficient balance. Please add funds first.'); return; }
 
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
@@ -1147,11 +1220,13 @@ function calculateBudget() {
                     body: JSON.stringify({
                         campaignName: campaignName,
                         targetUrl: targetUrl,
+                        budgetType: budgetType,
+                        budgetAmount: budgetAmount,
                         dailyBudget: dailyBudget,
                         totalBudget: totalBudget,
                         campaignType: pricingModel,
                         targetAudience: selectedCountries.join(','),
-                        description: adFormat.toUpperCase() + ' - ' + pricingModel.toUpperCase() + ' - $' + dailyBudget + '/day for ' + duration + ' days'
+                        description: adFormat.toUpperCase() + ' - ' + pricingModel.toUpperCase() + ' - ' + (budgetType === 'daily' ? '$' + budgetAmount + '/day' : '$' + budgetAmount + '/week') + ' for ' + duration + ' days'
                     })
                 });
                 var data = await response.json();

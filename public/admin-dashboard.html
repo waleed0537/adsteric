@@ -913,7 +913,7 @@
                         <td style="text-transform: uppercase; font-weight: 600; color: #3dd5c3;">${campaign.campaignType}</td>
                         <td>
                             <div style="font-weight: 600;">$${campaign.totalBudget.toFixed(2)}</div>
-                            <div style="font-size: 12px; color: #718096;">$${campaign.dailyBudget.toFixed(2)}/day</div>
+                            <div style="font-size: 12px; color: #718096;">$${campaign.budgetAmount ? campaign.budgetAmount.toFixed(2) : campaign.dailyBudget.toFixed(2)}/${campaign.budgetType === 'weekly' ? 'week' : 'day'}</div>
                         </td>
                         <td>
                             <span class="status-badge status-${campaign.status}">${campaign.status}</span>
